@@ -8,8 +8,18 @@ inputDocuments:
   - 'docs/qr-restaurant-ordering-platform-prd.md'
   - 'docs/ui-design.md'
   - 'docs/ui-flow.md'
+  - 'docs/reference-inspiration.md'
+  - 'docs/reference-inspiration-2-google-stitch.md'
   - '_bmad-output/project-context.md'
   - '_bmad-output/planning-artifacts/prd-validation-report.md'
+lastEdited: '2026-05-06'
+editHistory:
+  - date: '2026-05-06'
+    changes: 'Added brand-adapted Apple-inspired visual direction from docs/reference-inspiration.md while preserving QR Resto Hub role workflows and functionality.'
+  - date: '2026-05-06'
+    changes: 'Applied an interim Apple-inspired visual pass, later superseded by the Modern Epicurean direction.'
+  - date: '2026-05-06'
+    changes: 'Replaced the previous visual experiment with Modern Epicurean guidance from docs/reference-inspiration-2-google-stitch.md: cream surfaces, cocoa ink, orange CTAs, olive markers, glassy overlays, and food-first quiet luxury.'
 ---
 
 # UX Design Specification qr-resto-hub
@@ -281,16 +291,22 @@ Platform Admin and Super Admin surfaces should use searchable, filterable tables
 - Mobile ordering patterns from food delivery apps for menu browsing, dish sheets, add-ons, cart, and sticky actions.
 - Board scanning and drag/drop clarity from Trello-style tools.
 - Calm operational density from POS dashboards.
+- Product-first presentation from `docs/reference-inspiration-2-google-stitch.md`: cream surfaces, cocoa ink, orange CTAs, olive markers, glassy overlays, crisp imagery, restrained elevation, and generous customer-facing whitespace.
 
 **Adapt**
 - Customer checkout patterns should become order submission patterns, without customer payment.
 - Project-management boards should become restaurant service boards with strict domain transitions.
 - Admin tables should be simplified around role boundaries and tenant/account status.
+- Apple-inspired structural clarity should become QR Resto Hub's Modern Epicurean brand pattern: cream/parchment surfaces, cocoa text, orange action language, restrained restaurant status colors, Plus Jakarta Sans headings, Inter body text, food/restaurant imagery, and role-specific density.
+- Full-bleed or spacious visual rhythm should be reserved for customer menu, QR setup/print/download, subscription, onboarding, empty, and status surfaces where it improves confidence.
 
 **Avoid**
 - Delivery-app clutter, promotions, address/payment flows, and account friction.
 - Generic task-board flexibility that conflicts with server-validated restaurant order states.
 - Dashboard decoration that slows down restaurant staff during live service.
+- Copying Apple branding, SF Pro-specific typography, Apple navigation patterns, or product-device presentation.
+- Sterile cool-toned wellness palettes, cool gradients, or color choices that make food feel less appetizing.
+- Applying sparse marketing-page layout to Restaurant Admin order boards, Platform Admin account tables, or live service workflows.
 
 ## Design System Foundation
 
@@ -355,10 +371,11 @@ Platform Admin and Super Admin components should prioritize tables, filters, sta
 
 The design system will use the existing visual language from `docs/ui-design.md` as the starting point:
 
-- Primary color: teal for primary actions and active states.
+- Primary action color: warm orange for CTAs, add-to-cart/order actions, price highlights, and critical interactive emphasis.
+- Primary ink: cocoa brown for headings, body text, iconography, and ghost actions.
 - Secondary amber for pending/warning states.
 - Danger red for cancellation, delete, and error states.
-- Success green for successful completion and in-stock states.
+- Olive only for dietary tags, sustainable/health markers, and subtle confirmed/secondary states.
 - Status-specific board colors for `Pending`, `Preparing`, `To Serve`, and `Payment`.
 - `Completed` color may appear in history/statistics and customer final status, but not as an active board column.
 - Inter typography.
@@ -367,7 +384,9 @@ The design system will use the existing visual language from `docs/ui-design.md`
 - 44px minimum customer-facing touch targets.
 - Reduced-motion support.
 
-The UI should avoid over-rounded, decorative, marketing-style SaaS layouts. Cards should stay practical and compact. Dashboard surfaces should be full-width, organized, and optimized for scanning. Customer surfaces may feel more tactile and warm, but should still stay fast and uncluttered.
+The UI should incorporate the Modern Epicurean guidance from `docs/reference-inspiration-2-google-stitch.md`: photography-led customer presentation, quiet interface chrome, cream-toned surfaces, cocoa text, orange action language, olive markers, glassmorphic sticky overlays, tonal layering, barely visible cocoa-tinted separators only where needed, warm ambient shadows, and confident spacing. This inspiration is a translation into QR Resto Hub's restaurant brand and operating model, not a license to copy Apple-owned identity.
+
+The UI should avoid over-rounded, decorative, marketing-style SaaS layouts. Cards should stay practical and compact. Dashboard surfaces should be full-width, organized, and optimized for scanning. Customer surfaces may feel more tactile, premium, and warm, but should still stay fast and uncluttered.
 
 Lucide React should be used for icons where icons are needed, especially action buttons, status markers, navigation, and empty states.
 
@@ -466,34 +485,40 @@ Completed orders leave the active board and table/chair customer visibility, the
 QR Resto Hub will use the semantic color system from `docs/ui-design.md` as the baseline.
 
 Core colors:
-- Primary teal: used for primary actions, active states, selected tabs, and main CTAs.
-- Primary light/dark: used for hover, pressed, and focus-visible states.
+- Cream/parchment surfaces: used for page backgrounds, customer menu canvases, and warm low-eye-strain dining surfaces.
+- Cocoa ink: used for headings, body text, icons, secondary actions, focus indicators, and admin shell text.
+- Accent orange: used for primary actions, add-to-cart/order actions, price highlights, selected tabs, and main CTAs.
+- Orange light/dark variants: used for hover, pressed, focus-visible, and emphasis states.
 - Secondary amber: used for pending states, warning states, and attention without danger.
 - Danger red: used for cancellation, delete, failed actions, validation errors, and destructive confirmations.
-- Success green: used for successful completion, in-stock states, saved changes, and completed-history indicators.
-- Neutral scale: used for text hierarchy, borders, page backgrounds, dividers, disabled states, and dashboard surfaces.
+- Olive: used for dietary tags, sustainable/health markers, and subtle confirmed/secondary states.
+- Warm neutral scale: used for text hierarchy, page backgrounds, barely visible separators, disabled states, and dashboard surfaces.
 
 Order status colors:
 - `Pending`: amber background and dark amber text.
 - `Preparing`: blue background and dark blue text.
 - `To Serve`: indigo background and dark indigo text.
 - `Payment`: pink background and dark pink text.
-- `Completed`: green treatment for customer final status and history/statistics only.
+- `Completed`: restrained olive/success treatment for customer final status and history/statistics only.
 - `Cancelled`: red treatment for cancelled orders.
 
 Color rules:
 - Status color must never be the only indicator. Status text and/or icons must always accompany color.
-- Customer-facing primary actions should use teal unless the action is destructive.
-- Restaurant Admin order cards should use a colored left border or badge, not full saturated card backgrounds.
+- Customer-facing primary actions should use orange unless the action is destructive.
+- Restaurant Admin order cards should use a thin status rail or badge, not full saturated card backgrounds.
 - Ad-related UI should be visually separated and labeled without competing with order actions.
 - Paid tenant surfaces should not reserve empty ad space.
+- The latest Google Stitch reference makes warm orange the primary action color while cream, cocoa, and parchment tones carry most of the interface.
+- Customer-facing surfaces may alternate cream, near-white, cocoa-tinted glass, and carefully selected dark cocoa/charcoal sections when this improves focus on food imagery or QR context.
+- Olive must be restrained to dietary tags, sustainable/health markers, and subtle confirmed states; it must not become a dominant food surface or primary CTA color.
+- Decorative gradients, sterile cool-toned gradients, and heavy black shadows should not be introduced as a substitute for real food/restaurant imagery, layout rhythm, or semantic status treatment.
 
 ### Typography System
 
-The product will use Inter as the primary font family.
+The product will use Plus Jakarta Sans for headings and Inter for body/UI text.
 
 Typography goals:
-- Customer screens should feel clear, friendly, and readable on small phones.
+- Customer screens should feel clear, premium, friendly, and readable on small phones.
 - Restaurant Admin dashboards should feel compact and scannable.
 - Platform Admin and Super Admin tables should prioritize legibility and information density.
 
@@ -512,6 +537,8 @@ Typography rules:
 - Keep letter spacing at 0.
 - Use concise labels for restaurant operations.
 - Error text must explain what failed and what the user can do next.
+- Do not copy SF Pro-specific typography or negative tracking from the reference inspiration. The Google Stitch reference includes tight tracking, but implementation must keep letter spacing at 0 to follow project UI rules.
+- Use weight, size, spacing, and image hierarchy to create the premium feel instead of adopting another brand's typography.
 
 ### Spacing & Layout Foundation
 
@@ -543,6 +570,8 @@ Layout rules:
 - Avoid decorative gradient blobs, orbs, and bokeh backgrounds.
 - Preserve whitespace for scanability, but do not make operational dashboards airy at the cost of speed.
 - Fixed-format elements like boards, toolbars, QR cards, and counters must have stable dimensions.
+- Customer-facing menu, dish detail, QR, subscription, and empty/onboarding views may use more whitespace and low-chrome presentation when it helps the food, QR, or primary action become the focus.
+- Restaurant Admin order boards, menu CRUD, seating management, account tables, and live workflow controls must preserve operational density and fast scanning.
 
 ### Accessibility Considerations
 
@@ -1041,7 +1070,7 @@ Use for the main next action on a screen or modal:
 - Restaurant Admin: Start Prep, Ready to Serve, Complete Order.
 - Platform/Super Admin: Create Account, Save Changes, Confirm Transfer.
 
-Primary buttons use teal, clear verb-first labels, and maintain at least 44px height on customer-facing surfaces.
+Primary buttons use orange, clear verb-first labels, and maintain at least 44px height on customer-facing surfaces.
 
 **Secondary buttons**
 Use for non-destructive alternatives:

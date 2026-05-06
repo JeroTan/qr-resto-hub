@@ -6,11 +6,19 @@ lastEdited: '2026-05-06'
 editHistory:
   - date: '2026-05-06'
     changes: 'Aligned PRD with completed architecture for Elysia OpenAPI/Swagger documentation, TypeBox API contracts, route logic boundaries, and src/lib plus src/utils governance.'
+  - date: '2026-05-06'
+    changes: 'Added brand-adapted visual experience direction from docs/reference-inspiration.md while preserving QR Resto Hub functionality and operational density.'
+  - date: '2026-05-06'
+    changes: 'Applied an interim Apple-inspired visual pass, later superseded by the Modern Epicurean direction.'
+  - date: '2026-05-06'
+    changes: 'Replaced the previous visual experiment with the Modern Epicurean direction from docs/reference-inspiration-2-google-stitch.md: cream surfaces, cocoa ink, orange CTAs, olive markers, and quiet luxury dining presentation.'
 releaseMode: 'phased'
 inputDocuments:
   - 'docs/qr-restaurant-ordering-platform-prd.md'
   - 'docs/ui-design.md'
   - 'docs/ui-flow.md'
+  - 'docs/reference-inspiration.md'
+  - 'docs/reference-inspiration-2-google-stitch.md'
   - '_bmad-output/project-context.md'
 documentCounts:
   productBriefs: 0
@@ -62,6 +70,14 @@ The product solves the operational gap between manual dine-in ordering and heavy
 The core insight is that restaurants can modernize dine-in ordering without forcing customers to download a native app. A QR-linked mobile web flow removes the biggest adoption blocker for first-time diners: app-install friction. This makes the customer experience lightweight, fast, and suitable for walk-in restaurant use.
 
 The product is differentiated by combining a no-login customer ordering surface with a real-time restaurant operations dashboard. Live updates through Cloudflare Durable Objects/WebSocket behavior are core functionality, not a later enhancement. Tenant isolation, server-side order transition validation, and strict role separation are foundational because the same platform serves many restaurants.
+
+### Visual Experience Direction
+
+QR Resto Hub should feel polished, calm, and food-focused without copying another brand identity. `docs/reference-inspiration-2-google-stitch.md` is the current visual source of truth for the product UI. The direction is **Modern Epicurean**: cream and parchment surfaces, cocoa ink, warm orange primary actions, olive dietary/secondary markers, quiet glassy overlays, restrained depth, generous food-focused spacing, and high-quality dish or restaurant imagery.
+
+Customer-facing surfaces may use generous whitespace, full-bleed or card-led food imagery, warm cream backgrounds, glassmorphic sticky bars, sticky mobile actions, and low-chrome layouts so dishes and restaurant context lead the experience. Restaurant Admin dashboards must remain compact, scannable, and operational; visual polish must improve speed and confidence, not create sparse marketing pages. Platform Admin and Super Admin screens should stay restrained and account-focused.
+
+The reference inspiration must not replace functionality, alter order rules, introduce app-download friction, remove required status labels, or copy Apple-specific branding, typography, navigation, or owned visual identity. Apple remains a structural inspiration for clarity and restraint; the visible brand should be Modern Epicurean dining, not Apple hardware/product-page design.
 
 ## Project Classification
 
@@ -647,6 +663,15 @@ This is not a menu-only MVP. The useful product is the complete loop from QR sca
 - Form errors and blocked actions must state what failed, why it failed when known, and what the user can do next.
 - Customer-facing errors must avoid stack traces, HTTP codes, database errors, provider internals, and other technical wording.
 
+### Visual Design & Brand Experience
+
+- Customer-facing menu, dish detail, cart, live status, QR, and subscription surfaces must use the Modern Epicurean visual direction from `docs/reference-inspiration-2-google-stitch.md`.
+- The visual system must use cream/parchment surfaces, cocoa ink, warm orange primary actions, olive dietary/secondary markers, Plus Jakarta Sans headings, Inter body text, and documented Tailwind CSS v4 tokens.
+- Customer-facing surfaces may use spacious layouts, crisp food/restaurant imagery, quiet chrome, glassmorphic cream overlays, tonal layering, barely visible cocoa-tinted separators only where needed, orange CTAs, and warm ambient shadows when this improves menu clarity and ordering confidence.
+- Restaurant Admin order board, menu management, seating/QR, Platform Admin, and Super Admin surfaces must preserve operational density, fast scanning, visible labels, and low-click workflows.
+- UI implementation must not copy Apple branding, SF Pro-specific typography, Apple product/navigation patterns, or Apple-owned visual identity.
+- Decorative gradients, sterile cool-toned wellness treatments, heavy black shadows, nested cards, and visual chrome that competes with dishes, QR context, status actions, or order operations must be avoided.
+
 ### Integration
 
 - Cloudflare D1 migrations must support dev and prod remote environments only.
@@ -668,7 +693,7 @@ This is not a menu-only MVP. The useful product is the complete loop from QR sca
 - Atomic independent helpers must live under `src/utils/**`.
 - User-added files in `src/utils/**` and `src/lib/**` must be treated as intentional project knowledge; agents must inspect and prefer reuse before duplicating, replacing, or bypassing them.
 - Agents may promote genuinely shared atomic logic into `src/utils/**` or integration/provider wrappers into `src/lib/**` when it improves reuse, consistency, or boundary separation.
-- Tailwind CSS v4 design tokens must map from `docs/ui-design.md` rather than using scattered one-off styling values.
+- Tailwind CSS v4 design tokens must map from `docs/ui-design.md` and the current Modern Epicurean guidance in `docs/reference-inspiration-2-google-stitch.md` rather than using scattered one-off styling values.
 - Order status transitions must be modeled as explicit domain rules, not arbitrary status mutation.
 - Active orders and completed order history must be modeled as separate operational concepts.
 

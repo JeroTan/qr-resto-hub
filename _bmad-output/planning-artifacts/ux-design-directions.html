@@ -6,23 +6,26 @@
     <title>QR Resto Hub - UX Design Directions</title>
     <style>
       :root {
-        --primary: #0f766e;
-        --primary-light: #14b8a6;
-        --primary-dark: #0d5c56;
-        --secondary: #f59e0b;
+        --primary: #ff6b00;
+        --primary-light: #ff8a33;
+        --primary-dark: #cc5600;
+        --secondary: #5d2a18;
+        --tertiary: #8b8000;
         --danger: #ef4444;
-        --success: #22c55e;
-        --ink: #111827;
-        --muted: #6b7280;
-        --line: #d1d5db;
-        --soft: #f3f4f6;
-        --page: #f9fafb;
+        --success: #8b8000;
+        --ink: #1c1b1b;
+        --muted: #4c463f;
+        --line: rgba(93, 42, 24, 0.11);
+        --line-strong: rgba(93, 42, 24, 0.18);
+        --soft: #f2e8df;
+        --page: #fdf8f7;
         --surface: #ffffff;
-        --pending: #fef3c7;
-        --preparing: #dbeafe;
-        --serve: #e0e7ff;
-        --payment: #fce7f3;
-        --complete: #dcfce7;
+        --surface-container: #f7f3f1;
+        --pending: #fff4d6;
+        --preparing: #eaf2ff;
+        --serve: #efeaff;
+        --payment: #ffe4d9;
+        --complete: #f2e8df;
       }
 
       * {
@@ -40,9 +43,9 @@
         position: sticky;
         top: 0;
         z-index: 20;
-        border-bottom: 1px solid var(--line);
-        background: rgba(255, 255, 255, 0.94);
-        backdrop-filter: blur(10px);
+        background: rgba(253, 248, 247, 0.88);
+        backdrop-filter: saturate(160%) blur(18px);
+        box-shadow: inset 0 -1px 0 var(--line);
       }
 
       .top {
@@ -60,6 +63,12 @@
       h3,
       p {
         margin: 0;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: "Plus Jakarta Sans", Inter, ui-sans-serif, system-ui, sans-serif;
       }
 
       h1 {
@@ -82,11 +91,11 @@
       nav a {
         color: var(--ink);
         text-decoration: none;
-        border: 1px solid var(--line);
-        background: var(--surface);
+        background: rgba(255, 255, 255, 0.72);
         border-radius: 8px;
         padding: 8px 10px;
         font-size: 13px;
+        box-shadow: inset 0 0 0 1px var(--line);
       }
 
       main {
@@ -96,20 +105,22 @@
       }
 
       section {
-        background: var(--surface);
-        border: 1px solid var(--line);
-        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.78);
+        border-radius: 24px;
         margin: 0 0 24px;
         overflow: hidden;
+        box-shadow:
+          0 18px 44px rgba(93, 42, 24, 0.05),
+          inset 0 0 0 1px rgba(93, 42, 24, 0.06);
       }
 
       .section-head {
         padding: 18px 20px;
-        border-bottom: 1px solid var(--line);
         display: flex;
         justify-content: space-between;
         gap: 16px;
         align-items: flex-start;
+        box-shadow: inset 0 -1px 0 var(--line);
       }
 
       .tag {
@@ -118,8 +129,8 @@
         min-height: 28px;
         padding: 4px 9px;
         border-radius: 999px;
-        background: #ecfdf5;
-        color: #065f46;
+        background: #f2e8df;
+        color: #5d2a18;
         font-size: 12px;
         font-weight: 700;
         white-space: nowrap;
@@ -136,14 +147,14 @@
       }
 
       .notes {
-        border-right: 1px solid var(--line);
-        background: #fbfbfb;
+        background: #f7f3f1;
+        box-shadow: inset -1px 0 0 var(--line);
       }
 
       .notes ul {
         margin: 16px 0 0;
         padding: 0 0 0 18px;
-        color: #374151;
+        color: var(--muted);
         line-height: 1.6;
         font-size: 14px;
       }
@@ -152,23 +163,68 @@
         background: var(--page);
       }
 
+      .brand-brief {
+        background: #ffffff;
+      }
+
+      .brand-grid {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 16px;
+        padding: 20px;
+      }
+
+      .brand-card {
+        border-radius: 24px;
+        background: var(--surface);
+        padding: 18px;
+        box-shadow: inset 0 0 0 1px rgba(93, 42, 24, 0.07);
+      }
+
+      .brand-card.dark {
+        background: #1f1b16;
+        color: white;
+      }
+
+      .brand-card h3 {
+        margin-bottom: 10px;
+      }
+
+      .brand-card p,
+      .brand-card li {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .brand-card.dark p,
+      .brand-card.dark li {
+        color: #f4f0ee;
+      }
+
+      .brand-card ul {
+        margin: 12px 0 0;
+        padding-left: 18px;
+      }
+
       .phone {
         width: min(360px, 100%);
         margin: 0 auto;
-        border: 1px solid #cbd5e1;
         border-radius: 28px;
-        background: white;
+        background: #fffaf8;
         overflow: hidden;
-        box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12);
+        box-shadow:
+          0 24px 48px rgba(93, 42, 24, 0.08),
+          inset 0 0 0 1px rgba(93, 42, 24, 0.08);
       }
 
       .phone-head {
         padding: 16px;
-        border-bottom: 1px solid var(--line);
         display: flex;
         justify-content: space-between;
         align-items: center;
         gap: 10px;
+        box-shadow: inset 0 -1px 0 var(--line);
       }
 
       .badge {
@@ -184,7 +240,7 @@
         gap: 8px;
         overflow: hidden;
         padding: 12px 16px;
-        border-bottom: 1px solid var(--line);
+        box-shadow: inset 0 -1px 0 var(--line);
       }
 
       .tab {
@@ -205,14 +261,15 @@
         grid-template-columns: 76px 1fr auto;
         gap: 12px;
         padding: 14px 16px;
-        border-bottom: 1px solid var(--line);
         align-items: center;
+        box-shadow: inset 0 -1px 0 var(--line);
       }
 
       .photo {
         height: 76px;
         border-radius: 8px;
-        background: linear-gradient(135deg, #fbbf24, #0f766e);
+        background: #f2e8df;
+        box-shadow: inset 0 0 0 1px rgba(93, 42, 24, 0.08);
       }
 
       .dish h3 {
@@ -248,8 +305,8 @@
         justify-content: space-between;
         gap: 12px;
         padding: 14px 16px;
-        border-top: 1px solid var(--line);
         background: white;
+        box-shadow: inset 0 1px 0 var(--line);
       }
 
       .primary-btn {
@@ -263,20 +320,21 @@
       }
 
       .dash {
-        border: 1px solid var(--line);
         background: white;
         border-radius: 8px;
         overflow: hidden;
         min-height: 430px;
-        box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+        box-shadow:
+          0 18px 34px rgba(93, 42, 24, 0.06),
+          inset 0 0 0 1px rgba(93, 42, 24, 0.07);
       }
 
       .dash-top {
         padding: 14px 16px;
-        border-bottom: 1px solid var(--line);
         display: flex;
         justify-content: space-between;
         align-items: center;
+        box-shadow: inset 0 -1px 0 var(--line);
       }
 
       .board {
@@ -287,18 +345,18 @@
       }
 
       .col {
-        border: 1px solid var(--line);
         border-radius: 8px;
         min-height: 350px;
         background: #fff;
+        box-shadow: inset 0 0 0 1px rgba(93, 42, 24, 0.07);
       }
 
       .col h3 {
         padding: 10px 12px;
         font-size: 13px;
-        border-bottom: 1px solid var(--line);
         display: flex;
         justify-content: space-between;
+        box-shadow: inset 0 -1px 0 var(--line);
       }
 
       .pending h3 {
@@ -320,10 +378,11 @@
       .order-card {
         margin: 10px;
         padding: 11px;
-        border: 1px solid var(--line);
-        border-left: 4px solid var(--primary);
         border-radius: 8px;
         background: white;
+        box-shadow:
+          inset 4px 0 0 var(--primary),
+          inset 0 0 0 1px rgba(93, 42, 24, 0.07);
       }
 
       .order-card h4 {
@@ -334,28 +393,29 @@
       .next {
         width: 100%;
         margin-top: 10px;
-        border: 1px solid var(--primary);
+        border: 0;
         color: var(--primary-dark);
         background: white;
         border-radius: 8px;
         min-height: 36px;
         font-weight: 700;
+        box-shadow: inset 0 0 0 1px rgba(255, 107, 0, 0.45);
       }
 
       .split {
         display: grid;
         grid-template-columns: 260px 1fr;
         min-height: 430px;
-        border: 1px solid var(--line);
         border-radius: 8px;
         background: white;
         overflow: hidden;
+        box-shadow: inset 0 0 0 1px rgba(93, 42, 24, 0.07);
       }
 
       .sidebar {
-        border-right: 1px solid var(--line);
-        background: #fbfbfb;
+        background: #f7f3f1;
         padding: 14px;
+        box-shadow: inset -1px 0 0 var(--line);
       }
 
       .side-item {
@@ -366,9 +426,10 @@
       }
 
       .side-item.active {
-        background: #ccfbf1;
-        color: #115e59;
+        background: rgba(139, 128, 0, 0.12);
+        color: var(--secondary);
         font-weight: 800;
+        box-shadow: inset 3px 0 0 var(--primary);
       }
 
       .cards {
@@ -379,10 +440,10 @@
       }
 
       .metric {
-        border: 1px solid var(--line);
         border-radius: 8px;
         padding: 14px;
         background: white;
+        box-shadow: inset 0 0 0 1px rgba(93, 42, 24, 0.07);
       }
 
       .metric strong {
@@ -393,11 +454,12 @@
 
       table {
         width: 100%;
-        border-collapse: collapse;
+        border-collapse: separate;
+        border-spacing: 0;
         background: white;
-        border: 1px solid var(--line);
         border-radius: 8px;
         overflow: hidden;
+        box-shadow: inset 0 0 0 1px rgba(93, 42, 24, 0.07);
       }
 
       th,
@@ -411,7 +473,7 @@
       th {
         font-size: 12px;
         color: var(--muted);
-        background: #f8fafc;
+        background: #f7f3f1;
       }
 
       .status-row {
@@ -458,10 +520,10 @@
       }
 
       .table-card {
-        border: 1px solid var(--line);
         border-radius: 8px;
         background: white;
         padding: 14px;
+        box-shadow: inset 0 0 0 1px rgba(93, 42, 24, 0.07);
       }
 
       .chairs {
@@ -485,24 +547,33 @@
       .qr {
         height: 220px;
         border-radius: 8px;
+        background: white;
+        padding: 16px;
+        box-shadow: inset 0 0 0 1px rgba(93, 42, 24, 0.12);
+      }
+
+      .qr::before {
+        content: "";
+        display: block;
+        width: 100%;
+        height: 100%;
+        border-radius: 4px;
         background:
           linear-gradient(90deg, #111 8px, transparent 8px) 0 0 / 24px 24px,
           linear-gradient(#111 8px, transparent 8px) 0 0 / 24px 24px,
           white;
-        border: 16px solid white;
-        box-shadow: inset 0 0 0 1px var(--line);
       }
 
       @media (max-width: 900px) {
         .grid,
         .split,
-        .qr-layout {
+        .qr-layout,
+        .brand-grid {
           grid-template-columns: 1fr;
         }
 
         .notes {
-          border-right: 0;
-          border-bottom: 1px solid var(--line);
+          box-shadow: inset 0 -1px 0 var(--line);
         }
 
         .board {
@@ -522,9 +593,10 @@
       <div class="top">
         <div>
           <h1>QR Resto Hub - UX Design Directions</h1>
-          <p class="sub">Six practical directions for the customer, restaurant, and platform surfaces.</p>
+          <p class="sub">Modern Epicurean direction plus six practical directions for customer, restaurant, and platform surfaces.</p>
         </div>
         <nav aria-label="Design directions">
+          <a href="#brand">Brand</a>
           <a href="#d1">Customer</a>
           <a href="#d2">Board</a>
           <a href="#d3">Unified</a>
@@ -536,6 +608,37 @@
     </header>
 
     <main>
+      <section id="brand" class="brand-brief">
+        <div class="section-head">
+          <div>
+            <h2>Brand Adaptation: Modern Epicurean</h2>
+            <p class="sub">Use the Google Stitch reference as the current UI direction: quiet luxury for digital dining with cream, cocoa, orange, olive, and food-first presentation.</p>
+          </div>
+          <span class="tag">Reference alignment</span>
+        </div>
+        <div class="brand-grid">
+          <div class="brand-card">
+            <h3>Bring forward</h3>
+            <p>Customer-facing surfaces should feel calm, crisp, and food-first. Let dishes, table/chair context, QR assets, and live status lead the page while the interface stays quiet.</p>
+            <ul>
+              <li>Use real dish or restaurant imagery where it helps ordering confidence.</li>
+              <li>Prefer cream surfaces, cocoa ink, tonal layering, barely visible cocoa separators, and glassy sticky overlays over decorative effects.</li>
+              <li>Use orange as the primary CTA/action color for ordering and dashboard actions.</li>
+              <li>Use olive only for dietary tags, sustainable/health markers, and subtle confirmed states.</li>
+            </ul>
+          </div>
+          <div class="brand-card dark">
+            <h3>Do not copy</h3>
+            <p>The reference is not a request to become Apple. QR Resto Hub remains an operational restaurant SaaS with mobile QR ordering.</p>
+            <ul>
+              <li>No Apple branding, SF Pro typography, Apple navigation, or device/product-page copy.</li>
+              <li>No negative letter spacing; keep Plus Jakarta Sans headings, Inter body text, and documented token rules.</li>
+              <li>No sterile cool-toned wellness palette or sparse marketing layout for admin boards, account tables, or live workflows.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
       <section id="d1">
         <div class="section-head">
           <div>
@@ -687,7 +790,7 @@
                   <strong>Order #A7B3</strong>
                   <p class="small">Table 5 - Chair A</p>
                 </div>
-                <span class="badge" style="background:#dcfce7;color:#166534;">Live</span>
+                <span class="badge" style="background:rgba(139,128,0,0.12);color:#5d2a18;">Live</span>
               </div>
               <div class="timeline">
                 <div class="time-step">
@@ -740,7 +843,7 @@
                   <strong>Table 1</strong><p class="small">4 chairs</p>
                   <div class="chairs"><span class="chair">A</span><span class="chair">B</span><span class="chair">C</span><span class="chair">D</span></div>
                 </div>
-                <div class="table-card" style="border-color:var(--primary);">
+                <div class="table-card" style="box-shadow:inset 0 0 0 1px rgba(255,107,0,0.45);">
                   <strong>Table 5</strong><p class="small">3 chairs</p>
                   <div class="chairs"><span class="chair">A</span><span class="chair">B</span><span class="chair">C</span></div>
                 </div>
@@ -829,11 +932,11 @@
                 <strong style="font-size:18px;">Connection lost</strong>
                 <p class="small">We are reconnecting. Your order status will refresh automatically.</p>
               </div>
-              <div class="metric" style="border-left:4px solid var(--danger);">
+              <div class="metric" style="box-shadow:inset 4px 0 0 var(--danger), inset 0 0 0 1px rgba(93,42,24,0.07);">
                 <strong style="font-size:18px;">Cancellation no longer available</strong>
                 <p class="small">The kitchen has started preparing this order. You can ask staff for help.</p>
               </div>
-              <div class="metric" style="border-left:4px solid var(--secondary);">
+              <div class="metric" style="box-shadow:inset 4px 0 0 var(--secondary), inset 0 0 0 1px rgba(93,42,24,0.07);">
                 <strong style="font-size:18px;">Ad blocker detected</strong>
                 <p class="small">This restaurant uses the free plan. Allow ads to continue, or the restaurant can upgrade to remove ads.</p>
                 <button class="primary-btn" style="margin-top:12px;">I allowed ads - refresh</button>

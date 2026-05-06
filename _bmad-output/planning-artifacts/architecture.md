@@ -9,10 +9,20 @@ inputDocuments:
   - 'docs/qr-restaurant-ordering-platform-prd.md'
   - 'docs/ui-design.md'
   - 'docs/ui-flow.md'
+  - 'docs/reference-inspiration.md'
+  - 'docs/reference-inspiration-2-google-stitch.md'
 workflowType: 'architecture'
 lastStep: 8
 status: 'complete'
 completedAt: '2026-05-06'
+lastEdited: '2026-05-06'
+editHistory:
+  - date: '2026-05-06'
+    changes: 'Aligned architecture with brand-adapted visual guidance from docs/reference-inspiration.md while preserving operational dashboard density and Tailwind token governance.'
+  - date: '2026-05-06'
+    changes: 'Applied an interim Apple-inspired visual token pass, later superseded by the Modern Epicurean direction.'
+  - date: '2026-05-06'
+    changes: 'Replaced the previous visual token experiment with Modern Epicurean Google Stitch reference: cream surfaces, cocoa ink, orange CTAs, olive markers, and glassy dining overlays.'
 project_name: 'qr-resto-hub'
 user_name: 'Mr. JRW'
 date: '2026-05-06'
@@ -144,6 +154,7 @@ Project initialization using this command should be the first implementation sto
 - Use Durable Objects/WebSockets for live order coordination, with D1 as durable state.
 - Use React `19.2.5` feature modules for interactive customer/admin surfaces.
 - Use Tailwind CSS `4.2.4` and local UI primitives, not a heavy component framework.
+- Use the Modern Epicurean visual direction from `docs/reference-inspiration-2-google-stitch.md` as UI guidance: cream/parchment surfaces, cocoa ink, orange actions, olive dietary/secondary markers, food-first imagery, glassy overlays, and restrained warm elevation.
 
 **Important Decisions (Shape Architecture):**
 - Use `@dnd-kit/core 6.3.1` and `@dnd-kit/sortable 10.0.0` for Restaurant Admin drag/drop, with button alternatives.
@@ -542,6 +553,11 @@ Astro owns routing and page shells. React owns interactive islands inside featur
 - `src/components/data-display/**` for shared tables, status indicators, metric cards, and list primitives.
 
 If a component is only used by one feature, it stays in that feature. Promote a component to `src/components/**` only after it is genuinely shared by multiple features.
+
+**Visual System Boundaries:**
+Tailwind CSS v4 tokens must start from `docs/ui-design.md` and incorporate the Modern Epicurean reference guidance in `docs/reference-inspiration-2-google-stitch.md`. Shared primitives should support quiet chrome, cream/parchment surfaces, cocoa text, orange action/focus states, olive dietary markers, tonal layering, barely visible cocoa-tinted separators only where needed, glassy overlays, limited warm elevation, crisp image presentation, stable dimensions, and clear action hierarchy.
+
+Customer-facing components may use more whitespace, food/restaurant imagery, low-chrome layouts, glassmorphic sticky bars, and clean section rhythm when it improves ordering confidence. Restaurant Admin, Platform Admin, and Super Admin components must preserve information density, fast scanning, explicit labels, and low-click operations. Do not implement Apple-owned branding, SF Pro-specific typography, Apple navigation patterns, negative tracking, sterile cool-toned wellness palettes, heavy black shadows, or sparse marketing layouts for operational dashboards.
 
 **Middleware Boundaries:**
 Middleware is composed through `src/middleware/index.ts`. Each middleware file owns one concern: auth session, tenant context, role guard, ad entitlement, request ID, or error boundary. New middleware must be added as a focused file and composed in `index.ts`.

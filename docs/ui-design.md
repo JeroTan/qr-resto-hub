@@ -1,4 +1,4 @@
-** This document might be deprecated as new Design is created under BMAD. Use this as legacy reference only. Some contents here are still usable **
+**Implementation note:** This document is the implementation-facing UI token companion to the BMAD UX specification. If conflicts appear, `_bmad-output/planning-artifacts/ux-design-specification.md` and `docs/reference-inspiration-2-google-stitch.md` are the source of truth.
 
 # QR Resto Hub — UI Design Document
 
@@ -12,42 +12,59 @@
 
 ## Design System Overview
 
+### Reference-Inspired Brand Adaptation
+
+`docs/reference-inspiration-2-google-stitch.md` is the current visual source of truth. It defines a Modern Epicurean direction: quiet luxury for digital dining, cream/parchment surfaces, cocoa ink, orange CTAs, olive markers, glassy overlays, food-first photography, and restrained warm elevation.
+
+Adaptation rules:
+- Use a cream/cocoa/orange dining system as the main brand expression: cream backgrounds, cocoa text, orange primary actions, olive dietary markers, and warm neutral dividers.
+- Use Plus Jakarta Sans for headings and Inter for body/UI text.
+- Keep the 4px spacing system for implementation compatibility while allowing 8px rhythm groupings from the reference.
+- Customer-facing menu, dish detail, cart, live status, QR, subscription, empty, and onboarding surfaces may use more whitespace, larger imagery, low-chrome sections, tonal layering, and barely visible cocoa-tinted separators only where needed when this improves food focus and ordering confidence.
+- Restaurant Admin boards, menu CRUD, seating/QR management, Platform Admin tables, and Super Admin screens must remain compact, scannable, and workflow-first.
+- Use real dish, restaurant, QR, and operational imagery where imagery helps understanding; avoid decorative gradients, sterile cool-toned wellness palettes, abstract blobs, and fake atmospheric chrome.
+- Olive is allowed for dietary tags, sustainable/health markers, and subtle confirmed/secondary states. It must not become the primary CTA or dominant food surface color.
+- Do not copy Apple-specific branding, SF Pro typography, Apple navigation patterns, negative letter spacing, or device/product-page composition.
+
 ### Color Palette
 
 | Token                     | Hex       | Usage                                    |
 | ------------------------- | --------- | ---------------------------------------- |
-| `--color-primary`         | `#0F766E` | Primary actions, active states, CTAs     |
-| `--color-primary-light`   | `#14B8A6` | Hover states, highlights                 |
-| `--color-primary-dark`    | `#0D5C56` | Pressed states                           |
-| `--color-secondary`       | `#F59E0B` | Warnings, pending states, payment badges |
+| `--color-primary`         | `#FF6B00` | Primary CTAs, add/order actions, price highlights |
+| `--color-primary-light`   | `#FF8A33` | Hover states, highlights                 |
+| `--color-primary-dark`    | `#CC5600` | Pressed states                           |
+| `--color-secondary`       | `#5D2A18` | Cocoa ink, ghost buttons, iconography    |
+| `--color-tertiary`        | `#8B8000` | Dietary tags, sustainable/health markers |
 | `--color-danger`          | `#EF4444` | Cancel actions, errors, delete           |
-| `--color-success`         | `#22C55E` | Completed, in-stock, success states      |
-| `--color-neutral-900`     | `#111827` | Primary text, headings                   |
-| `--color-neutral-700`     | `#374151` | Secondary text                           |
-| `--color-neutral-500`     | `#6B7280` | Placeholder, disabled text               |
-| `--color-neutral-300`     | `#D1D5DB` | Borders, dividers                        |
-| `--color-neutral-100`     | `#F3F4F6` | Backgrounds, hover surfaces              |
-| `--color-neutral-50`      | `#F9FAFB` | Page backgrounds                         |
+| `--color-success`         | `#8B8000` | Confirmed, in-stock, completed-history indicators |
+| `--color-neutral-900`     | `#1C1B1B` | Primary text, headings                   |
+| `--color-neutral-700`     | `#4C463F` | Secondary text                           |
+| `--color-neutral-500`     | `#7D766E` | Placeholder, disabled text               |
+| `--color-neutral-300`     | `#CEC5BC` | Barely visible dividers, inset separators |
+| `--color-neutral-100`     | `#F2E8DF` | Cream surfaces, hover surfaces           |
+| `--color-neutral-50`      | `#FDF8F7` | Page backgrounds                         |
 | `--color-surface`         | `#FFFFFF` | Cards, modals, elevated surfaces         |
+| `--color-surface-container` | `#F7F3F1` | Low-elevation cards and panels         |
+| `--color-surface-container-high` | `#ECE7E6` | Higher tonal surfaces             |
 | `--color-board-pending`   | `#FEF3C7` | Pending column bg                        |
 | `--color-board-preparing` | `#DBEAFE` | Preparing column bg                      |
 | `--color-board-serve`     | `#E0E7FF` | To Serve column bg                       |
 | `--color-board-payment`   | `#FCE7F3` | Payment column bg                        |
-| `--color-board-completed` | `#DCFCE7` | Completed column bg                      |
+| `--color-board-completed` | `#F2E8DF` | Completed history/customer final bg      |
 
 ### Typography
 
 | Scale   | Mobile | Tablet+ | Weight | Usage                        |
 | ------- | ------ | ------- | ------ | ---------------------------- |
-| Display | 28px   | 36px    | 700    | Page titles, empty states    |
+| Display | 28px   | 40px    | 700    | Page titles, empty states    |
 | H1      | 24px   | 32px    | 700    | Section headers              |
 | H2      | 20px   | 24px    | 600    | Card titles, column headers  |
-| H3      | 16px   | 18px    | 600    | Subsection, dish names       |
+| H3      | 16px   | 20px    | 600    | Subsection, dish names       |
 | Body    | 14px   | 16px    | 400    | Paragraphs, descriptions     |
 | Small   | 12px   | 14px    | 400    | Metadata, timestamps         |
 | Caption | 11px   | 12px    | 500    | Labels, badges, stock status |
 
-**Font Family**: Inter (Google Fonts) — weights 400, 500, 600, 700
+**Font Family**: Plus Jakarta Sans for headings/display, Inter for body/UI text. Use weights 400, 500, 600, 700. Letter spacing remains 0 even where the reference suggests tight tracking.
 
 ### Spacing Scale (4px base)
 
@@ -65,12 +82,14 @@
 
 ### Shadows & Elevation
 
+Elevation should stay restrained and warm. Prefer tonal layers, barely visible cocoa-tinted separators, glassy overlays, spacing, and imagery over heavy shadows. Customer-facing food or QR presentation may use subtle ambient depth when it helps the visual subject read clearly; admin cards and controls should avoid decorative elevation.
+
 | Token          | Value                              | Usage                     |
 | -------------- | ---------------------------------- | ------------------------- |
-| `shadow-sm`    | `0 1px 2px rgba(0,0,0,0.05)`       | Buttons, inputs           |
-| `shadow-md`    | `0 4px 6px -1px rgba(0,0,0,0.1)`   | Cards, dropdowns          |
-| `shadow-lg`    | `0 10px 15px -3px rgba(0,0,0,0.1)` | Modals, floating elements |
-| `shadow-board` | `0 2px 8px rgba(0,0,0,0.08)`       | Board cards               |
+| `shadow-sm`    | `0 1px 2px rgba(93,42,24,0.05)`       | Buttons, inputs        |
+| `shadow-md`    | `0 12px 30px rgba(93,42,24,0.06)`     | Cards, dropdowns       |
+| `shadow-lg`    | `0 24px 48px rgba(93,42,24,0.08)`     | Modals, floating elements |
+| `shadow-board` | `0 2px 8px rgba(93,42,24,0.06)`       | Board cards            |
 
 ### Border Radius
 
@@ -78,8 +97,8 @@
 | ------------- | ------ | -------------------------- |
 | `radius-sm`   | 4px    | Buttons, badges            |
 | `radius-md`   | 8px    | Inputs, small cards        |
-| `radius-lg`   | 12px   | Cards, modals              |
-| `radius-xl`   | 16px   | Large cards, mobile sheets |
+| `radius-lg`   | 16px   | Cards, modals              |
+| `radius-xl`   | 24px   | Large cards, mobile sheets, image containers |
 | `radius-full` | 9999px | Pills, avatars             |
 
 ### Animation Tokens
@@ -111,7 +130,7 @@
 **Secondary Button**
 
 - Background: `--color-surface`
-- Border: 1px solid `--color-neutral-300`
+- Subtle cocoa inset line; no heavy outline
 - Text: `--color-neutral-900`, 14px, weight 500
 - Hover: `--color-neutral-100`
 
@@ -142,7 +161,7 @@
 - Border radius: `radius-lg`
 - Shadow: `shadow-md`
 - Padding: `space-4` to `space-6`
-- Border: 1px solid `--color-neutral-100` (subtle)
+- Optional barely visible cocoa inset separator
 
 **Board Card (Order Card)**
 
@@ -150,7 +169,7 @@
 - Border radius: `radius-md`
 - Shadow: `shadow-board`
 - Padding: `space-4`
-- Left border: 4px solid status color
+- Thin status rail: 4px status color
 - Hover: translateY(-2px), `shadow-md`
 - Dragging: rotate(2deg), `shadow-lg`, opacity 0.9
 
@@ -159,7 +178,7 @@
 - Horizontal layout: Image (80px) + Content
 - Border radius: `radius-lg`
 - Background: `--color-surface`
-- Border: 1px solid `--color-neutral-200`
+- Optional barely visible separator line
 - Out of stock: Opacity 0.6, grayscale filter, "Out of Stock" badge
 
 ### Inputs
@@ -167,7 +186,7 @@
 **Text Input**
 
 - Height: 48px (mobile) / 44px (desktop)
-- Border: 1px solid `--color-neutral-300`
+- Subtle cocoa inset line
 - Border radius: `radius-md`
 - Padding: 0 `space-4`
 - Focus: 2px `--color-primary` border, subtle glow
@@ -232,7 +251,7 @@
 
 - Position: Top-right (desktop), top-center (mobile)
 - Auto-dismiss: 4 seconds
-- Types: Success (green), Error (red), Warning (amber), Info (blue)
+- Types: Success (small olive/success indicator), Error (red), Warning (amber), Info (blue)
 - Animation: Slide in from right, fade out
 
 ### Empty States
@@ -254,7 +273,7 @@
 
 - Size: 24px (inline), 40px (page)
 - Color: `--color-primary`
-- Stroke: 3px
+- Line width: 3px
 
 ---
 
@@ -459,7 +478,7 @@ Scan QR → Menu Loading → Browse Menu → Build Order → Review & Notes → 
 - **Status Timeline**:
   - Vertical timeline with 5 steps
   - Current step: Highlighted with primary color, pulse animation
-  - Completed steps: Checkmark icon, green
+  - Completed steps: Checkmark icon with small olive/success indicator
   - Future steps: Gray, muted
   - Steps: Pending → Preparing → To Serve → [Payment] → Completed
 - **Order Summary (collapsible)**:
@@ -474,7 +493,7 @@ Scan QR → Menu Loading → Browse Menu → Build Order → Review & Notes → 
     - Primary style
     - Moves order to Payment status
 - **Live Indicator**:
-  - "● Live updates" green pulse dot
+  - "Live updates" small olive/success pulse dot
   - Last updated timestamp
   - Reconnecting state if WebSocket drops
 
@@ -485,7 +504,7 @@ Scan QR → Menu Loading → Browse Menu → Build Order → Review & Notes → 
 | Preparing | 👨‍🍳 | Blue | "The kitchen is preparing your order" |
 | To Serve | 🍽️ | Indigo | "Your order is ready to be served" |
 | Payment | 💳 | Pink | "Please settle your bill" |
-| Completed | ✅ | Green | "Thank you for dining with us!" |
+| Completed | Checkmark | Small olive/success indicator | "Thank you for dining with us!" |
 | Cancelled | ❌ | Red | "This order has been cancelled" |
 
 **Cancellation Flow**:
@@ -581,7 +600,7 @@ Daily Flow: Orders Board → Move cards through statuses → Complete
 - Card: White bg, shadow-sm, radius-lg
 - Metric: H1, bold
 - Label: Caption, neutral-500
-- Trend: Small text, green/red
+- Trend: Small text, olive/red semantic indicator only
 
 **Quick Actions**:
 
@@ -598,7 +617,7 @@ Daily Flow: Orders Board → Move cards through statuses → Complete
 **Subscription Banner (Free Tier)**:
 
 - Background: `--color-secondary` at 10%
-- Border: 1px `--color-secondary`
+- Subtle cocoa inset line
 - Text: "Upgrade to remove ads — ₱100/month"
 - CTA: "Upgrade Now" secondary button
 - Dismissible for session
@@ -644,7 +663,7 @@ Daily Flow: Orders Board → Move cards through statuses → Complete
 
 **Order Card**:
 
-- Left border: 4px status color
+- Thin status rail: 4px status color
 - Order number (H3)
 - Table/chair label (Small)
 - Item count + total (Body)
@@ -1055,10 +1074,10 @@ Login → Platform Control → Manage Admins → [Create/Edit/Transfer Ownership
 
 | State        | Indicator                  | Behavior                                   |
 | ------------ | -------------------------- | ------------------------------------------ |
-| Connected    | Green dot, "Live"          | Real-time updates active                   |
+| Connected    | Small olive dot, "Live"   | Real-time updates active                   |
 | Connecting   | Amber dot, "Connecting..." | Retry in progress, queue updates           |
 | Disconnected | Red dot, "Offline"         | Show banner, queue actions, retry every 5s |
-| Reconnected  | Flash green, "Back online" | Sync queued actions, refresh data          |
+| Reconnected  | Brief olive/success indicator, "Back online" | Sync queued actions, refresh data          |
 
 ### Optimistic Updates
 
@@ -1208,7 +1227,7 @@ src/
 
 6. **Graceful Degradation**: Offline mode shows cached data with clear "Reconnecting" state. Actions queue and sync.
 
-7. **Visual Hierarchy**: Status colors are consistent across all views. Staff learn: amber = needs action, blue = in progress, green = done.
+7. **Visual Hierarchy**: Status colors are consistent across all views. Staff learn: amber = needs action, blue/info = in progress, and small olive/success indicators = done/success.
 
 ---
 
