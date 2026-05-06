@@ -1,3 +1,5 @@
+** This document is deprecated as new PRD is created under BMAD. Use this as legacy reference only **
+
 # Product Requirements Document: QR Restaurant Ordering Platform
 
 **Version**: 1.0
@@ -30,6 +32,7 @@ The first release should focus on reliable anonymous QR ordering, live kitchen/o
 ## Success Metrics
 
 **Primary KPIs:**
+
 - Order completion rate: At least 90% of submitted orders reach completed status.
 - QR ordering adoption: At least 70% of active restaurant tables or chairs receive one or more QR orders per service day.
 - Live update latency: Order status updates appear for admins and customers within 2 seconds under normal load.
@@ -44,24 +47,28 @@ The first release should focus on reliable anonymous QR ordering, live kitchen/o
 ## User Personas
 
 ### Super Admin
+
 - **Role**: Seeded platform owner account.
 - **Goals**: Create and manage Admin accounts, transfer ownership when needed, and keep platform access controlled.
 - **Pain Points**: Needs strict control without being involved in restaurant day-to-day operations.
 - **Technical Level**: Intermediate.
 
 ### Admin
+
 - **Role**: Internal platform administrator account managed by the Super Admin.
 - **Goals**: Create, update, suspend, and manage Restaurant Admin accounts from the platform administrator dashboard.
 - **Pain Points**: Needs to manage restaurant owner accounts without touching restaurant day-to-day operations.
 - **Technical Level**: Intermediate.
 
 ### Restaurant Admin
+
 - **Role**: Restaurant owner/operator account. One Restaurant Admin owns and manages exactly one restaurant tenant.
 - **Goals**: Manage restaurant settings, menu availability, seating, QR codes, live orders, optional payment-request flow, no-ads subscription, and completed-order statistics.
 - **Pain Points**: Needs fast, clear workflows during busy service periods.
 - **Technical Level**: Basic to intermediate.
 
 ### Customer
+
 - **Role**: Anonymous diner using a mobile device.
 - **Goals**: Scan a QR code, order food quickly, leave notes, and see live order status.
 - **Pain Points**: Does not want to install an app, create an account, or ask staff for basic order status.
@@ -78,6 +85,7 @@ The first release should focus on reliable anonymous QR ordering, live kitchen/o
 **So that** I can place an order without account creation or app installation
 
 **Acceptance Criteria:**
+
 - [ ] QR code opens a mobile-first customer menu scoped to the correct restaurant and table or chair.
 - [ ] Customer can add dishes and available add-ons to an order.
 - [ ] Customer can leave an optional note up to 255 characters before ordering.
@@ -92,6 +100,7 @@ The first release should focus on reliable anonymous QR ordering, live kitchen/o
 **So that** staff can coordinate preparation, serving, payment requests, and completion
 
 **Acceptance Criteria:**
+
 - [ ] New orders enter `Pending`.
 - [ ] Restaurant admin can move orders from `Pending` to `Preparing` using drag and drop or a "Move to Preparation" action.
 - [ ] Restaurant admin can move orders from `Preparing` to `To Serve`.
@@ -107,6 +116,7 @@ The first release should focus on reliable anonymous QR ordering, live kitchen/o
 **So that** the customer menu stays accurate during service
 
 **Acceptance Criteria:**
+
 - [ ] A dish cannot be created without assigning it to a category.
 - [ ] Dish fields include name, picture, price, add-ons, and `is_out_of_stock`.
 - [ ] Add-on fields include name, price, and `is_out_of_stock`.
@@ -120,10 +130,12 @@ The first release should focus on reliable anonymous QR ordering, live kitchen/o
 **So that** orders can be tracked to the correct physical location
 
 **Acceptance Criteria:**
+
 - [ ] Restaurant admin can create, edit, archive, and reorder tables.
 - [ ] Restaurant admin can create chairs and assign or move them under tables.
 - [ ] Restaurant admin can update chair/table grouping using drag and drop or edit actions.
 - [ ] Restaurant admin can generate QR codes for an entire table or individual chairs.
+- [ ] Restaurant admin can download the QR image and copy the QR URL as a fallback link.
 - [ ] QR codes remain stable unless explicitly regenerated or archived.
 
 ### Story 5: Subscription and Ads
@@ -133,6 +145,7 @@ The first release should focus on reliable anonymous QR ordering, live kitchen/o
 **So that** my dashboard and customer-facing ordering pages are free from platform ads
 
 **Acceptance Criteria:**
+
 - [ ] Free tenants may display non-intrusive ads in allowed dashboard and customer-facing placements.
 - [ ] Paid tenants remove ads from both admin and customer-facing surfaces.
 - [ ] PayMongo handles platform subscription payment only.
@@ -146,54 +159,63 @@ The first release should focus on reliable anonymous QR ordering, live kitchen/o
 ### Core Features
 
 **Role and Tenant Management**
+
 - Description: The platform has one seeded Super Admin, internal Admin accounts created by the Super Admin, and Restaurant Admin accounts managed by Admins.
 - User flow: Super Admin creates Admin. Admin creates and manages Restaurant Admin accounts. Each Restaurant Admin owns exactly one restaurant tenant and handles restaurant operations.
 - Edge cases: An Admin cannot edit restaurant menus, seating, QR codes, or orders. A Restaurant Admin cannot access another restaurant.
 - Error handling: Unauthorized access returns a consistent forbidden response and logs an audit event.
 
 **Customer Ordering**
+
 - Description: Anonymous customer ordering through table or chair QR links.
 - User flow: Scan QR, view menu, select dishes/add-ons, add note, submit, watch status.
 - Edge cases: QR code is archived, restaurant is inactive, dish becomes out of stock before submit, note exceeds 255 characters.
 - Error handling: Show mobile-friendly error states and prevent invalid order submission.
 
 **Order Status Board**
+
 - Description: Live operational board with `Pending`, `Preparing`, `To Serve`, optional `Payment`, and `Completed`.
 - User flow: Order submitted to Pending, staff moves through workflow, customer requests payment when eligible, staff completes order.
 - Edge cases: Payment disabled, duplicate status updates, stale board state, customer disconnects from live session, customer cancellation before preparation.
 - Error handling: Status transitions must be validated server-side using domain rules.
 
 **Order Cancellation**
+
 - Description: Customers may cancel anonymous orders only while the order is still in `Pending`.
 - User flow: Customer opens active order status screen, taps cancel, confirms cancellation, and the restaurant board updates live.
 - Edge cases: Restaurant admin moves the order to `Preparing` while the customer cancellation confirmation is open.
 - Error handling: Server-side status validation rejects cancellation once the order is `Preparing` or later.
 
 **Menu Catalog**
+
 - Description: Category-first dish management with add-ons and stock controls.
 - User flow: Create category, create dish, add optional add-ons, upload picture, set prices and stock.
 - Edge cases: Delete category with dishes, update price during active order, image upload failure.
 - Error handling: Preserve existing order snapshot prices after order submission.
 
 **QR and Seating Management**
+
 - Description: Tables and chairs can be modeled separately, with chairs grouped under tables.
-- User flow: Restaurant Admin creates tables, adds chairs, generates QR by table/chair, prints or downloads QR assets.
+- User flow: Restaurant Admin creates tables, adds chairs, generates QR by table/chair, then prints, downloads, or copies the QR URL fallback.
 - Edge cases: Chair moved after QR generation, table archived with active orders, duplicate chair labels, QR reused by a later customer group.
 - Error handling: Existing QR links resolve to the current active table/chair identity unless archived. Each submitted order receives its own anonymous order token so live tracking can reconnect when the customer returns.
 
 **Dashboard Statistics**
+
 - Description: Restaurant Admin dashboard shows completed order counts and operational metrics. Platform Admin dashboard shows tenant-level account and subscription metrics.
 - User flow: Restaurant Admin opens dashboard and sees completed orders by date range, table/chair, dish, and category. Admin opens platform dashboard and sees active restaurants, free vs paid tenants, expired subscriptions, and account status.
 - Edge cases: No orders yet, date range with no data, high-volume day.
 - Error handling: Empty states must be clear and non-blocking.
 
 **Subscription and Monetization**
+
 - Description: PayMongo subscription controls ad removal for tenant dashboard and customer ordering pages.
 - User flow: Restaurant Admin subscribes to no-ads plan, PayMongo confirms payment, tenant entitlement updates.
 - Edge cases: Failed payment, expired subscription, cancelled subscription, webhook retry, disputed payment.
 - Error handling: Subscription state should be idempotent and webhook-driven.
 
 **Recommended Ads Implementation**
+
 - Description: Use Google AdSense for MVP ad serving and AdSense Privacy & messaging / Funding Choices for ad blocker recovery.
 - User flow: Free tenant pages load permitted ad slots. If ad blocking is detected, a blocking recovery modal asks the user to allow ads or points the Restaurant Admin to the PHP 100/month no-ads subscription.
 - Edge cases: AdSense rejects the site, ad inventory is low, ad scripts are blocked before detection, or the user is on a paid tenant.
@@ -312,26 +334,28 @@ The first release should focus on reliable anonymous QR ordering, live kitchen/o
 
 ## Risk Assessment
 
-| Risk | Probability | Impact | Mitigation Strategy |
-|------|-------------|--------|---------------------|
-| Role hierarchy confusion | Low | High | Enforce a strict hierarchy: Super Admin manages Admins, Admins manage Restaurant Admin accounts, and Restaurant Admins manage exactly one restaurant. |
-| Live updates become unreliable during busy service | Medium | High | Use Durable Objects per restaurant or order stream and define reconnect/replay behavior. |
-| Ad blocker enforcement harms customer ordering | Medium | Medium | Keep enforcement clear, limited, and bypassed for paid tenants; avoid blocking after a successful ad load. |
-| QR codes are shared outside the restaurant | Medium | Medium | Use non-guessable tokens, support QR archive/regeneration, and display table/chair context before order submit. |
-| Menu prices change while customers are ordering | High | Medium | Snapshot prices at order submission and revalidate stock before creating the order. |
-| PayMongo webhook duplication or delay | Medium | Medium | Make subscription webhook handling idempotent and show pending subscription state. If a subscription expires, ads return automatically. |
+| Risk                                               | Probability | Impact | Mitigation Strategy                                                                                                                                   |
+| -------------------------------------------------- | ----------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Role hierarchy confusion                           | Low         | High   | Enforce a strict hierarchy: Super Admin manages Admins, Admins manage Restaurant Admin accounts, and Restaurant Admins manage exactly one restaurant. |
+| Live updates become unreliable during busy service | Medium      | High   | Use Durable Objects per restaurant or order stream and define reconnect/replay behavior.                                                              |
+| Ad blocker enforcement harms customer ordering     | Medium      | Medium | Keep enforcement clear, limited, and bypassed for paid tenants; avoid blocking after a successful ad load.                                            |
+| QR codes are shared outside the restaurant         | Medium      | Medium | Use non-guessable tokens, support QR archive/regeneration, and display table/chair context before order submit.                                       |
+| Menu prices change while customers are ordering    | High        | Medium | Snapshot prices at order submission and revalidate stock before creating the order.                                                                   |
+| PayMongo webhook duplication or delay              | Medium      | Medium | Make subscription webhook handling idempotent and show pending subscription state. If a subscription expires, ads return automatically.               |
 
 ---
 
 ## Dependencies & Blockers
 
 **Dependencies:**
+
 - Cloudflare account with Workers, D1, Durable Objects, and R2 enabled.
 - PayMongo account with subscription/payment link or checkout integration capability.
 - Google AdSense account approval, or a fallback ad provider if AdSense rejects the site.
 - Final UI placement choices for free-tier ad slots.
 
 **Known Blockers:**
+
 - The repo is currently greenfield, so Astro, Cloudflare, Elysia, React, Tailwind CSS, testing, linting, and migration foundations still need to be scaffolded.
 - Ad provider choice is not yet finalized.
 
@@ -369,4 +393,4 @@ The first release should focus on reliable anonymous QR ordering, live kitchen/o
 
 ---
 
-*This PRD was created through interactive requirements gathering with quality scoring to ensure comprehensive coverage of business, functional, UX, and technical dimensions.*
+_This PRD was created through interactive requirements gathering with quality scoring to ensure comprehensive coverage of business, functional, UX, and technical dimensions._

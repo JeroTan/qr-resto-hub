@@ -1,0 +1,847 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>QR Resto Hub - UX Design Directions</title>
+    <style>
+      :root {
+        --primary: #0f766e;
+        --primary-light: #14b8a6;
+        --primary-dark: #0d5c56;
+        --secondary: #f59e0b;
+        --danger: #ef4444;
+        --success: #22c55e;
+        --ink: #111827;
+        --muted: #6b7280;
+        --line: #d1d5db;
+        --soft: #f3f4f6;
+        --page: #f9fafb;
+        --surface: #ffffff;
+        --pending: #fef3c7;
+        --preparing: #dbeafe;
+        --serve: #e0e7ff;
+        --payment: #fce7f3;
+        --complete: #dcfce7;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: var(--ink);
+        background: var(--page);
+      }
+
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        border-bottom: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.94);
+        backdrop-filter: blur(10px);
+      }
+
+      .top {
+        max-width: 1240px;
+        margin: 0 auto;
+        padding: 18px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+      }
+
+      h1 {
+        font-size: 22px;
+        line-height: 1.2;
+      }
+
+      .sub {
+        color: var(--muted);
+        font-size: 13px;
+        margin-top: 4px;
+      }
+
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      nav a {
+        color: var(--ink);
+        text-decoration: none;
+        border: 1px solid var(--line);
+        background: var(--surface);
+        border-radius: 8px;
+        padding: 8px 10px;
+        font-size: 13px;
+      }
+
+      main {
+        max-width: 1240px;
+        margin: 0 auto;
+        padding: 24px 20px 48px;
+      }
+
+      section {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        margin: 0 0 24px;
+        overflow: hidden;
+      }
+
+      .section-head {
+        padding: 18px 20px;
+        border-bottom: 1px solid var(--line);
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        align-items: flex-start;
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        min-height: 28px;
+        padding: 4px 9px;
+        border-radius: 999px;
+        background: #ecfdf5;
+        color: #065f46;
+        font-size: 12px;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+        min-height: 540px;
+      }
+
+      .panel {
+        padding: 20px;
+      }
+
+      .notes {
+        border-right: 1px solid var(--line);
+        background: #fbfbfb;
+      }
+
+      .notes ul {
+        margin: 16px 0 0;
+        padding: 0 0 0 18px;
+        color: #374151;
+        line-height: 1.6;
+        font-size: 14px;
+      }
+
+      .mock-area {
+        background: var(--page);
+      }
+
+      .phone {
+        width: min(360px, 100%);
+        margin: 0 auto;
+        border: 1px solid #cbd5e1;
+        border-radius: 28px;
+        background: white;
+        overflow: hidden;
+        box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12);
+      }
+
+      .phone-head {
+        padding: 16px;
+        border-bottom: 1px solid var(--line);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .badge {
+        border-radius: 999px;
+        padding: 4px 8px;
+        font-size: 12px;
+        font-weight: 700;
+        background: var(--soft);
+      }
+
+      .tabs {
+        display: flex;
+        gap: 8px;
+        overflow: hidden;
+        padding: 12px 16px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .tab {
+        padding: 8px 11px;
+        border-radius: 999px;
+        font-size: 13px;
+        background: var(--soft);
+        white-space: nowrap;
+      }
+
+      .tab.active {
+        color: white;
+        background: var(--primary);
+      }
+
+      .dish {
+        display: grid;
+        grid-template-columns: 76px 1fr auto;
+        gap: 12px;
+        padding: 14px 16px;
+        border-bottom: 1px solid var(--line);
+        align-items: center;
+      }
+
+      .photo {
+        height: 76px;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #fbbf24, #0f766e);
+      }
+
+      .dish h3 {
+        font-size: 15px;
+      }
+
+      .dish p,
+      .small {
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .price {
+        margin-top: 7px;
+        color: var(--primary-dark);
+        font-weight: 800;
+      }
+
+      .add {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        border: 0;
+        background: var(--primary);
+        color: white;
+        font-weight: 800;
+        font-size: 20px;
+      }
+
+      .sticky-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 14px 16px;
+        border-top: 1px solid var(--line);
+        background: white;
+      }
+
+      .primary-btn {
+        border: 0;
+        border-radius: 8px;
+        background: var(--primary);
+        color: white;
+        padding: 12px 16px;
+        min-height: 44px;
+        font-weight: 800;
+      }
+
+      .dash {
+        border: 1px solid var(--line);
+        background: white;
+        border-radius: 8px;
+        overflow: hidden;
+        min-height: 430px;
+        box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+      }
+
+      .dash-top {
+        padding: 14px 16px;
+        border-bottom: 1px solid var(--line);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .board {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(150px, 1fr));
+        gap: 12px;
+        padding: 14px;
+      }
+
+      .col {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        min-height: 350px;
+        background: #fff;
+      }
+
+      .col h3 {
+        padding: 10px 12px;
+        font-size: 13px;
+        border-bottom: 1px solid var(--line);
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .pending h3 {
+        background: var(--pending);
+      }
+
+      .preparing h3 {
+        background: var(--preparing);
+      }
+
+      .serve h3 {
+        background: var(--serve);
+      }
+
+      .payment h3 {
+        background: var(--payment);
+      }
+
+      .order-card {
+        margin: 10px;
+        padding: 11px;
+        border: 1px solid var(--line);
+        border-left: 4px solid var(--primary);
+        border-radius: 8px;
+        background: white;
+      }
+
+      .order-card h4 {
+        margin: 0 0 6px;
+        font-size: 14px;
+      }
+
+      .next {
+        width: 100%;
+        margin-top: 10px;
+        border: 1px solid var(--primary);
+        color: var(--primary-dark);
+        background: white;
+        border-radius: 8px;
+        min-height: 36px;
+        font-weight: 700;
+      }
+
+      .split {
+        display: grid;
+        grid-template-columns: 260px 1fr;
+        min-height: 430px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: white;
+        overflow: hidden;
+      }
+
+      .sidebar {
+        border-right: 1px solid var(--line);
+        background: #fbfbfb;
+        padding: 14px;
+      }
+
+      .side-item {
+        padding: 10px;
+        border-radius: 8px;
+        margin-bottom: 6px;
+        font-size: 14px;
+      }
+
+      .side-item.active {
+        background: #ccfbf1;
+        color: #115e59;
+        font-weight: 800;
+      }
+
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        padding: 16px;
+      }
+
+      .metric {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 14px;
+        background: white;
+      }
+
+      .metric strong {
+        display: block;
+        font-size: 26px;
+        margin-top: 6px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      th,
+      td {
+        padding: 12px;
+        border-bottom: 1px solid var(--line);
+        text-align: left;
+        font-size: 14px;
+      }
+
+      th {
+        font-size: 12px;
+        color: var(--muted);
+        background: #f8fafc;
+      }
+
+      .status-row {
+        display: grid;
+        gap: 12px;
+      }
+
+      .timeline {
+        display: grid;
+        gap: 10px;
+        padding: 16px;
+      }
+
+      .time-step {
+        display: grid;
+        grid-template-columns: 28px 1fr;
+        gap: 10px;
+        align-items: start;
+      }
+
+      .dot {
+        width: 28px;
+        height: 28px;
+        display: grid;
+        place-items: center;
+        border-radius: 999px;
+        color: white;
+        background: var(--primary);
+        font-size: 12px;
+        font-weight: 900;
+      }
+
+      .qr-layout {
+        display: grid;
+        grid-template-columns: 1fr 320px;
+        gap: 16px;
+        min-height: 430px;
+      }
+
+      .table-map {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+
+      .table-card {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: white;
+        padding: 14px;
+      }
+
+      .chairs {
+        display: flex;
+        gap: 6px;
+        margin-top: 12px;
+        flex-wrap: wrap;
+      }
+
+      .chair {
+        min-width: 38px;
+        min-height: 32px;
+        display: grid;
+        place-items: center;
+        border-radius: 6px;
+        background: var(--soft);
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .qr {
+        height: 220px;
+        border-radius: 8px;
+        background:
+          linear-gradient(90deg, #111 8px, transparent 8px) 0 0 / 24px 24px,
+          linear-gradient(#111 8px, transparent 8px) 0 0 / 24px 24px,
+          white;
+        border: 16px solid white;
+        box-shadow: inset 0 0 0 1px var(--line);
+      }
+
+      @media (max-width: 900px) {
+        .grid,
+        .split,
+        .qr-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .notes {
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+
+        .board {
+          grid-template-columns: repeat(4, 220px);
+          overflow-x: auto;
+        }
+
+        .cards,
+        .table-map {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="top">
+        <div>
+          <h1>QR Resto Hub - UX Design Directions</h1>
+          <p class="sub">Six practical directions for the customer, restaurant, and platform surfaces.</p>
+        </div>
+        <nav aria-label="Design directions">
+          <a href="#d1">Customer</a>
+          <a href="#d2">Board</a>
+          <a href="#d3">Unified</a>
+          <a href="#d4">QR Setup</a>
+          <a href="#d5">Platform</a>
+          <a href="#d6">Recovery</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section id="d1">
+        <div class="section-head">
+          <div>
+            <h2>Direction 1: Mobile Ordering First</h2>
+            <p class="sub">A thumb-friendly diner flow that feels like opening a polished menu.</p>
+          </div>
+          <span class="tag">Best for customer QR UX</span>
+        </div>
+        <div class="grid">
+          <div class="panel notes">
+            <h3>Use this when</h3>
+            <ul>
+              <li>The customer flow must feel instant and app-less.</li>
+              <li>Dish browsing, add-ons, and order notes need to stay simple.</li>
+              <li>Primary actions must stay reachable on small screens.</li>
+            </ul>
+          </div>
+          <div class="panel mock-area">
+            <div class="phone">
+              <div class="phone-head">
+                <div>
+                  <strong>Casa Verde</strong>
+                  <p class="small">Table 5 - Chair A</p>
+                </div>
+                <span class="badge">2 items</span>
+              </div>
+              <div class="tabs">
+                <span class="tab active">Popular</span>
+                <span class="tab">Meals</span>
+                <span class="tab">Drinks</span>
+                <span class="tab">Dessert</span>
+              </div>
+              <div class="dish">
+                <div class="photo"></div>
+                <div>
+                  <h3>Chicken Inasal</h3>
+                  <p>Garlic rice, atchara, house sauce</p>
+                  <div class="price">PHP 185</div>
+                </div>
+                <button class="add">+</button>
+              </div>
+              <div class="dish">
+                <div class="photo"></div>
+                <div>
+                  <h3>Pancit Canton</h3>
+                  <p>Good for sharing</p>
+                  <div class="price">PHP 240</div>
+                </div>
+                <button class="add">+</button>
+              </div>
+              <div class="sticky-bar">
+                <div>
+                  <strong>PHP 425</strong>
+                  <p class="small">2 items in order</p>
+                </div>
+                <button class="primary-btn">Review Order</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="d2">
+        <div class="section-head">
+          <div>
+            <h2>Direction 2: Operations Command Board</h2>
+            <p class="sub">A dense, fast board for live restaurant service with no active Completed lane.</p>
+          </div>
+          <span class="tag">Best for Restaurant Admin</span>
+        </div>
+        <div class="grid">
+          <div class="panel notes">
+            <h3>Use this when</h3>
+            <ul>
+              <li>Staff need to scan workload at speed.</li>
+              <li>Drag/drop and action buttons both need to be available.</li>
+              <li>Completed orders should leave the active board.</li>
+            </ul>
+          </div>
+          <div class="panel mock-area">
+            <div class="dash">
+              <div class="dash-top">
+                <div>
+                  <strong>Live Orders</strong>
+                  <p class="small">Connected - last update 5s ago</p>
+                </div>
+                <button class="primary-btn">History</button>
+              </div>
+              <div class="board">
+                <div class="col pending">
+                  <h3>Pending <span>3</span></h3>
+                  <div class="order-card">
+                    <h4>#A7B3</h4>
+                    <p class="small">Table 5 - 4 items - 2m</p>
+                    <button class="next">Start Prep</button>
+                  </div>
+                </div>
+                <div class="col preparing">
+                  <h3>Preparing <span>5</span></h3>
+                  <div class="order-card">
+                    <h4>#A7C1</h4>
+                    <p class="small">Table 2 - 2 items - 9m</p>
+                    <button class="next">Ready to Serve</button>
+                  </div>
+                </div>
+                <div class="col serve">
+                  <h3>To Serve <span>2</span></h3>
+                  <div class="order-card">
+                    <h4>#A7D8</h4>
+                    <p class="small">Chair A - 1 item - 15m</p>
+                    <button class="next">Complete</button>
+                  </div>
+                </div>
+                <div class="col payment">
+                  <h3>Payment <span>1</span></h3>
+                  <div class="order-card">
+                    <h4>#A7D2</h4>
+                    <p class="small">Table 8 - bill requested</p>
+                    <button class="next">Complete Order</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="d3">
+        <div class="section-head">
+          <div>
+            <h2>Direction 3: Unified Status Language</h2>
+            <p class="sub">Customer timeline and staff board use the same status names and meanings.</p>
+          </div>
+          <span class="tag">Best for trust</span>
+        </div>
+        <div class="grid">
+          <div class="panel notes">
+            <h3>Use this when</h3>
+            <ul>
+              <li>Customer and staff need shared expectations.</li>
+              <li>The customer needs to understand when payment request is available.</li>
+              <li>Connection states need to be visible but calm.</li>
+            </ul>
+          </div>
+          <div class="panel mock-area">
+            <div class="phone">
+              <div class="phone-head">
+                <div>
+                  <strong>Order #A7B3</strong>
+                  <p class="small">Table 5 - Chair A</p>
+                </div>
+                <span class="badge" style="background:#dcfce7;color:#166534;">Live</span>
+              </div>
+              <div class="timeline">
+                <div class="time-step">
+                  <span class="dot">1</span>
+                  <div><strong>Pending</strong><p class="small">Your order has been received.</p></div>
+                </div>
+                <div class="time-step">
+                  <span class="dot">2</span>
+                  <div><strong>Preparing</strong><p class="small">The kitchen is preparing your order.</p></div>
+                </div>
+                <div class="time-step">
+                  <span class="dot" style="background:#4f46e5;">3</span>
+                  <div><strong>To Serve</strong><p class="small">Your order is ready to be served.</p></div>
+                </div>
+                <div class="time-step">
+                  <span class="dot" style="background:#db2777;">4</span>
+                  <div><strong>Payment</strong><p class="small">Request the bill when ready.</p></div>
+                </div>
+              </div>
+              <div class="sticky-bar">
+                <span class="small">Updated just now</span>
+                <button class="primary-btn">Request Bill</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="d4">
+        <div class="section-head">
+          <div>
+            <h2>Direction 4: Table-First QR Setup</h2>
+            <p class="sub">A visual setup flow for tables, chairs, reusable QR codes, and print/download actions.</p>
+          </div>
+          <span class="tag">Best for setup confidence</span>
+        </div>
+        <div class="grid">
+          <div class="panel notes">
+            <h3>Use this when</h3>
+            <ul>
+              <li>Restaurant Admins need to understand table/chair grouping.</li>
+              <li>Chair QR and table QR generation need to feel tangible.</li>
+              <li>Archiving/regeneration consequences need to be clear.</li>
+            </ul>
+          </div>
+          <div class="panel mock-area">
+            <div class="qr-layout">
+              <div class="table-map">
+                <div class="table-card">
+                  <strong>Table 1</strong><p class="small">4 chairs</p>
+                  <div class="chairs"><span class="chair">A</span><span class="chair">B</span><span class="chair">C</span><span class="chair">D</span></div>
+                </div>
+                <div class="table-card" style="border-color:var(--primary);">
+                  <strong>Table 5</strong><p class="small">3 chairs</p>
+                  <div class="chairs"><span class="chair">A</span><span class="chair">B</span><span class="chair">C</span></div>
+                </div>
+                <div class="table-card">
+                  <strong>Table 8</strong><p class="small">2 chairs</p>
+                  <div class="chairs"><span class="chair">A</span><span class="chair">B</span></div>
+                </div>
+              </div>
+              <div class="table-card">
+                <strong>Table 5 - Chair A</strong>
+                <p class="small">Reusable QR context</p>
+                <div class="qr" aria-label="QR preview"></div>
+                <button class="primary-btn" style="width:100%;margin-top:12px;">Download QR</button>
+                <button class="next" style="width:100%;margin-top:8px;">Copy QR URL</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="d5">
+        <div class="section-head">
+          <div>
+            <h2>Direction 5: Quiet Account Administration</h2>
+            <p class="sub">A restrained table-driven dashboard for Platform Admin and Super Admin work.</p>
+          </div>
+          <span class="tag">Best for role boundaries</span>
+        </div>
+        <div class="grid">
+          <div class="panel notes">
+            <h3>Use this when</h3>
+            <ul>
+              <li>Internal admins need account status, not restaurant operations.</li>
+              <li>Suspension/reactivation needs clear confirmation.</li>
+              <li>The UI should prevent accidental cross-role assumptions.</li>
+            </ul>
+          </div>
+          <div class="panel mock-area">
+            <div class="split">
+              <aside class="sidebar">
+                <div class="side-item active">Restaurant Admins</div>
+                <div class="side-item">Subscriptions</div>
+                <div class="side-item">Audit Events</div>
+                <div class="side-item">Settings</div>
+              </aside>
+              <div class="panel">
+                <div class="cards">
+                  <div class="metric"><span class="small">Restaurants</span><strong>156</strong></div>
+                  <div class="metric"><span class="small">Free Tier</span><strong>134</strong></div>
+                  <div class="metric"><span class="small">Paid Tier</span><strong>22</strong></div>
+                </div>
+                <table>
+                  <thead><tr><th>Restaurant</th><th>Admin</th><th>Status</th><th>Tier</th></tr></thead>
+                  <tbody>
+                    <tr><td>Casa Verde</td><td>ana@example.com</td><td><span class="badge">Active</span></td><td>Paid</td></tr>
+                    <tr><td>Table Eight</td><td>owner@example.com</td><td><span class="badge">Active</span></td><td>Free</td></tr>
+                    <tr><td>Luna Grill</td><td>luna@example.com</td><td><span class="badge">Suspended</span></td><td>Free</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="d6">
+        <div class="section-head">
+          <div>
+            <h2>Direction 6: Recovery and Confidence States</h2>
+            <p class="sub">Clear handling for reconnect, invalid QR, blocked ads, invalid moves, and cancellation races.</p>
+          </div>
+          <span class="tag">Best for resilience UX</span>
+        </div>
+        <div class="grid">
+          <div class="panel notes">
+            <h3>Use this when</h3>
+            <ul>
+              <li>The system needs to preserve trust when something goes wrong.</li>
+              <li>Rejected actions should feel handled, not broken.</li>
+              <li>Ad-block recovery needs to be firm without feeling hostile.</li>
+            </ul>
+          </div>
+          <div class="panel mock-area">
+            <div class="status-row">
+              <div class="metric">
+                <strong style="font-size:18px;">Connection lost</strong>
+                <p class="small">We are reconnecting. Your order status will refresh automatically.</p>
+              </div>
+              <div class="metric" style="border-left:4px solid var(--danger);">
+                <strong style="font-size:18px;">Cancellation no longer available</strong>
+                <p class="small">The kitchen has started preparing this order. You can ask staff for help.</p>
+              </div>
+              <div class="metric" style="border-left:4px solid var(--secondary);">
+                <strong style="font-size:18px;">Ad blocker detected</strong>
+                <p class="small">This restaurant uses the free plan. Allow ads to continue, or the restaurant can upgrade to remove ads.</p>
+                <button class="primary-btn" style="margin-top:12px;">I allowed ads - refresh</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

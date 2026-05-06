@@ -133,6 +133,7 @@ MVP includes:
 - R2-backed dish image upload.
 - Table/chair management with chair grouping under tables.
 - QR generation by table or chair.
+- QR download and copy-link fallback for each generated table/chair QR code.
 - Anonymous mobile-first customer ordering.
 - Order note support with 255-character maximum.
 - Live active order board with `Pending`, `Preparing`, `To Serve`, and optional `Payment`.
@@ -197,11 +198,11 @@ The value moment happens during peak time: the dashboard becomes the source of t
 
 ### Journey 4: Restaurant Admin Setup - Tables, Chairs, QR Codes, and Subscription
 
-Before launch, Ana configures the restaurant seating plan. She creates tables, adds chairs under each table, reorders or moves chairs when needed, and generates QR codes either for the full table or for individual chairs. She prints the QR codes and places them physically in the restaurant.
+Before launch, Ana configures the restaurant seating plan. She creates tables, adds chairs under each table, reorders or moves chairs when needed, and generates QR codes either for the full table or for individual chairs. She downloads or prints the QR codes and places them physically in the restaurant. If printing or scanning is not practical, she can copy the QR URL and send it to a customer or staff member as a fallback.
 
 Ana also reviews subscription status. On the free plan, non-intrusive ads appear in allowed placements. If she upgrades to the PHP 100/month no-ads plan through PayMongo, ads disappear from both the dashboard and customer-facing ordering pages. If the subscription expires, fails, or is cancelled, ads return automatically.
 
-The critical moment is ownership: Ana can operate independently without asking the platform team to configure daily restaurant behavior. This journey reveals requirements for tenant setup, seating hierarchy, QR token generation, QR archive/regeneration, R2 QR asset handling if persisted, subscription entitlement, PayMongo webhook handling, and ad/ad-block policy enforcement.
+The critical moment is ownership: Ana can operate independently without asking the platform team to configure daily restaurant behavior. This journey reveals requirements for tenant setup, seating hierarchy, QR token generation, QR download/copy URL actions, QR archive/regeneration, R2 QR asset handling if persisted, subscription entitlement, PayMongo webhook handling, and ad/ad-block policy enforcement.
 
 ### Journey 5: Platform Admin Account Management
 
@@ -412,6 +413,7 @@ This is not a menu-only MVP. The useful product is the complete loop from QR sca
 - R2-backed dish image upload.
 - Table/chair creation, grouping, reordering, editing, archiving.
 - QR generation by table or chair.
+- QR download and copy URL fallback for generated table/chair QR codes.
 - Reusable table/chair QR tokens plus per-order anonymous order tokens.
 - Mobile-first anonymous customer ordering.
 - 255-character customer order notes.
@@ -506,7 +508,7 @@ This is not a menu-only MVP. The useful product is the complete loop from QR sca
 - FR26: Restaurant Admin can move chairs between tables.
 - FR27: Restaurant Admin can generate QR codes by table.
 - FR28: Restaurant Admin can generate QR codes by chair.
-- FR29: Restaurant Admin can archive or regenerate QR codes.
+- FR29: Restaurant Admin can archive, regenerate, download, and copy the URL for table/chair QR codes.
 - FR30: Customer can open a QR link that resolves to the correct restaurant and table/chair context.
 - FR31: The system can keep QR tokens reusable for table/chair access while assigning a separate anonymous token per submitted order.
 - FR32: Customer QR sessions can start a new order for a reusable table/chair QR without exposing previous completed orders from that table/chair.

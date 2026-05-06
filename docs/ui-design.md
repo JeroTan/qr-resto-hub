@@ -1,3 +1,5 @@
+** This document might be deprecated as new Design is created under BMAD. Use this as legacy reference only. Some contents here are still usable **
+
 # QR Resto Hub — UI Design Document
 
 **Version**: 1.0  
@@ -12,83 +14,83 @@
 
 ### Color Palette
 
-| Token | Hex | Usage |
-|-------|-----|-------|
-| `--color-primary` | `#0F766E` | Primary actions, active states, CTAs |
-| `--color-primary-light` | `#14B8A6` | Hover states, highlights |
-| `--color-primary-dark` | `#0D5C56` | Pressed states |
-| `--color-secondary` | `#F59E0B` | Warnings, pending states, payment badges |
-| `--color-danger` | `#EF4444` | Cancel actions, errors, delete |
-| `--color-success` | `#22C55E` | Completed, in-stock, success states |
-| `--color-neutral-900` | `#111827` | Primary text, headings |
-| `--color-neutral-700` | `#374151` | Secondary text |
-| `--color-neutral-500` | `#6B7280` | Placeholder, disabled text |
-| `--color-neutral-300` | `#D1D5DB` | Borders, dividers |
-| `--color-neutral-100` | `#F3F4F6` | Backgrounds, hover surfaces |
-| `--color-neutral-50` | `#F9FAFB` | Page backgrounds |
-| `--color-surface` | `#FFFFFF` | Cards, modals, elevated surfaces |
-| `--color-board-pending` | `#FEF3C7` | Pending column bg |
-| `--color-board-preparing` | `#DBEAFE` | Preparing column bg |
-| `--color-board-serve` | `#E0E7FF` | To Serve column bg |
-| `--color-board-payment` | `#FCE7F3` | Payment column bg |
-| `--color-board-completed` | `#DCFCE7` | Completed column bg |
+| Token                     | Hex       | Usage                                    |
+| ------------------------- | --------- | ---------------------------------------- |
+| `--color-primary`         | `#0F766E` | Primary actions, active states, CTAs     |
+| `--color-primary-light`   | `#14B8A6` | Hover states, highlights                 |
+| `--color-primary-dark`    | `#0D5C56` | Pressed states                           |
+| `--color-secondary`       | `#F59E0B` | Warnings, pending states, payment badges |
+| `--color-danger`          | `#EF4444` | Cancel actions, errors, delete           |
+| `--color-success`         | `#22C55E` | Completed, in-stock, success states      |
+| `--color-neutral-900`     | `#111827` | Primary text, headings                   |
+| `--color-neutral-700`     | `#374151` | Secondary text                           |
+| `--color-neutral-500`     | `#6B7280` | Placeholder, disabled text               |
+| `--color-neutral-300`     | `#D1D5DB` | Borders, dividers                        |
+| `--color-neutral-100`     | `#F3F4F6` | Backgrounds, hover surfaces              |
+| `--color-neutral-50`      | `#F9FAFB` | Page backgrounds                         |
+| `--color-surface`         | `#FFFFFF` | Cards, modals, elevated surfaces         |
+| `--color-board-pending`   | `#FEF3C7` | Pending column bg                        |
+| `--color-board-preparing` | `#DBEAFE` | Preparing column bg                      |
+| `--color-board-serve`     | `#E0E7FF` | To Serve column bg                       |
+| `--color-board-payment`   | `#FCE7F3` | Payment column bg                        |
+| `--color-board-completed` | `#DCFCE7` | Completed column bg                      |
 
 ### Typography
 
-| Scale | Mobile | Tablet+ | Weight | Usage |
-|-------|--------|---------|--------|-------|
-| Display | 28px | 36px | 700 | Page titles, empty states |
-| H1 | 24px | 32px | 700 | Section headers |
-| H2 | 20px | 24px | 600 | Card titles, column headers |
-| H3 | 16px | 18px | 600 | Subsection, dish names |
-| Body | 14px | 16px | 400 | Paragraphs, descriptions |
-| Small | 12px | 14px | 400 | Metadata, timestamps |
-| Caption | 11px | 12px | 500 | Labels, badges, stock status |
+| Scale   | Mobile | Tablet+ | Weight | Usage                        |
+| ------- | ------ | ------- | ------ | ---------------------------- |
+| Display | 28px   | 36px    | 700    | Page titles, empty states    |
+| H1      | 24px   | 32px    | 700    | Section headers              |
+| H2      | 20px   | 24px    | 600    | Card titles, column headers  |
+| H3      | 16px   | 18px    | 600    | Subsection, dish names       |
+| Body    | 14px   | 16px    | 400    | Paragraphs, descriptions     |
+| Small   | 12px   | 14px    | 400    | Metadata, timestamps         |
+| Caption | 11px   | 12px    | 500    | Labels, badges, stock status |
 
 **Font Family**: Inter (Google Fonts) — weights 400, 500, 600, 700
 
 ### Spacing Scale (4px base)
 
-| Token | Value |
-|-------|-------|
-| `space-1` | 4px |
-| `space-2` | 8px |
-| `space-3` | 12px |
-| `space-4` | 16px |
-| `space-5` | 20px |
-| `space-6` | 24px |
-| `space-8` | 32px |
-| `space-10` | 40px |
-| `space-12` | 48px |
+| Token      | Value |
+| ---------- | ----- |
+| `space-1`  | 4px   |
+| `space-2`  | 8px   |
+| `space-3`  | 12px  |
+| `space-4`  | 16px  |
+| `space-5`  | 20px  |
+| `space-6`  | 24px  |
+| `space-8`  | 32px  |
+| `space-10` | 40px  |
+| `space-12` | 48px  |
 
 ### Shadows & Elevation
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| `shadow-sm` | `0 1px 2px rgba(0,0,0,0.05)` | Buttons, inputs |
-| `shadow-md` | `0 4px 6px -1px rgba(0,0,0,0.1)` | Cards, dropdowns |
-| `shadow-lg` | `0 10px 15px -3px rgba(0,0,0,0.1)` | Modals, floating elements |
-| `shadow-board` | `0 2px 8px rgba(0,0,0,0.08)` | Board cards |
+| Token          | Value                              | Usage                     |
+| -------------- | ---------------------------------- | ------------------------- |
+| `shadow-sm`    | `0 1px 2px rgba(0,0,0,0.05)`       | Buttons, inputs           |
+| `shadow-md`    | `0 4px 6px -1px rgba(0,0,0,0.1)`   | Cards, dropdowns          |
+| `shadow-lg`    | `0 10px 15px -3px rgba(0,0,0,0.1)` | Modals, floating elements |
+| `shadow-board` | `0 2px 8px rgba(0,0,0,0.08)`       | Board cards               |
 
 ### Border Radius
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| `radius-sm` | 4px | Buttons, badges |
-| `radius-md` | 8px | Inputs, small cards |
-| `radius-lg` | 12px | Cards, modals |
-| `radius-xl` | 16px | Large cards, mobile sheets |
-| `radius-full` | 9999px | Pills, avatars |
+| Token         | Value  | Usage                      |
+| ------------- | ------ | -------------------------- |
+| `radius-sm`   | 4px    | Buttons, badges            |
+| `radius-md`   | 8px    | Inputs, small cards        |
+| `radius-lg`   | 12px   | Cards, modals              |
+| `radius-xl`   | 16px   | Large cards, mobile sheets |
+| `radius-full` | 9999px | Pills, avatars             |
 
 ### Animation Tokens
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| `duration-fast` | 150ms | Hover, focus |
-| `duration-normal` | 250ms | Transitions, modals |
-| `duration-slow` | 350ms | Page transitions, drag |
-| `ease-default` | `cubic-bezier(0.4, 0, 0.2, 1)` | Standard easing |
-| `ease-bounce` | `cubic-bezier(0.34, 1.56, 0.64, 1)` | Success, pop-in |
+| Token             | Value                               | Usage                  |
+| ----------------- | ----------------------------------- | ---------------------- |
+| `duration-fast`   | 150ms                               | Hover, focus           |
+| `duration-normal` | 250ms                               | Transitions, modals    |
+| `duration-slow`   | 350ms                               | Page transitions, drag |
+| `ease-default`    | `cubic-bezier(0.4, 0, 0.2, 1)`      | Standard easing        |
+| `ease-bounce`     | `cubic-bezier(0.34, 1.56, 0.64, 1)` | Success, pop-in        |
 
 ---
 
@@ -97,6 +99,7 @@
 ### Buttons
 
 **Primary Button**
+
 - Background: `--color-primary`
 - Text: White, 14px, weight 600
 - Padding: 12px 20px (mobile) / 12px 24px (desktop)
@@ -106,22 +109,26 @@
 - Disabled: opacity 0.5, cursor not-allowed
 
 **Secondary Button**
+
 - Background: `--color-surface`
 - Border: 1px solid `--color-neutral-300`
 - Text: `--color-neutral-900`, 14px, weight 500
 - Hover: `--color-neutral-100`
 
 **Danger Button**
+
 - Background: `--color-danger`
 - Text: White
 - Hover: `#DC2626`
 
 **Ghost Button**
+
 - Background: transparent
 - Text: `--color-primary`
 - Hover: `--color-primary` at 8% opacity background
 
 **Icon Button**
+
 - Size: 40px × 40px
 - Border radius: `radius-md`
 - Background: transparent
@@ -130,6 +137,7 @@
 ### Cards
 
 **Standard Card**
+
 - Background: `--color-surface`
 - Border radius: `radius-lg`
 - Shadow: `shadow-md`
@@ -137,6 +145,7 @@
 - Border: 1px solid `--color-neutral-100` (subtle)
 
 **Board Card (Order Card)**
+
 - Background: `--color-surface`
 - Border radius: `radius-md`
 - Shadow: `shadow-board`
@@ -146,6 +155,7 @@
 - Dragging: rotate(2deg), `shadow-lg`, opacity 0.9
 
 **Menu Item Card**
+
 - Horizontal layout: Image (80px) + Content
 - Border radius: `radius-lg`
 - Background: `--color-surface`
@@ -155,6 +165,7 @@
 ### Inputs
 
 **Text Input**
+
 - Height: 48px (mobile) / 44px (desktop)
 - Border: 1px solid `--color-neutral-300`
 - Border radius: `radius-md`
@@ -163,11 +174,13 @@
 - Error: `--color-danger` border, error text below
 
 **Textarea (Order Notes)**
+
 - Min height: 80px
 - Max length indicator: "0/255"
 - Counter turns `--color-danger` at >230 chars
 
 **Toggle Switch**
+
 - Track: 48px × 24px
 - Thumb: 20px diameter
 - Active: `--color-primary` track
@@ -176,22 +189,23 @@
 
 ### Badges
 
-| Type | Background | Text | Usage |
-|------|-----------|------|-------|
-| Status Pending | `#FEF3C7` | `#92400E` | Order status |
-| Status Preparing | `#DBEAFE` | `#1E40AF` | Order status |
-| Status To Serve | `#E0E7FF` | `#3730A3` | Order status |
-| Status Payment | `#FCE7F3` | `#9D174D` | Order status |
-| Status Completed | `#DCFCE7` | `#166534` | Order status |
-| Status Cancelled | `#FEE2E2` | `#991B1B` | Order status |
-| Stock In | `#DCFCE7` | `#166534` | Available |
-| Stock Out | `#FEE2E2` | `#991B1B` | Unavailable |
-| Subscription | `#E0E7FF` | `#3730A3` | Paid tier |
-| Free Tier | `#F3F4F6` | `#374151` | Free tier |
+| Type             | Background | Text      | Usage        |
+| ---------------- | ---------- | --------- | ------------ |
+| Status Pending   | `#FEF3C7`  | `#92400E` | Order status |
+| Status Preparing | `#DBEAFE`  | `#1E40AF` | Order status |
+| Status To Serve  | `#E0E7FF`  | `#3730A3` | Order status |
+| Status Payment   | `#FCE7F3`  | `#9D174D` | Order status |
+| Status Completed | `#DCFCE7`  | `#166534` | Order status |
+| Status Cancelled | `#FEE2E2`  | `#991B1B` | Order status |
+| Stock In         | `#DCFCE7`  | `#166534` | Available    |
+| Stock Out        | `#FEE2E2`  | `#991B1B` | Unavailable  |
+| Subscription     | `#E0E7FF`  | `#3730A3` | Paid tier    |
+| Free Tier        | `#F3F4F6`  | `#374151` | Free tier    |
 
 ### Modals
 
 **Standard Modal**
+
 - Overlay: `rgba(0,0,0,0.5)`, backdrop-blur(4px)
 - Container: max-width 480px (mobile: 100% - 32px)
 - Border radius: `radius-xl` (mobile bottom sheet style)
@@ -200,6 +214,7 @@
 - Footer: Action buttons, right-aligned
 
 **Ad Blocker Recovery Modal**
+
 - Cannot be dismissed without action
 - Overlay: `rgba(0,0,0,0.7)`
 - Content: Clear explanation + two CTAs
@@ -207,6 +222,7 @@
 - CTA Secondary: "Subscribe to Remove Ads (₱100/mo)"
 
 **Confirmation Modal**
+
 - Icon: Warning triangle or Info circle
 - Title: Action description
 - Body: Consequences
@@ -229,11 +245,13 @@
 ### Loading States
 
 **Skeleton**
+
 - Background: linear-gradient shimmer
 - Border radius matches content
 - Pulse animation
 
 **Spinner**
+
 - Size: 24px (inline), 40px (page)
 - Color: `--color-primary`
 - Stroke: 3px
@@ -243,6 +261,7 @@
 ## Global Navigation & Layout Patterns
 
 ### Mobile-First Layout (Customer)
+
 - Single column, full width
 - Bottom fixed action bar for CTAs
 - Safe area insets respected
@@ -250,12 +269,14 @@
 - Pull-to-refresh on order status
 
 ### Tablet Layout (Restaurant Admin)
+
 - Collapsible sidebar (240px)
 - Main content area with padding
 - Board view: 3-4 columns visible
 - Touch-friendly for kitchen use
 
 ### Desktop Layout (Admin / Super Admin)
+
 - Fixed sidebar (260px)
 - Top header bar (64px)
 - Content max-width: 1440px, centered
@@ -267,14 +288,16 @@
 ## Persona 1: Customer (Anonymous Mobile User)
 
 ### Flow Overview
+
 ```
-Scan QR → Menu Loading → Browse Menu → Build Order → Review & Notes → Submit 
+Scan QR → Menu Loading → Browse Menu → Build Order → Review & Notes → Submit
 → Live Order Status → [Cancel if Pending] → [Request Payment if To Serve] → Complete
 ```
 
 ### Screen 1: QR Landing / Menu Loading
 
 **Layout**:
+
 - Full screen, centered content
 - Restaurant logo (if uploaded) or restaurant name in Display type
 - Table/Chair context: "Table 5 · Chair A" caption
@@ -282,11 +305,13 @@ Scan QR → Menu Loading → Browse Menu → Build Order → Review & Notes → 
 - Error state: "Unable to load menu" with retry button
 
 **States**:
+
 - Loading: Skeleton of menu categories
 - Error: QR archived, restaurant inactive, network error
 - Success: Auto-redirect to Menu
 
 **Key Elements**:
+
 - Restaurant branding area (top 30%)
 - Context label (table/chair identifier)
 - Loading indicator
@@ -297,6 +322,7 @@ Scan QR → Menu Loading → Browse Menu → Build Order → Review & Notes → 
 ### Screen 2: Menu Browser
 
 **Layout**:
+
 - **Header (sticky)**:
   - Restaurant name (H3, truncated)
   - Table/chair badge (right)
@@ -312,6 +338,7 @@ Scan QR → Menu Loading → Browse Menu → Build Order → Review & Notes → 
   - Category headers: Sticky, `--color-neutral-50` bg
 
 **Dish Card**:
+
 ```
 [Image: 80×80, radius-md, object-cover]
 [Name: H3, 1 line, ellipsis]
@@ -323,12 +350,14 @@ Scan QR → Menu Loading → Browse Menu → Build Order → Review & Notes → 
 ```
 
 **Out of Stock State**:
+
 - Grayscale image
 - "Out of Stock" badge (red)
-- + Button disabled, opacity 0.4
+- - Button disabled, opacity 0.4
 - Price struck through (optional)
 
 **Interactions**:
+
 - Tap dish card → Open Dish Detail Sheet
 - Tap + button → Quick add (quantity 1, no add-ons)
 - Horizontal scroll categories → Snap to tab
@@ -339,11 +368,13 @@ Scan QR → Menu Loading → Browse Menu → Build Order → Review & Notes → 
 ### Screen 3: Dish Detail Sheet (Bottom Sheet)
 
 **Layout**:
+
 - Bottom sheet, 85% height, `radius-xl` top corners
 - Drag handle at top (visual only)
 - Scrollable content
 
 **Content**:
+
 - Dish image (full width, 200px height, `radius-lg` top)
 - Dish name (H1)
 - Price (H2, primary)
@@ -351,24 +382,29 @@ Scan QR → Menu Loading → Browse Menu → Build Order → Review & Notes → 
 - Divider
 
 **Add-ons Section**:
+
 - Header: "Add-ons" (H3)
 - Each add-on: Checkbox + name + price
 - Out of stock add-ons: Disabled, struck through
 
 **Quantity Selector**:
+
 - [-] [1] [+] horizontal group
 - Min: 1, Max: 99
 - Button style: Ghost with border
 
 **Notes (optional)**:
+
 - Textarea, max 255 chars
 - Character counter
 
 **Footer (sticky)**:
+
 - "Add to Order — ₱XXX" primary button, full width
 - Price updates dynamically with quantity/add-ons
 
 **Interactions**:
+
 - Swipe down to dismiss (if no selections)
 - Tap overlay to dismiss (if no selections)
 - Backdrop: `rgba(0,0,0,0.5)`
@@ -378,6 +414,7 @@ Scan QR → Menu Loading → Browse Menu → Build Order → Review & Notes → 
 ### Screen 4: Cart / Order Review
 
 **Layout**:
+
 - **Header**: "Your Order" (H1) + close/back
 - **Order Items List**:
   - Each item: Card with image thumbnail
@@ -397,12 +434,14 @@ Scan QR → Menu Loading → Browse Menu → Build Order → Review & Notes → 
   - Disabled if cart empty or all items out of stock
 
 **Empty State**:
+
 - Cart icon (64px, neutral-300)
 - "Your cart is empty"
 - "Browse the menu to add items"
 - CTA: "View Menu" secondary button
 
 **Interactions**:
+
 - Pull to refresh stock status (revalidates)
 - Stock change while viewing: Toast warning, highlight affected item
 - Place order → Loading state → Success → Order Status screen
@@ -412,7 +451,8 @@ Scan QR → Menu Loading → Browse Menu → Build Order → Review & Notes → 
 ### Screen 5: Order Status (Live)
 
 **Layout**:
-- **Header**: 
+
+- **Header**:
   - Order number (e.g., "Order #A7B3")
   - Table/chair context
   - Timestamp
@@ -449,6 +489,7 @@ Scan QR → Menu Loading → Browse Menu → Build Order → Review & Notes → 
 | Cancelled | ❌ | Red | "This order has been cancelled" |
 
 **Cancellation Flow**:
+
 1. Customer taps "Cancel Order"
 2. Confirmation modal: "Cancel this order? This cannot be undone."
 3. Server validates status is still Pending
@@ -456,6 +497,7 @@ Scan QR → Menu Loading → Browse Menu → Build Order → Review & Notes → 
 5. Failure (already preparing): Toast error "Order already being prepared"
 
 **Payment Request Flow**:
+
 1. Customer taps "Request Bill"
 2. Confirmation: "Request the bill?"
 3. Status moves to Payment
@@ -467,6 +509,7 @@ Scan QR → Menu Loading → Browse Menu → Build Order → Review & Notes → 
 ### Screen 6: Ad Placements (Free Tier)
 
 **Customer Menu Ad Slot**:
+
 - Position: Fixed footer, below order action area
 - Size: 320×50 (mobile banner) or responsive
 - Style: Non-intrusive, separated by divider
@@ -474,6 +517,7 @@ Scan QR → Menu Loading → Browse Menu → Build Order → Review & Notes → 
 - Does NOT block order submission when loaded
 
 **Ad Blocker State**:
+
 - Full screen modal overlay
 - Title: "Please Allow Ads or Subscribe"
 - Body: "This restaurant uses the free plan. Ads help keep the service running. Please disable your ad blocker or ask the restaurant owner to upgrade."
@@ -486,6 +530,7 @@ Scan QR → Menu Loading → Browse Menu → Build Order → Review & Notes → 
 ## Persona 2: Restaurant Admin
 
 ### Flow Overview
+
 ```
 Login → Dashboard → [Menu / Seating / Orders / QR / Settings / Subscription]
 Daily Flow: Orders Board → Move cards through statuses → Complete
@@ -494,6 +539,7 @@ Daily Flow: Orders Board → Move cards through statuses → Complete
 ### Screen 1: Login
 
 **Layout**:
+
 - Centered card, max-width 400px
 - Logo (top)
 - "Restaurant Admin Login" (H1)
@@ -508,6 +554,7 @@ Daily Flow: Orders Board → Move cards through statuses → Complete
 ### Screen 2: Dashboard (Home)
 
 **Layout**:
+
 - **Sidebar** (desktop) / **Bottom Nav** (mobile):
   - Dashboard (stats overview)
   - Orders (board)
@@ -522,6 +569,7 @@ Daily Flow: Orders Board → Move cards through statuses → Complete
   - Profile dropdown (logout, settings)
 
 **Stats Cards (2×2 grid mobile, 4×1 desktop)**:
+
 ```
 ┌─────────────────┬─────────────────┬─────────────────┬─────────────────┐
 │ Today's Orders  │ Pending         │ Completed       │ Revenue Est.  │
@@ -536,16 +584,19 @@ Daily Flow: Orders Board → Move cards through statuses → Complete
 - Trend: Small text, green/red
 
 **Quick Actions**:
+
 - "View Live Board" → Orders
 - "Manage Menu" → Menu
 - "Print QR Codes" → QR
 
 **Recent Activity**:
+
 - List of last 5 orders
 - Order number, table, status badge, time
 - Tap to jump to order in board
 
 **Subscription Banner (Free Tier)**:
+
 - Background: `--color-secondary` at 10%
 - Border: 1px `--color-secondary`
 - Text: "Upgrade to remove ads — ₱100/month"
@@ -557,6 +608,7 @@ Daily Flow: Orders Board → Move cards through statuses → Complete
 ### Screen 3: Live Order Board (Primary Screen)
 
 **Layout**:
+
 - **Header**:
   - Title: "Live Orders" (H1)
   - Date picker (today default)
@@ -585,11 +637,13 @@ Daily Flow: Orders Board → Move cards through statuses → Complete
 ```
 
 **Column Header**:
+
 - Status name + count badge
 - Background color matches status
 - Sticky within scroll container
 
 **Order Card**:
+
 - Left border: 4px status color
 - Order number (H3)
 - Table/chair label (Small)
@@ -603,12 +657,14 @@ Daily Flow: Orders Board → Move cards through statuses → Complete
   - Completed → No action
 
 **Drag and Drop**:
+
 - Desktop: Drag card between columns
 - Mobile: Long press → move menu → select target column
 - Visual feedback: Card lifts, column highlights on hover
 - Invalid drop: Shake animation, returns to origin
 
 **Order Detail Modal**:
+
 - Trigger: Tap order card
 - Content:
   - Order number, status badge, timestamp
@@ -620,12 +676,14 @@ Daily Flow: Orders Board → Move cards through statuses → Complete
   - "Cancel Order" (danger, only if Pending)
 
 **New Order Alert**:
+
 - Toast: "New order #A7B3 from Table 5"
 - Sound: Short chime (if enabled)
 - Auto-scroll to Pending column
 - Card entrance: slide-in + bounce
 
 **Empty Column State**:
+
 - Icon (checkmark or plate)
 - "No orders"
 - Subtle encouragement
@@ -635,16 +693,19 @@ Daily Flow: Orders Board → Move cards through statuses → Complete
 ### Screen 4: Menu Management
 
 **Layout**:
+
 - **Header**: "Menu" (H1) + "Add Category" button
 - **Category Tabs** (vertical sidebar on desktop, horizontal on mobile)
 - **Dish Grid**: 1 column mobile, 2 tablet, 3 desktop
 
 **Category Section**:
+
 - Category name (H2) + edit icon + delete icon
 - Drag handle for reordering
 - "Add Dish" button (secondary, small)
 
 **Dish Card**:
+
 ```
 ┌─────────────────────────────┐
 │ [Image: 16:9 aspect ratio]  │
@@ -658,11 +719,13 @@ Daily Flow: Orders Board → Move cards through statuses → Complete
 ```
 
 **Dish Actions**:
+
 - Toggle stock status (dropdown or toggle)
 - Edit → Dish Form Modal
 - Delete → Confirmation → Archive (if used in orders) or Hard delete
 
 **Add/Edit Dish Modal**:
+
 - Image upload (drag & drop or click)
   - Preview with remove button
   - Uploading state with progress
@@ -678,6 +741,7 @@ Daily Flow: Orders Board → Move cards through statuses → Complete
 - Save / Cancel
 
 **Add-on Management Sub-screen**:
+
 - Table of add-ons
 - Columns: Name, Price, Stock Status, Actions
 - Inline editing
@@ -688,15 +752,18 @@ Daily Flow: Orders Board → Move cards through statuses → Complete
 ### Screen 5: Seating & QR Management
 
 **Layout**:
+
 - Two-panel (desktop): Tables list left, Chairs/QR right
 - Single panel (mobile): Tables → Drill down → Chairs
 
 **Tables List**:
+
 - Each table: Card with table name/number, chair count, status
 - Actions: Edit name, Archive, Reorder (drag), Generate Table QR
 - "Add Table" floating button (bottom right)
 
 **Table Detail / Chair Management**:
+
 - Table header with name
 - Chair list (vertical):
   - Each chair: Name/label, QR code thumbnail, actions
@@ -706,14 +773,17 @@ Daily Flow: Orders Board → Move cards through statuses → Complete
 - "Add Chair" button
 
 **QR Code Display**:
+
 - Large QR code image (300×300)
 - Label: "Table 5 — Chair A"
 - URL preview (truncated)
+- Copy URL button (fallback for sending the QR link directly)
 - Download PNG button
 - Print button (opens browser print with styled layout)
 - Regenerate button (with confirmation: "This will invalidate the old QR code")
 
 **Archive Flow**:
+
 1. Archive table/chair
 2. Confirmation: "Archive Table 5? Existing QR codes will no longer work."
 3. Archived items move to "Archived" section (collapsible)
@@ -724,6 +794,7 @@ Daily Flow: Orders Board → Move cards through statuses → Complete
 ### Screen 6: Settings
 
 **Sections**:
+
 - **Restaurant Profile**:
   - Name (required)
   - Description
@@ -743,6 +814,7 @@ Daily Flow: Orders Board → Move cards through statuses → Complete
 ### Screen 7: Subscription
 
 **Layout**:
+
 - **Current Plan Card**:
   - Free: "Free Plan" badge, "Ads enabled" note
   - Paid: "Premium Plan" badge, "Ads removed" note, expiry date
@@ -768,6 +840,7 @@ Daily Flow: Orders Board → Move cards through statuses → Complete
 ### Screen 8: Statistics
 
 **Layout**:
+
 - Date range picker (Today, Yesterday, Last 7 days, Last 30 days, Custom)
 - **Summary Cards** (same as dashboard, but for selected range)
 - **Charts**:
@@ -785,6 +858,7 @@ Daily Flow: Orders Board → Move cards through statuses → Complete
 ## Persona 3: Admin (Platform Administrator)
 
 ### Flow Overview
+
 ```
 Login → Platform Dashboard → Manage Restaurants → [View/Edit/Suspend]
 ```
@@ -792,10 +866,12 @@ Login → Platform Dashboard → Manage Restaurants → [View/Edit/Suspend]
 ### Screen 1: Platform Dashboard
 
 **Layout**:
+
 - Sidebar: Dashboard, Restaurants, Analytics, Settings
 - Top bar: Platform name, Admin profile
 
 **Stats Cards**:
+
 ```
 ┌──────────────┬──────────────┬──────────────┬──────────────┐
 │ Restaurants  │ Active Today │ Free Tier    │ Paid Tier    │
@@ -805,11 +881,13 @@ Login → Platform Dashboard → Manage Restaurants → [View/Edit/Suspend]
 ```
 
 **Recent Activity**:
+
 - New restaurant signups
 - Subscription changes
 - Suspended accounts
 
 **Quick Actions**:
+
 - "Add Restaurant Admin"
 - "View All Restaurants"
 
@@ -818,6 +896,7 @@ Login → Platform Dashboard → Manage Restaurants → [View/Edit/Suspend]
 ### Screen 2: Restaurant Management
 
 **Layout**:
+
 - **Filter Bar**: Search, Status filter (All/Active/Suspended), Tier filter
 - **Data Table**:
   - Columns: Restaurant Name, Admin Email, Status, Tier, Orders (30d), Created, Actions
@@ -825,12 +904,14 @@ Login → Platform Dashboard → Manage Restaurants → [View/Edit/Suspend]
   - Pagination: 25/50/100 per page
 
 **Row Actions**:
+
 - View → Restaurant detail modal (read-only operations data)
 - Edit → Change name, contact (limited)
 - Suspend/Activate → Toggle with confirmation
 - Delete → Only if no orders, confirmation
 
 **Add Restaurant Admin Modal**:
+
 - Restaurant name
 - Admin email
 - Admin password (auto-generated or custom)
@@ -842,6 +923,7 @@ Login → Platform Dashboard → Manage Restaurants → [View/Edit/Suspend]
 ### Screen 3: Restaurant Detail (Read-Only)
 
 **Tabs**:
+
 - Overview: Stats, subscription status, contact
 - Orders: Last 50 orders (read-only)
 - Activity: Login history, changes (audit log)
@@ -851,6 +933,7 @@ Login → Platform Dashboard → Manage Restaurants → [View/Edit/Suspend]
 ## Persona 4: Super Admin
 
 ### Flow Overview
+
 ```
 Login → Platform Control → Manage Admins → [Create/Edit/Transfer Ownership]
 ```
@@ -858,6 +941,7 @@ Login → Platform Control → Manage Admins → [Create/Edit/Transfer Ownership
 ### Screen 1: Super Admin Dashboard
 
 **Layout**:
+
 - Similar to Admin dashboard
 - Additional card: "Platform Health" (uptime, error rate)
 
@@ -866,11 +950,13 @@ Login → Platform Control → Manage Admins → [Create/Edit/Transfer Ownership
 ### Screen 2: Admin Account Management
 
 **Layout**:
+
 - Table of Admin accounts
 - Columns: Name, Email, Status, Created, Last Login, Actions
 - Actions: Edit, Suspend, Reset Password, Transfer Ownership
 
 **Transfer Ownership Flow**:
+
 1. "Transfer Ownership" button
 2. Modal: Select new Super Admin from existing admins
 3. Confirmation: "This will demote you to Admin. Are you sure?"
@@ -883,13 +969,14 @@ Login → Platform Control → Manage Admins → [Create/Edit/Transfer Ownership
 
 ### Breakpoint Strategy
 
-| Breakpoint | Layout | Navigation | Board Columns |
-|------------|--------|-----------|---------------|
-| < 640px (Mobile) | Single column | Bottom tab bar | 1 column, horizontal scroll |
-| 640-1024px (Tablet) | Two column where applicable | Collapsible sidebar | 3 columns visible, scroll |
-| > 1024px (Desktop) | Multi-column | Fixed sidebar | All columns visible |
+| Breakpoint          | Layout                      | Navigation          | Board Columns               |
+| ------------------- | --------------------------- | ------------------- | --------------------------- |
+| < 640px (Mobile)    | Single column               | Bottom tab bar      | 1 column, horizontal scroll |
+| 640-1024px (Tablet) | Two column where applicable | Collapsible sidebar | 3 columns visible, scroll   |
+| > 1024px (Desktop)  | Multi-column                | Fixed sidebar       | All columns visible         |
 
 ### Mobile-Specific Patterns
+
 - Bottom sheets instead of modals for forms
 - Floating action buttons (FAB) for primary create actions
 - Swipe gestures for quick actions (archive, delete)
@@ -898,6 +985,7 @@ Login → Platform Control → Manage Admins → [Create/Edit/Transfer Ownership
 - Full-screen overlays for complex forms
 
 ### Tablet-Specific Patterns
+
 - Split view: List left, Detail right
 - Larger touch targets for kitchen use (glove-friendly)
 - Landscape orientation optimized for board view
@@ -924,16 +1012,19 @@ Login → Platform Control → Manage Admins → [Create/Edit/Transfer Ownership
 ### Free Tier Ad Slots
 
 **Restaurant Admin Dashboard**:
+
 - Slot: Sidebar bottom or below stats cards
 - Size: 300×250 (medium rectangle) or responsive
 - Style: Separated by divider, "Advertisement" label
 
 **Customer Menu**:
+
 - Slot: Fixed footer, below cart action
 - Size: 320×50 (mobile banner)
 - Style: Non-floating, non-blocking
 
 **Loading States**:
+
 - Ad container reserves space (prevents layout shift)
 - Skeleton loader while ad loads
 - Collapses gracefully if no fill
@@ -943,13 +1034,14 @@ Login → Platform Control → Manage Admins → [Create/Edit/Transfer Ownership
 **Trigger**: Ad script fails to load or ad blocker detected
 
 **Modal**:
+
 - Full screen overlay, cannot dismiss
 - Icon: Shield with warning
 - Title: "Ad Blocker Detected"
-- Body: 
-  - "This restaurant uses QR Resto Hub's free plan. 
-     Ads support the platform. Please disable your ad blocker 
-     for this site, or ask the restaurant to upgrade to Premium."
+- Body:
+  - "This restaurant uses QR Resto Hub's free plan.
+    Ads support the platform. Please disable your ad blocker
+    for this site, or ask the restaurant to upgrade to Premium."
 - Actions:
   - "I've Disabled My Ad Blocker" (primary, refreshes page)
   - "Learn About Premium" (secondary, links to subscription info)
@@ -961,19 +1053,21 @@ Login → Platform Control → Manage Admins → [Create/Edit/Transfer Ownership
 
 ### Connection States
 
-| State | Indicator | Behavior |
-|-------|-----------|----------|
-| Connected | Green dot, "Live" | Real-time updates active |
-| Connecting | Amber dot, "Connecting..." | Retry in progress, queue updates |
-| Disconnected | Red dot, "Offline" | Show banner, queue actions, retry every 5s |
-| Reconnected | Flash green, "Back online" | Sync queued actions, refresh data |
+| State        | Indicator                  | Behavior                                   |
+| ------------ | -------------------------- | ------------------------------------------ |
+| Connected    | Green dot, "Live"          | Real-time updates active                   |
+| Connecting   | Amber dot, "Connecting..." | Retry in progress, queue updates           |
+| Disconnected | Red dot, "Offline"         | Show banner, queue actions, retry every 5s |
+| Reconnected  | Flash green, "Back online" | Sync queued actions, refresh data          |
 
 ### Optimistic Updates
+
 - Board card moves immediately on drag
 - Reverts with shake animation if server rejects
 - Toast on conflict: "Order status changed by another user"
 
 ### Conflict Resolution
+
 - Concurrent status changes: Last-write-wins with timestamp
 - Customer cancellation + staff move: Server rejects cancellation, customer sees toast
 
@@ -982,24 +1076,28 @@ Login → Platform Control → Manage Admins → [Create/Edit/Transfer Ownership
 ## Error State Patterns
 
 ### Network Error
+
 - Icon: Cloud offline
 - Title: "Connection lost"
 - Body: "Check your internet connection and try again."
 - CTA: "Retry" button
 
 ### 403 Forbidden
+
 - Icon: Lock
 - Title: "Access denied"
 - Body: "You don't have permission to view this page."
 - CTA: "Go to Dashboard"
 
 ### 404 Not Found
+
 - Icon: Search
 - Title: "Page not found"
 - Body: "The page you're looking for doesn't exist."
 - CTA: "Go Home"
 
 ### Empty States (Feature-Specific)
+
 - No orders: "No orders yet. When customers scan QR codes and order, they'll appear here."
 - No menu items: "Your menu is empty. Add categories and dishes to get started."
 - No tables: "Set up your seating plan to generate QR codes."
@@ -1066,25 +1164,30 @@ src/
 ## Animation Specifications
 
 ### Page Transitions
+
 - Enter: fade-in + translateY(8px), 250ms
 - Exit: fade-out, 150ms
 
 ### Modal / Sheet
+
 - Overlay: fade-in 200ms
 - Content: slide-up from bottom (mobile) / scale + fade (desktop)
 - Close: reverse
 
 ### Board Card Move
+
 - Lift: scale(1.02) + rotate(1deg) + shadow-lg, 200ms
 - Drop: scale(1) + rotate(0), bounce easing, 300ms
 - Column enter: slide-in from left, stagger 50ms per card
 
 ### Status Update
+
 - Pulse: scale(1.05) → scale(1), 300ms
 - Color transition: 200ms
 - Toast: slide-in from right, auto-dismiss after 4s
 
 ### Loading Sequences
+
 - Skeleton: shimmer animation, 1.5s infinite
 - Spinner: rotate 360deg, 1s linear infinite
 - Button loading: Spinner replaces text, width maintained
@@ -1109,4 +1212,4 @@ src/
 
 ---
 
-*This UI design document serves as the implementation reference for all frontend development, component scoping, and design handoff.*
+_This UI design document serves as the implementation reference for all frontend development, component scoping, and design handoff._

@@ -1,3 +1,5 @@
+** This document might be deprecated as new Design is created under BMAD. Use this as legacy reference only. Some contents here are still usable **
+
 I've created a comprehensive UI Design Document covering all four personas and their flows based on the PRD. Here's a summary of what's included:
 Document Structure
 🎨 Design System
