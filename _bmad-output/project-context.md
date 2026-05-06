@@ -1,8 +1,8 @@
 ---
-project_name: 'qr-resto-hub'
-user_name: 'Mr. JRW'
-date: '2026-05-05'
-sections_completed: ['technology_stack', 'discovery']
+project_name: "qr-resto-hub"
+user_name: "Mr. JRW"
+date: "2026-05-05"
+sections_completed: ["technology_stack", "discovery"]
 existing_patterns_found: 12
 ---
 
@@ -53,6 +53,8 @@ Planning artifacts:
 - UI design: `docs/ui-design.md`
 - UI flow: `docs/ui-flow.md`
 - Original raw request: `raw-query.txt`
+
+Documents above might be deprecated but you can use it as legacy reference.
 
 ## Critical Implementation Rules
 

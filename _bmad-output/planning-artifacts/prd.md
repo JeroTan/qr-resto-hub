@@ -1,7 +1,11 @@
 ---
-stepsCompleted: ['step-01-init', 'step-02-discovery', 'step-02b-vision', 'step-02c-executive-summary', 'step-03-success', 'step-04-journeys', 'step-05-domain', 'step-06-innovation-skipped', 'step-07-project-type', 'step-08-scoping', 'step-09-functional', 'step-10-nonfunctional', 'step-11-polish', 'step-12-complete']
+stepsCompleted: ['step-01-init', 'step-02-discovery', 'step-02b-vision', 'step-02c-executive-summary', 'step-03-success', 'step-04-journeys', 'step-05-domain', 'step-06-innovation-skipped', 'step-07-project-type', 'step-08-scoping', 'step-09-functional', 'step-10-nonfunctional', 'step-11-polish', 'step-12-complete', 'step-e-01-discovery', 'step-e-02-review', 'step-e-03-edit']
 workflowStatus: 'complete'
 completedAt: '2026-05-05'
+lastEdited: '2026-05-06'
+editHistory:
+  - date: '2026-05-06'
+    changes: 'Aligned PRD with completed architecture for Elysia OpenAPI/Swagger documentation, TypeBox API contracts, route logic boundaries, and src/lib plus src/utils governance.'
 releaseMode: 'phased'
 inputDocuments:
   - 'docs/qr-restaurant-ordering-platform-prd.md'
@@ -302,9 +306,15 @@ The architecture must preserve strict separation between domain rules and techni
 Required architecture patterns:
 - Domain Driven Design for business rules and order workflow invariants.
 - Layered API pattern: Route -> Controller -> Service -> Domain/Repository.
+- Elysia route declarations define API contracts and documentation, then delegate to controllers; endpoint handlers must not contain business logic.
+- Elysia API contracts must use TypeBox/Elysia `t` schemas for request bodies, params, query strings, headers when needed, and response schemas.
+- API endpoints must generate OpenAPI/Swagger documentation with summary, description, tags, security metadata where applicable, and response definitions per status code.
+- Zod may be used for non-Elysia validation such as environment/config parsing or isolated internal helpers, but it must not become a parallel API contract system.
 - Feature-based React organization for customer, restaurant admin, platform admin, menu, seating, QR, orders, subscriptions, and ads.
 - `src/utils/**` only for atomic independent helpers.
 - `src/lib/**` for third-party integrations and custom wrappers.
+- User-added helpers and wrappers in `src/utils/**` and `src/lib/**` must be inspected and reused when appropriate before agents duplicate or replace them.
+- Repeated shared logic may be promoted into `src/utils/**`; integration or provider-wrapper logic may be promoted into `src/lib/**` when it improves reuse and preserves clear boundaries.
 - Remote-first D1 migrations with dev/prod environments only.
 - Tailwind CSS v4 for UI styling, with design tokens mapped from `docs/ui-design.md`.
 
@@ -351,6 +361,8 @@ Required integrations:
 - Tailwind CSS v4 and `@tailwindcss/vite` for styling.
 - React for interactive customer and dashboard surfaces.
 - ElysiaJS for API composition where compatible with Cloudflare Workers.
+- TypeBox/Elysia `t` for Elysia API request/response contracts.
+- OpenAPI/Swagger generated from Elysia route contracts for API documentation.
 
 ### Compliance Requirements
 
@@ -436,6 +448,7 @@ This is not a menu-only MVP. The useful product is the complete loop from QR sca
 - Cloudflare Durable Objects/WebSocket live updates.
 - Cloudflare R2 asset storage.
 - Astro + React + Tailwind CSS v4 + ElysiaJS architecture.
+- Elysia TypeBox route contracts and OpenAPI/Swagger API documentation.
 - Feature-based React, DDD, layered API, `src/utils/**`, and `src/lib/**` standards.
 
 ### Post-MVP Features
@@ -642,13 +655,19 @@ This is not a menu-only MVP. The useful product is the complete loop from QR sca
 - PayMongo integration must be isolated to subscription billing and webhook processing.
 - Google AdSense/ad-block recovery logic must be isolated so the provider can be replaced if needed.
 - Third-party integrations and wrappers must live under `src/lib/**`.
+- Elysia API endpoints must generate OpenAPI/Swagger documentation that includes request body, route params, query params, response schemas per status code, summary, description, tags, and security metadata where applicable.
+- Elysia route contracts must use TypeBox/Elysia `t` schemas as the source for API validation and documentation.
 
 ### Maintainability & Architecture
 
 - Business rules must be testable without HTTP, D1, Durable Objects, R2, PayMongo, AdSense, or React.
 - APIs must follow Route -> Controller -> Service -> Domain/Repository.
+- Elysia route handlers must only adapt the request, call controllers, and return controller results; business logic must live in services/domain modules.
+- TypeBox/Elysia `t` must be used for Elysia API schemas; Zod is allowed only for non-Elysia validation such as environment/config parsing or isolated internal helpers.
 - React code must follow feature-based organization.
 - Atomic independent helpers must live under `src/utils/**`.
+- User-added files in `src/utils/**` and `src/lib/**` must be treated as intentional project knowledge; agents must inspect and prefer reuse before duplicating, replacing, or bypassing them.
+- Agents may promote genuinely shared atomic logic into `src/utils/**` or integration/provider wrappers into `src/lib/**` when it improves reuse, consistency, or boundary separation.
 - Tailwind CSS v4 design tokens must map from `docs/ui-design.md` rather than using scattered one-off styling values.
 - Order status transitions must be modeled as explicit domain rules, not arbitrary status mutation.
 - Active orders and completed order history must be modeled as separate operational concepts.
