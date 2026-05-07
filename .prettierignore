@@ -1,0 +1,10 @@
+node_modules
+dist
+.astro
+.wrangler
+coverage
+.agents
+.claude
+.github/agents
+_bmad
+_bmad-output

@@ -7,6 +7,8 @@
   },
   "scripts": {
     "dev": "astro dev",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "typecheck": "astro check",
     "test": "vitest run",
     "build": "astro build",
@@ -48,6 +50,7 @@
     "@cloudflare/workers-types": "^4.20260507.1",
     "@types/node": "^25.6.0",
     "drizzle-kit": "^0.31.10",
+    "prettier": "^3.8.3",
     "typescript": "^6.0.3",
     "vitest": "^4.1.5"
   }
