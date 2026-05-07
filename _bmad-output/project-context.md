@@ -64,8 +64,10 @@ These standards come from the original request and must be preserved across impl
 - Use Domain Driven Design. Business rules must be testable without HTTP, D1, Durable Objects, R2, PayMongo, AdSense, or React.
 - Use the layered API pattern: Route -> Controller -> Service -> Domain/Repository.
 - Use fluent modular APIs only where they improve readability for validators, builders, query composition, or domain workflows.
+- Avoid TypeScript `any` as much as possible. Prefer explicit domain types, generated Cloudflare binding types, `unknown` with narrowing, generics, or validated schemas.
 - Atomic independent helpers must live in `src/utils/**`.
 - Third-party integrations and custom wrappers must live in `src/lib/**`.
+- Cloudflare Worker bindings/env can be imported in any supported file with `import { env } from "cloudflare:workers";` per the newer Cloudflare Workers module API. Prefer this over manually threading env through unrelated layers when it keeps code simpler, while still isolating platform access from domain logic.
 - D1 migrations are remote-first and must support only `dev` and `prod` D1 environments.
 - Customer-facing ordering is mobile-first.
 - Super Admin is seeded and unique.
