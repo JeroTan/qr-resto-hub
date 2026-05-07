@@ -11,8 +11,10 @@ inputDocuments:
 workflowType: 'epics-and-stories'
 projectName: 'qr-resto-hub'
 createdDate: '2026-05-06'
-lastEdited: '2026-05-06'
+lastEdited: '2026-05-07'
 editHistory:
+  - date: '2026-05-07'
+    changes: 'Resolved implementation-readiness sequencing issues: moved cross-cutting response/error, request ID, audit writer, and operational logging primitives into Epic 1 foundation; clarified Story 1.3 schema scope; converted Epic 8 into validation/hardening and Story 8.5 into a readiness gate.'
   - date: '2026-05-06'
     changes: 'Aligned stories and requirements with brand-adapted visual guidance from docs/reference-inspiration.md without changing product behavior.'
   - date: '2026-05-06'
@@ -270,7 +272,7 @@ FR4: Epic 1 - Platform Admin Restaurant Admin account management.
 FR5: Epic 1 - Platform Admin tenant account status visibility.
 FR6: Epic 1 - Restaurant Admin tenant-scoped authentication.
 FR7: Epic 1 - Role and tenant permission enforcement.
-FR8: Epic 8 - Audit-relevant account and permission events.
+FR8: Epic 1 and Epic 8 - Audit-relevant account and permission events.
 FR9: Epic 1 - Restaurant profile and operational settings.
 FR10: Epic 1 - Restaurant payment-stage setting.
 FR11: Epic 1 - Restaurant subscription/ad entitlement visibility.
@@ -344,9 +346,9 @@ FR78: Epic 3 - Persisted QR asset storage.
 FR79: Epic 8 - Tenant, role, menu, seating, QR, order, subscription, analytics, and audit data storage.
 FR80: Epic 1 - D1 dev/prod migration support.
 FR81: Epic 4 - Anonymous customer order sessions scoped to QR/order tokens.
-FR82: Epic 8 - Consistent forbidden responses.
+FR82: Epic 1 and Epic 8 - Consistent forbidden responses.
 FR83: Epic 4 - Customer-friendly errors.
-FR84: Epic 8 - Restaurant Admin-friendly errors.
+FR84: Epic 1, feature stories, and Epic 8 - Restaurant Admin-friendly errors.
 FR85: Epic 7 - No customer food-order checkout through PayMongo.
 
 ## Epic List
@@ -355,9 +357,9 @@ FR85: Epic 7 - No customer food-order checkout through PayMongo.
 
 Super Admin and Platform Admins can securely initialize the platform, manage admin accounts, onboard Restaurant Admins, and enforce tenant/role boundaries.
 
-**FRs covered:** FR1, FR2, FR3, FR4, FR5, FR6, FR7, FR9, FR10, FR11, FR12, FR13, FR58, FR59, FR60, FR80
+**FRs covered:** FR1, FR2, FR3, FR4, FR5, FR6, FR7, FR8, FR9, FR10, FR11, FR12, FR13, FR58, FR59, FR60, FR80, FR82, FR84
 
-**Implementation notes:** This epic establishes the Cloudflare Astro foundation, D1/Drizzle migration base, authentication/session model, server-side RBAC/tenant guards, OpenAPI/TypeBox route contract rules, and the account administration surfaces needed by all later epics.
+**Implementation notes:** This epic establishes the Cloudflare Astro foundation, D1/Drizzle migration base, authentication/session model, server-side RBAC/tenant guards, OpenAPI/TypeBox route contract rules, standardized response/error envelopes, forbidden response mapping, request ID propagation, audit writer primitives, operational logging primitives, and the account administration surfaces needed by all later epics.
 
 ### Epic 2: Restaurant Menu, Add-ons, Stock & Asset Management
 
@@ -409,11 +411,11 @@ Restaurant Admins can subscribe to the PHP 100/month no-ads plan, while the plat
 
 ### Epic 8: Audit, Data Governance & Operational Hardening
 
-The platform records audit-relevant events, stores tenant/order/subscription/audit data safely, returns consistent forbidden/admin errors, and becomes implementation-ready for production operation.
+The platform verifies and hardens audit-relevant events, tenant/order/subscription/audit data safety, consistent forbidden/admin errors, and production operational behavior after the shared primitives have been established in Epic 1 and used by feature stories.
 
 **FRs covered:** FR8, FR79, FR82, FR84
 
-**Implementation notes:** This epic hardens cross-cutting concerns that should be threaded through earlier work and validated as a dedicated final readiness pass.
+**Implementation notes:** This epic validates and hardens cross-cutting concerns already established by Epic 1 and threaded through feature stories. It should verify coverage, close gaps, and strengthen retention/data-governance behavior rather than introducing shared error, audit, or logging primitives for the first time.
 
 ## Epic 1: Platform Foundation, Authentication & Tenant Administration
 
@@ -454,13 +456,16 @@ So that implementation remains consistent for future development work.
 **And** Zod is reserved for non-Elysia validation such as environment/config parsing or isolated internal helpers
 **And** shared UI primitives live under `src/components/**`, feature-owned components live under `src/features/**/components/**`, third-party wrappers live under `src/lib/**`, and atomic helpers live under `src/utils/**`
 **And** existing or future user-added files under `src/lib/**` and `src/utils/**` are treated as intentional project knowledge to inspect and reuse before duplication
+**And** standardized API success helpers produce `{ data, meta }` envelopes and standardized error helpers produce `{ error: { code, message, details } }` envelopes
+**And** forbidden response mapping, public-safe error message mapping, request ID propagation, and OpenAPI error response metadata helpers are available for all later route groups
+**And** an audit event writer interface and operational logging utility are available for later stories to record permission denials, auth failures, account changes, invalid transitions, provider failures, QR failures, R2 failures, and live reconnect failures without re-creating logging patterns
 **And** Tailwind CSS v4 tokens and shared primitives incorporate `docs/ui-design.md` plus the Modern Epicurean guidance from `docs/reference-inspiration-2-google-stitch.md` with cream/parchment surfaces, cocoa ink, orange action/focus states, olive markers, and restrained status colors
 **And** the visual system does not copy Apple-specific branding, SF Pro typography, Apple navigation patterns, negative tracking, or device/product-page composition.
 
 ### Story 1.3: Configure Remote-First D1 Schema and Migrations for Platform Accounts
 
 As a developer,
-I want remote-first D1 migration setup plus the initial account, role, session, tenant, restaurant, and audit tables needed for platform access,
+I want remote-first D1 migration setup plus the initial account, role, session, tenant, restaurant, minimal entitlement visibility, and audit tables needed for platform access,
 So that authentication and administration have a stable data foundation.
 
 **Acceptance Criteria:**
@@ -469,10 +474,10 @@ So that authentication and administration have a stable data foundation.
 **When** the initial database schema and migrations are added
 **Then** Drizzle schema and migration configuration support dev and prod remote D1 environments only
 **And** tables use plural `snake_case` names, `snake_case` columns, `id` primary keys, `{entity}_id` foreign keys, `idx_{table}_{columns}` indexes, and `uq_{table}_{columns}` unique constraints
-**And** the schema supports Super Admin, Platform Admin, Restaurant Admin, restaurant tenant, one Restaurant Admin to one restaurant in MVP, sessions, subscription/ad entitlement state, and audit event recording
+**And** the schema supports Super Admin, Platform Admin, Restaurant Admin, restaurant tenant, one Restaurant Admin to one restaurant in MVP, sessions, minimal subscription/ad entitlement visibility needed for account and tenant status screens, and audit event recording
 **And** the migration can seed exactly one Super Admin owner account
 **And** the schema supports server-side tenant scoping for protected Restaurant Admin capabilities
-**And** no menu, seating, QR, order, subscription provider, ad provider, or analytics tables are created before a story needs them.
+**And** PayMongo subscription event tables, ad provider state tables, detailed analytics tables, menu tables, seating tables, QR tables, and order tables are not created before their owning stories need them.
 
 ### Story 1.4: Seed Unique Super Admin and Implement Dashboard Authentication
 
@@ -1307,42 +1312,44 @@ So that my dashboard and customer pages stay clean.
 
 ## Epic 8: Audit, Data Governance & Operational Hardening
 
-The platform records audit-relevant events, stores tenant/order/subscription/audit data safely, returns consistent forbidden/admin errors, and becomes implementation-ready for production operation.
+The platform verifies and hardens audit-relevant events, tenant/order/subscription/audit data safety, consistent forbidden/admin errors, and production operational behavior after the shared primitives have been established in Epic 1 and used by feature stories.
 
-### Story 8.1: Record Audit Events Across Sensitive Actions
+### Story 8.1: Validate and Complete Audit Coverage Across Sensitive Actions
 
 As the platform,
-I want audit-relevant events recorded for account changes, permission denials, subscription changes, webhook processing, auth failures, and invalid order transitions,
-So that sensitive activity is traceable.
+I want audit-relevant events validated and completed across account changes, permission denials, subscription changes, webhook processing, auth failures, and invalid order transitions,
+So that sensitive activity is consistently traceable across previously implemented features.
 
 **Acceptance Criteria:**
 
 **Given** sensitive platform, tenant, subscription, or order actions occur
 **When** the action succeeds or fails in an audit-relevant way
-**Then** an audit event is recorded with event type, actor where available, tenant where applicable, target resource, timestamp, and safe metadata
+**Then** the Epic 1 audit writer is used consistently to record event type, actor where available, tenant where applicable, target resource, timestamp, and safe metadata
 **And** audit events cover Super Admin ownership transfer, Platform Admin account create/update/suspend/reactivate, Restaurant Admin login/auth failures, permission denials, subscription state changes, PayMongo webhook processing, and invalid order status transition attempts
 **And** audit metadata does not store customer name, phone, email, password, or account identity because customer ordering is anonymous in MVP
 **And** audit events remain tenant-scoped where applicable
 **And** audit logs are retained for at least 180 days
 **And** audit write failures are logged without exposing sensitive data to users
+**And** any missing audit coverage discovered during the pass is added to the owning feature service or domain workflow
 **And** audit recording can be tested without HTTP, React, PayMongo, AdSense, R2, or Durable Objects.
 
-### Story 8.2: Standardize Forbidden and Error Responses
+### Story 8.2: Validate Standardized Forbidden and Error Responses
 
 As the platform,
-I want consistent forbidden and admin/customer-friendly error envelopes,
-So that users receive clear messages and APIs remain predictable.
+I want all implemented routes and features to use the standardized forbidden and admin/customer-friendly error envelopes from Epic 1,
+So that users receive clear messages and APIs remain predictable across the whole product.
 
 **Acceptance Criteria:**
 
 **Given** an API request succeeds or fails
 **When** the route returns a response
-**Then** success responses use the standardized `{ data, meta }` envelope
-**And** error responses use the standardized `{ error: { code, message, details } }` envelope
+**Then** success responses use the Epic 1 standardized `{ data, meta }` envelope
+**And** error responses use the Epic 1 standardized `{ error: { code, message, details } }` envelope
 **And** forbidden responses are consistent across role, tenant, and authorization failures
 **And** customer-facing errors avoid stack traces, HTTP codes, database errors, provider internals, and technical wording
 **And** Restaurant Admin-facing errors explain rejected order transitions, upload failures, subscription issues, and forbidden actions in clear operational language
 **And** each Elysia route documents success and error envelopes in OpenAPI response maps
+**And** inconsistent error mapping discovered during the pass is fixed in the owning route/controller/service boundary
 **And** error mapping stays outside route handlers except for adapting controller results to HTTP responses.
 
 ### Story 8.3: Harden Tenant Data Governance and Retention
@@ -1364,25 +1371,28 @@ So that tenant boundaries, anonymous customer limits, and retention rules are pr
 **And** completed orders are retained for Restaurant Admin history/statistics while no longer appearing in active board or future reusable QR customer visibility
 **And** audit logs meet the approved retention target.
 
-### Story 8.4: Add Operational Logging for Critical Integration and Live Failures
+### Story 8.4: Validate Operational Logging for Critical Integration and Live Failures
 
 As the platform,
-I want critical failures logged with tenant/order/provider context,
+I want critical failures to consistently use the Epic 1 operational logging utility with tenant/order/provider context,
 So that live reconnect failures, webhook failures, forbidden access, invalid transitions, QR failures, and R2 upload failures are visible quickly.
 
 **Acceptance Criteria:**
 
 **Given** a critical operational or integration failure occurs
 **When** the system handles or detects the failure
-**Then** the failure is logged with safe tenant, order, QR, or provider context where applicable
+**Then** the failure is logged through the shared operational logging utility with safe tenant, order, QR, or provider context where applicable
 **And** logging covers live update reconnect failures, PayMongo webhook failures, forbidden access attempts, invalid order transitions, QR token resolution failures, and R2 upload failures
 **And** critical integration failures are visible in operational logs within 1 minute of occurrence
 **And** logs avoid raw secrets, password material, private tokens, and unnecessary customer-identifying data
 **And** provider-specific logging is isolated through integration wrappers or infrastructure utilities where appropriate
 **And** logged failures can be correlated to request IDs or event IDs where available
+**And** missing logging coverage discovered during the pass is added to the owning feature or provider wrapper
 **And** operational logging does not replace user-friendly error handling.
 
-### Story 8.5: Final Cross-Requirement Hardening Pass
+### Final Readiness Gate: Cross-Requirement Hardening Pass
+
+This is a readiness/QA gate, not a normal implementation story. It should be used before sprint execution or before declaring the implementation backlog ready.
 
 As a developer,
 I want a final validation pass across PRD, UX, architecture, and stories,

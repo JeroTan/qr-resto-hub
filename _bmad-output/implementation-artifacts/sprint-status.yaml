@@ -1,0 +1,111 @@
+# generated: 2026-05-07T09:44:00+08:00
+# last_updated: 2026-05-07T09:48:32+08:00
+# project: qr-resto-hub
+# project_key: NOKEY
+# tracking_system: file-system
+# story_location: F:/dev/website/resto-qr-hub/_bmad-output/implementation-artifacts
+
+# STATUS DEFINITIONS:
+# ==================
+# Epic Status:
+#   - backlog: Epic not yet started
+#   - in-progress: Epic actively being worked on
+#   - done: All stories in epic completed
+#
+# Epic Status Transitions:
+#   - backlog -> in-progress: Automatically when first story is created (via create-story)
+#   - in-progress -> done: Manually when all stories reach 'done' status
+#
+# Story Status:
+#   - backlog: Story only exists in epic file
+#   - ready-for-dev: Story file created in stories folder
+#   - in-progress: Developer actively working on implementation
+#   - review: Ready for code review (via Dev's code-review workflow)
+#   - done: Story completed
+#
+# Retrospective Status:
+#   - optional: Can be completed but not required
+#   - done: Retrospective has been completed
+#
+# WORKFLOW NOTES:
+# ===============
+# - Epic transitions to 'in-progress' automatically when first story is created
+# - Stories can be worked in parallel if team capacity allows
+# - Developer typically creates next story after previous one is 'done' to incorporate learnings
+# - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
+
+generated: 2026-05-07T09:44:00+08:00
+last_updated: 2026-05-07T09:48:32+08:00
+project: qr-resto-hub
+project_key: NOKEY
+tracking_system: file-system
+story_location: F:/dev/website/resto-qr-hub/_bmad-output/implementation-artifacts
+
+development_status:
+  epic-1: in-progress
+  1-1-scaffold-cloudflare-astro-platform-foundation: ready-for-dev
+  1-2-establish-ddd-api-middleware-lib-utils-and-component-structure: backlog
+  1-3-configure-remote-first-d1-schema-and-migrations-for-platform-accounts: backlog
+  1-4-seed-unique-super-admin-and-implement-dashboard-authentication: backlog
+  1-5-enforce-role-based-and-tenant-scoped-authorization: backlog
+  1-6-manage-platform-admin-accounts-as-super-admin: backlog
+  1-7-manage-restaurant-admin-accounts-as-platform-admin: backlog
+  1-8-manage-restaurant-profile-and-operational-settings: backlog
+  epic-1-retrospective: optional
+  epic-2: backlog
+  2-1-manage-menu-categories: backlog
+  2-2-create-and-manage-dishes-under-categories: backlog
+  2-3-upload-and-manage-dish-images-in-r2: backlog
+  2-4-manage-dish-stock-visibility: backlog
+  2-5-manage-dish-add-ons: backlog
+  2-6-expose-menu-data-for-customer-ordering: backlog
+  epic-2-retrospective: optional
+  epic-3: backlog
+  3-1-manage-restaurant-tables: backlog
+  3-2-manage-chairs-and-group-them-under-tables: backlog
+  3-3-move-chairs-between-tables: backlog
+  3-4-generate-table-and-chair-qr-codes: backlog
+  3-5-download-copy-print-archive-and-regenerate-qr-access: backlog
+  3-6-resolve-qr-links-to-customer-context: backlog
+  3-7-protect-reusable-qr-privacy-with-separate-order-tokens: backlog
+  epic-3-retrospective: optional
+  epic-4: backlog
+  4-1-render-mobile-first-qr-customer-menu: backlog
+  4-2-view-dish-details-and-select-available-items: backlog
+  4-3-prevent-unavailable-item-and-add-on-selection: backlog
+  4-4-manage-cart-and-order-note-before-submission: backlog
+  4-5-submit-anonymous-order-with-snapshot-pricing: backlog
+  4-6-view-submitted-order-status-by-anonymous-order-token: backlog
+  4-7-handle-customer-friendly-qr-menu-submission-errors: backlog
+  epic-4-retrospective: optional
+  epic-5: backlog
+  5-1-model-order-status-transition-domain-rules: backlog
+  5-2-build-restaurant-admin-active-order-board: backlog
+  5-3-move-orders-by-button-and-drag-drop-with-rollback: backlog
+  5-4-view-active-order-details-and-complete-eligible-orders: backlog
+  5-5-customer-pending-cancellation: backlog
+  5-6-customer-payment-request-from-to-serve: backlog
+  5-7-durable-object-live-order-events-and-board-sync: backlog
+  5-8-reconnect-resync-and-duplicate-event-protection: backlog
+  epic-5-retrospective: optional
+  epic-6: backlog
+  6-1-persist-completed-orders-into-history: backlog
+  6-2-view-completed-order-history: backlog
+  6-3-filter-and-inspect-completed-orders-by-date-range: backlog
+  6-4-view-restaurant-order-statistics: backlog
+  epic-6-retrospective: optional
+  epic-7: backlog
+  7-1-view-free-paid-entitlement-and-ads-state: backlog
+  7-2-start-php-100-month-no-ads-subscription-through-paymongo: backlog
+  7-3-process-paymongo-subscription-webhooks-idempotently: backlog
+  7-4-restore-ads-when-subscription-ends-or-fails: backlog
+  7-5-display-non-intrusive-free-tier-ads: backlog
+  7-6-detect-ad-blocking-and-show-recovery-modal: backlog
+  7-7-bypass-ads-and-ad-block-enforcement-for-paid-tenants: backlog
+  epic-7-retrospective: optional
+  epic-8: backlog
+  8-1-validate-and-complete-audit-coverage-across-sensitive-actions: backlog
+  8-2-validate-standardized-forbidden-and-error-responses: backlog
+  8-3-harden-tenant-data-governance-and-retention: backlog
+  8-4-validate-operational-logging-for-critical-integration-and-live-failures: backlog
+  epic-8-retrospective: optional

@@ -1,6 +1,6 @@
 ---
 validationTarget: '_bmad-output/planning-artifacts/prd.md'
-validationDate: '2026-05-06'
+validationDate: '2026-05-07'
 inputDocuments:
   - 'docs/qr-restaurant-ordering-platform-prd.md'
   - 'docs/ui-design.md'
@@ -8,16 +8,16 @@ inputDocuments:
   - 'docs/reference-inspiration.md'
   - 'docs/reference-inspiration-2-google-stitch.md'
   - '_bmad-output/project-context.md'
-validationStepsCompleted: ['step-v-01-discovery', 'step-v-02-format-detection', 'step-v-03-density-validation', 'step-v-04-brief-coverage-validation', 'step-v-05-measurability-validation', 'step-v-06-traceability-validation', 'step-v-07-implementation-leakage-validation', 'step-v-08-domain-compliance-validation', 'step-v-09-project-type-validation']
-validationStatus: IN_PROGRESS
+validationStepsCompleted: ['step-v-01-discovery', 'step-v-02-format-detection', 'step-v-03-density-validation', 'step-v-04-brief-coverage-validation', 'step-v-05-measurability-validation', 'step-v-06-traceability-validation', 'step-v-07-implementation-leakage-validation', 'step-v-08-domain-compliance-validation', 'step-v-09-project-type-validation', 'step-v-10-smart-validation', 'step-v-11-holistic-quality-validation', 'step-v-12-completeness-validation']
+validationStatus: COMPLETE
+holisticQualityRating: '5/5 - Excellent'
+overallStatus: 'Warning'
 ---
-
-> **Continuation Note for Future AI:** Validation was intentionally paused because Mr. JRW needed to clock out. Resume the BMAD PRD validation from `step-v-10-smart-validation.md` using `_bmad-output/planning-artifacts/prd.md` as the target PRD. Completed validation steps are listed in frontmatter. Do not restart from scratch unless the user asks.
 
 # PRD Validation Report
 
 **PRD Being Validated:** `_bmad-output/planning-artifacts/prd.md`
-**Validation Date:** 2026-05-06
+**Validation Date:** 2026-05-07
 
 ## Input Documents
 
@@ -278,3 +278,263 @@ The PRD intentionally includes Cloudflare, Elysia, TypeBox, OpenAPI/Swagger, Tai
 **Severity:** Pass
 
 **Recommendation:** All required sections for the primary SaaS B2B project type are present. Consider adding a brief browser support/SEO stance and rate-limit policy later for the secondary `web_app` and `api_backend` lenses.
+
+## SMART Requirements Validation
+
+**Total Functional Requirements:** 85
+
+### Scoring Summary
+
+**All scores >= 3:** 100% (85/85)
+**All scores >= 4:** 100% (85/85)
+**Overall Average Score:** 4.94/5.0
+
+### Scoring Table
+
+| FR # | Specific | Measurable | Attainable | Relevant | Traceable | Average | Flag |
+|------|----------|------------|------------|----------|-----------|---------|------|
+| FR1 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR2 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR3 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR4 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR5 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR6 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR7 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR8 | 4 | 4 | 5 | 5 | 5 | 4.6 |  |
+| FR9 | 4 | 4 | 5 | 5 | 5 | 4.6 |  |
+| FR10 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR11 | 4 | 5 | 5 | 5 | 5 | 4.8 |  |
+| FR12 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR13 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR14 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR15 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR16 | 4 | 5 | 5 | 5 | 5 | 4.8 |  |
+| FR17 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR18 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR19 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR20 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR21 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR22 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR23 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR24 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR25 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR26 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR27 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR28 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR29 | 4 | 5 | 5 | 5 | 5 | 4.8 |  |
+| FR30 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR31 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR32 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR33 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR34 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR35 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR36 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR37 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR38 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR39 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR40 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR41 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR42 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR43 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR44 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR45 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR46 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR47 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR48 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR49 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR50 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR51 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR52 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR53 | 4 | 4 | 5 | 5 | 5 | 4.6 |  |
+| FR54 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR55 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR56 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR57 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR58 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR59 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR60 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR61 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR62 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR63 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR64 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR65 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR66 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR67 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR68 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR69 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR70 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR71 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR72 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR73 | 4 | 4 | 5 | 5 | 5 | 4.6 |  |
+| FR74 | 4 | 4 | 5 | 5 | 5 | 4.6 |  |
+| FR75 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR76 | 4 | 5 | 5 | 5 | 5 | 4.8 |  |
+| FR77 | 5 | 5 | 5 | 4 | 4 | 4.6 |  |
+| FR78 | 4 | 4 | 5 | 5 | 5 | 4.6 |  |
+| FR79 | 4 | 5 | 5 | 5 | 5 | 4.8 |  |
+| FR80 | 4 | 5 | 5 | 4 | 4 | 4.4 |  |
+| FR81 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+| FR82 | 4 | 5 | 5 | 5 | 5 | 4.8 |  |
+| FR83 | 4 | 5 | 5 | 5 | 5 | 4.8 |  |
+| FR84 | 4 | 5 | 5 | 5 | 5 | 4.8 |  |
+| FR85 | 5 | 5 | 5 | 5 | 5 | 5.0 |  |
+
+**Legend:** 1=Poor, 3=Acceptable, 5=Excellent
+**Flag:** X = Score < 3 in one or more categories
+
+### Improvement Suggestions
+
+**Low-Scoring FRs:** None.
+
+No FR scored below 3 in any SMART category. Minor refinement opportunities remain for broad operational wording such as audit-relevant events, restaurant operational settings, reconnection behavior, and implementation-specific asset/data requirements, but these are advisory refinements rather than SMART failures.
+
+### Overall Assessment
+
+**Severity:** Pass
+
+**Recommendation:** Functional Requirements demonstrate good SMART quality overall.
+
+## Holistic Quality Assessment
+
+### Document Flow & Coherence
+
+**Assessment:** Excellent
+
+**Strengths:**
+- The document tells a coherent product story: frictionless QR ordering, real-time restaurant operations, tenant-safe SaaS administration, and subscription/ad monetization all reinforce the same MVP value loop.
+- User journeys translate naturally into capability areas, and the capability areas map cleanly into FR groups and NFR expectations.
+- The PRD clearly distinguishes offline food-order payment request status from PayMongo subscription billing, preventing a common product/implementation misunderstanding.
+- The phased scope is practical: MVP preserves the full operating loop while pushing analytics depth, advanced staff models, templates, integrations, and loyalty features into later phases.
+- The current visual direction is explicit enough to guide UX while preserving operational density for admin surfaces.
+
+**Areas for Improvement:**
+- A few NFR targets should name measurement methods so acceptance is easier during QA and implementation review.
+- Provider/platform constraints such as R2 storage and D1 migration behavior are useful, but they read cleaner in NFR Integration, Architecture, or implementation standards than in FRs.
+- Secondary web/API lenses could be sharpened with a compact browser support/SEO stance and rate-limit policy, even if detailed endpoint catalogs remain in Architecture or stories.
+
+### Dual Audience Effectiveness
+
+**For Humans:**
+- Executive-friendly: Excellent. The business model, target users, differentiators, and success signals are understandable early in the document.
+- Developer clarity: Excellent. Domain rules, status transitions, role boundaries, tenant isolation, integrations, and architecture constraints are explicit.
+- Designer clarity: Good. User journeys and visual direction are strong; acceptance criteria for visual density and scanning could be made more objective.
+- Stakeholder decision-making: Excellent. MVP, post-MVP, future scope, risks, and exclusions are clear enough to support trade-off decisions.
+
+**For LLMs:**
+- Machine-readable structure: Excellent. Numbered FRs, grouped NFRs, classification metadata, and consistent markdown sections are LLM-friendly.
+- UX readiness: Good. Customer/admin journeys and visual direction provide strong design input; browser/SEO and measurable UX-density criteria would improve automated UX generation.
+- Architecture readiness: Excellent. Integration, maintainability, DDD, Cloudflare, Elysia, TypeBox, and layering constraints are explicit.
+- Epic/Story readiness: Excellent. The FR groups naturally decompose into epics and implementation stories.
+
+**Dual Audience Score:** 4.8/5
+
+### BMAD PRD Principles Compliance
+
+| Principle | Status | Notes |
+|-----------|--------|-------|
+| Information Density | Met | Prior density check found no filler, wordy phrases, or redundant phrases. |
+| Measurability | Partial | FRs are strong, but several NFRs need explicit measurement methods or acceptance thresholds. |
+| Traceability | Met | Executive goals, success criteria, journeys, scope, and FRs form an intact chain with no orphan FRs. |
+| Domain Awareness | Met | Restaurant operations, QR session reuse, anonymous ordering, order states, tenant isolation, ads, and offline bill request behavior are handled explicitly. |
+| Zero Anti-Patterns | Met | No major PRD anti-patterns were found; implementation terms are intentional constraints, with two placement refinements recommended. |
+| Dual Audience | Met | The PRD works for executives, product/design stakeholders, engineers, and LLM-based planning workflows. |
+| Markdown Format | Met | BMAD standard sections, frontmatter, grouped requirements, and clear headings are present. |
+
+**Principles Met:** 6/7
+
+### Overall Quality Rating
+
+**Rating:** 5/5 - Excellent
+
+**Scale:**
+- 5/5 - Excellent: Exemplary, ready for production use
+- 4/5 - Good: Strong with minor improvements needed
+- 3/5 - Adequate: Acceptable but needs refinement
+- 2/5 - Needs Work: Significant gaps or issues
+- 1/5 - Problematic: Major flaws, needs substantial revision
+
+### Top 3 Improvements
+
+1. **Add NFR measurement methods**
+   Add the expected QA or telemetry method for performance/live-update targets, such as synthetic mobile 4G tests, WebPageTest/Lighthouse, integration timing tests, or production telemetry checks. This turns already-good metrics into implementation-ready acceptance checks.
+
+2. **Relocate provider-specific FR details**
+   Reword FR77 and FR80 as product capabilities in FRs, then keep R2 and D1 specifics in NFR Integration, Architecture, and implementation standards. This preserves required platform constraints while keeping FRs capability-focused.
+
+3. **Strengthen secondary web/API lens criteria**
+   Add a short browser support/SEO stance and a rate-limit policy summary. This does not need to become a full endpoint catalog, but it would close the remaining advisory gaps for `web_app` and `api_backend` readiness.
+
+### Summary
+
+**This PRD is:** A strong, production-ready planning artifact with excellent traceability, clear domain rules, and unusually good readiness for both human stakeholders and LLM implementation workflows.
+
+**To make it great:** Focus on the top 3 improvements above.
+
+## Completeness Validation
+
+### Template Completeness
+
+**Template Variables Found:** 0
+
+No template variables remaining.
+
+### Content Completeness by Section
+
+**Executive Summary:** Complete
+
+**Success Criteria:** Complete
+
+**Product Scope:** Complete
+
+**User Journeys:** Complete
+
+**Functional Requirements:** Complete
+
+**Non-Functional Requirements:** Complete
+
+**Project Classification:** Complete
+
+**Domain-Specific Requirements:** Complete
+
+**B2B SaaS Web App Specific Requirements:** Complete
+
+**Project Scoping & Phased Development:** Complete
+
+### Section-Specific Completeness
+
+**Success Criteria Measurability:** All measurable
+
+Success criteria include concrete adoption, completion, subscription, order movement, latency, isolation, billing, migration, and asset-storage criteria.
+
+**User Journeys Coverage:** Yes - covers all user types
+
+The journeys cover Customer, Restaurant Admin, Platform Admin, and Super Admin workflows, including both happy paths and cancellation conflict behavior.
+
+**FRs Cover MVP Scope:** Yes
+
+FR1-FR85 cover account roles, tenant setup, menu/stock, seating/QR, anonymous ordering, live operations, dashboard/statistics, subscription/ads, live resilience, asset/data management, and access/error handling.
+
+**NFRs Have Specific Criteria:** Some
+
+Most NFRs include clear criteria, metrics, or operational constraints. Minor specificity gaps remain where earlier validation identified missing measurement methods for performance/live-update targets and subjective visual/operational-density language.
+
+### Frontmatter Completeness
+
+**stepsCompleted:** Present
+**classification:** Present
+**inputDocuments:** Present
+**date:** Present
+
+**Frontmatter Completeness:** 4/4
+
+### Completeness Summary
+
+**Overall Completeness:** 93% (14/15)
+
+**Critical Gaps:** 0
+**Minor Gaps:** 1
+- Some NFR criteria need stronger measurement methods or explicit acceptance references.
+
+**Severity:** Warning
+
+**Recommendation:** PRD has minor completeness gaps. Address minor gaps for complete documentation.
