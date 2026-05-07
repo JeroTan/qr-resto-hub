@@ -1,0 +1,53 @@
+{
+  "name": "qr-resto-hub",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "typecheck": "astro check",
+    "test": "vitest run",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "generate-types": "wrangler types",
+    "wrangler-types": "wrangler types",
+    "predeploy:dev": "npm run build",
+    "deploy:dev": "wrangler deploy dist/server/entry.mjs --config wrangler.jsonc --env dev",
+    "deploy:dev:dry-run": "npm run build && wrangler deploy dist/server/entry.mjs --config wrangler.jsonc --env dev --dry-run",
+    "predeploy:prod": "npm run build",
+    "deploy:prod": "wrangler deploy dist/server/entry.mjs --config wrangler.jsonc --env prod",
+    "deploy:prod:dry-run": "npm run build && wrangler deploy dist/server/entry.mjs --config wrangler.jsonc --env prod --dry-run",
+    "db:migrate:dev": "wrangler d1 migrations apply qr-resto-hub-dev --env dev --remote",
+    "db:migrate:prod": "wrangler d1 migrations apply qr-resto-hub-prod --env prod --remote"
+  },
+  "dependencies": {
+    "@astrojs/cloudflare": "^13.3.1",
+    "@astrojs/react": "^5.0.4",
+    "@elysiajs/openapi": "^1.4.15",
+    "@sinclair/typebox": "^0.34.49",
+    "@tailwindcss/vite": "^4.2.4",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "astro": "^6.2.2",
+    "drizzle-orm": "^0.45.2",
+    "elysia": "^1.4.28",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "tailwindcss": "^4.2.4",
+    "wrangler": "^4.88.0",
+    "zod": "^4.4.3"
+  },
+  "overrides": {
+    "vite": "^7"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "@cloudflare/workers-types": "^4.20260507.1",
+    "drizzle-kit": "^0.31.10",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.5"
+  }
+}

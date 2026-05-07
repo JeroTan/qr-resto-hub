@@ -1,6 +1,6 @@
 # Story 1.1: Scaffold Cloudflare Astro Platform Foundation
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 
@@ -19,29 +19,29 @@ so that all future features follow the approved architecture from the start.
 
 ## Tasks / Subtasks
 
-- [ ] Scaffold the Cloudflare Astro starter without deleting planning artifacts. (AC: 1)
-  - [ ] Preserve `.agents/**`, `_bmad/**`, `_bmad-output/**`, `docs/**`, `.github/**`, and `.gitignore`.
-  - [ ] If the C3 command wants an empty target directory, scaffold into a temporary sibling/subfolder, then merge only source/config files into the repo.
-  - [ ] Remove generic starter content that conflicts with QR Resto Hub naming, but do not remove planning artifacts.
-- [ ] Add the required runtime and development dependencies. (AC: 2, 3)
-  - [ ] Add Astro Cloudflare support, React, Tailwind CSS v4 with `@tailwindcss/vite`, Elysia, `@elysiajs/openapi`, TypeBox support through Elysia `t`, Drizzle ORM, Drizzle Kit, Vitest, Wrangler, and Cloudflare worker types.
-  - [ ] Use Zod only if needed for non-Elysia validation/config parsing; do not use it as an API contract source.
-  - [ ] Do not install PayMongo checkout dependencies or create any customer payment checkout route.
-- [ ] Configure Cloudflare Workers bindings and deployment config. (AC: 2, 5)
-  - [ ] Configure `wrangler.jsonc` with D1, R2, and Durable Object placeholders using explicit `dev` and `prod` environments only.
-  - [ ] Add binding/type definitions so Worker runtime access is type-checkable.
-  - [ ] Add D1 migration commands that target only `dev` and `prod` remote databases; no local-only migration source of truth.
-- [ ] Configure build, typecheck, test, and deploy scripts. (AC: 4)
-  - [ ] `dev`: Astro dev server.
-  - [ ] `typecheck`: Astro/TypeScript checks.
-  - [ ] `test`: Vitest.
-  - [ ] `build`: Astro build for Cloudflare Workers.
-  - [ ] `deploy:dev` and `deploy:prod`: Wrangler deploys with explicit env selection.
-  - [ ] `db:migrate:dev` and `db:migrate:prod`: remote D1 migration apply commands.
-- [ ] Add minimal foundation smoke tests/checks. (AC: 1, 2, 4, 6)
-  - [ ] Add or verify a Vitest smoke test that runs in the scaffold.
-  - [ ] Run typecheck, tests, and build.
-  - [ ] Verify no `paymongo` customer checkout dependency, route, or script exists.
+- [x] Scaffold the Cloudflare Astro starter without deleting planning artifacts. (AC: 1)
+  - [x] Preserve `.agents/**`, `_bmad/**`, `_bmad-output/**`, `docs/**`, `.github/**`, and `.gitignore`.
+  - [x] If the C3 command wants an empty target directory, scaffold into a temporary sibling/subfolder, then merge only source/config files into the repo.
+  - [x] Remove generic starter content that conflicts with QR Resto Hub naming, but do not remove planning artifacts.
+- [x] Add the required runtime and development dependencies. (AC: 2, 3)
+  - [x] Add Astro Cloudflare support, React, Tailwind CSS v4 with `@tailwindcss/vite`, Elysia, `@elysiajs/openapi`, TypeBox support through Elysia `t`, Drizzle ORM, Drizzle Kit, Vitest, Wrangler, and Cloudflare worker types.
+  - [x] Use Zod only if needed for non-Elysia validation/config parsing; do not use it as an API contract source.
+  - [x] Do not install PayMongo checkout dependencies or create any customer payment checkout route.
+- [x] Configure Cloudflare Workers bindings and deployment config. (AC: 2, 5)
+  - [x] Configure `wrangler.jsonc` with D1, R2, and Durable Object placeholders using explicit `dev` and `prod` environments only.
+  - [x] Add binding/type definitions so Worker runtime access is type-checkable.
+  - [x] Add D1 migration commands that target only `dev` and `prod` remote databases; no local-only migration source of truth.
+- [x] Configure build, typecheck, test, and deploy scripts. (AC: 4)
+  - [x] `dev`: Astro dev server.
+  - [x] `typecheck`: Astro/TypeScript checks.
+  - [x] `test`: Vitest.
+  - [x] `build`: Astro build for Cloudflare Workers.
+  - [x] `deploy:dev` and `deploy:prod`: Wrangler deploys with explicit env selection.
+  - [x] `db:migrate:dev` and `db:migrate:prod`: remote D1 migration apply commands.
+- [x] Add minimal foundation smoke tests/checks. (AC: 1, 2, 4, 6)
+  - [x] Add or verify a Vitest smoke test that runs in the scaffold.
+  - [x] Run typecheck, tests, and build.
+  - [x] Verify no `paymongo` customer checkout dependency, route, or script exists.
 
 ## Dev Notes
 
@@ -159,13 +159,58 @@ Existing dirty planning artifact changes may be present in git and must not be r
 
 ### Agent Model Used
 
-TBD by dev agent.
+Codex (GPT-5)
 
 ### Debug Log References
+
+- 2026-05-07T09:57:51+08:00 - Started dev-story implementation for scaffold foundation.
+- 2026-05-07T10:27:00+08:00 - Official Astro minimal scaffold generated in `astro-scaffold`, then merged into repository root per user instruction.
+- 2026-05-07T10:33:00+08:00 - Official `astro add react`, `astro add tailwind`, and `astro add cloudflare` integrations completed.
+- 2026-05-07T10:45:00+08:00 - Added required Elysia/OpenAPI, Drizzle, Vitest, Wrangler, TypeScript, and Worker type dependencies.
+- 2026-05-07T10:56:00+08:00 - Final validation passed: `npm run typecheck`, `npm test`, `npm run build`, `npm run deploy:dev:dry-run`, and `npm run deploy:prod:dry-run`.
+- 2026-05-07T10:56:00+08:00 - `rg -i "paymongo|checkout"` across implementation/config files returned no matches.
+- 2026-05-07T10:57:00+08:00 - `npm audit --audit-level=high` returned no high-severity findings; 9 moderate transitive advisories remain where npm recommends breaking `--force` changes.
+
+### Implementation Plan
+
+- Preserve existing planning artifacts while introducing a minimal Astro + Cloudflare Workers scaffold.
+- Add required runtime/tooling dependencies and root configs only; defer full DDD/source layout to Story 1.2.
+- Configure Wrangler placeholders for `dev` and `prod` D1/R2/Durable Object bindings only.
+- Verify with typecheck, Vitest, build, and PayMongo checkout absence search.
 
 ### Completion Notes List
 
 - Story context created by BMad create-story workflow.
 - Ultimate context engine analysis completed - comprehensive developer guide created.
+- Scaffolded the Astro foundation with official Astro installer/integration commands wherever possible.
+- Configured React, Tailwind CSS v4, Cloudflare adapter, Elysia/OpenAPI, Drizzle, Vitest, Wrangler, D1/R2/Durable Object bindings, and generated Worker runtime types.
+- Added direct built-entry deploy scripts plus explicit dry-run scripts so `dev` and `prod` deployments carry the configured D1/R2/Durable Object bindings.
+- Verified typecheck, test, build, dev dry-run, prod dry-run, and absence of customer food-order PayMongo checkout references.
 
 ### File List
+
+- .gitignore
+- .vscode/extensions.json
+- .vscode/launch.json
+- README.md
+- astro.config.mjs
+- drizzle.config.ts
+- package-lock.json
+- package.json
+- public/favicon.ico
+- public/favicon.svg
+- src/foundation.test.ts
+- src/pages/index.astro
+- src/server/db/schema.ts
+- src/styles/global.css
+- src/worker.ts
+- tsconfig.json
+- vitest.config.ts
+- worker-configuration.d.ts
+- wrangler.jsonc
+- _bmad-output/implementation-artifacts/1-1-scaffold-cloudflare-astro-platform-foundation.md
+- _bmad-output/implementation-artifacts/sprint-status.yaml
+
+### Change Log
+
+- 2026-05-07: Implemented Story 1.1 scaffold foundation and moved story to review.
