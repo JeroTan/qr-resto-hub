@@ -1,75 +1,75 @@
 {
-	"compatibility_date": "2026-05-07",
-	"compatibility_flags": ["global_fetch_strictly_public"],
-	"name": "qr-resto-hub",
-	"main": "./src/worker.ts",
-	"assets": {
-		"directory": "./dist/client",
-		"binding": "ASSETS"
-	},
-	"observability": {
-		"enabled": true
-	},
-	"migrations": [
-		{
-			"tag": "v1",
-			"new_sqlite_classes": ["OrderLiveCoordinator"]
-		}
-	],
-	"env": {
-		"dev": {
-			"name": "qr-resto-hub-dev",
-			"d1_databases": [
-				{
-					"binding": "DB",
-					"database_name": "qr-resto-hub-dev",
-					"database_id": "73d707cf-3ff0-4e62-8898-9e52fd47c186",
-					"migrations_dir": "drizzle/migrations",
-					"remote": true,
-				}
-			],
-			"r2_buckets": [
-				{
-					"binding": "ASSET_BUCKET",
-					"bucket_name": "qr-resto-hub-dev-assets",
-					"remote": true
-				}
-			],
-			"durable_objects": {
-				"bindings": [
-					{
-						"name": "ORDER_LIVE_COORDINATOR",
-						"class_name": "OrderLiveCoordinator"
-					}
-				]
-			}
-		},
-		"prod": {
-			"name": "qr-resto-hub-prod",
-			"d1_databases": [
-				{
-					"binding": "DB",
-					"database_name": "qr-resto-hub-prod",
-					"database_id": "60942055-86bd-4efd-b058-5e7fe6f3a845",
-					"migrations_dir": "drizzle/migrations",
-					"remote": true
-				}
-			],
-			"r2_buckets": [
-				{
-					"binding": "ASSET_BUCKET",
-					"bucket_name": "qr-resto-hub-prod-assets",
-					"remote": true
-				}
-			],
-			"durable_objects": {
-				"bindings": [
-					{
-						"name": "ORDER_LIVE_COORDINATOR",
-						"class_name": "OrderLiveCoordinator"
-					}
-				]
-			}
-		}
-	}
+  "compatibility_date": "2026-05-07",
+  "compatibility_flags": ["global_fetch_strictly_public", "nodejs_compat"],
+  "name": "qr-resto-hub",
+  "main": "./src/worker.ts",
+  "assets": {
+    "directory": "./dist/client",
+    "binding": "ASSETS",
+  },
+  "observability": {
+    "enabled": true,
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["OrderLiveCoordinator"],
+    },
+  ],
+  "env": {
+    "dev": {
+      "name": "qr-resto-hub-dev",
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "qr-resto-hub-dev",
+          "database_id": "73d707cf-3ff0-4e62-8898-9e52fd47c186",
+          "migrations_dir": "drizzle/migrations",
+          "remote": true,
+        },
+      ],
+      "r2_buckets": [
+        {
+          "binding": "ASSET_BUCKET",
+          "bucket_name": "qr-resto-hub-dev-assets",
+          "remote": true,
+        },
+      ],
+      "durable_objects": {
+        "bindings": [
+          {
+            "name": "ORDER_LIVE_COORDINATOR",
+            "class_name": "OrderLiveCoordinator",
+          },
+        ],
+      },
+    },
+    "prod": {
+      "name": "qr-resto-hub-prod",
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "qr-resto-hub-prod",
+          "database_id": "60942055-86bd-4efd-b058-5e7fe6f3a845",
+          "migrations_dir": "drizzle/migrations",
+          "remote": true,
+        },
+      ],
+      "r2_buckets": [
+        {
+          "binding": "ASSET_BUCKET",
+          "bucket_name": "qr-resto-hub-prod-assets",
+          "remote": true,
+        },
+      ],
+      "durable_objects": {
+        "bindings": [
+          {
+            "name": "ORDER_LIVE_COORDINATOR",
+            "class_name": "OrderLiveCoordinator",
+          },
+        ],
+      },
+    },
+  },
 }
