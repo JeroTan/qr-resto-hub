@@ -499,6 +499,7 @@ So that protected dashboards are accessible only to valid platform users.
 **And** invalid credentials fail without exposing whether an email/account exists
 **And** password hashing is Workers-compatible and uses per-user salts plus configured secret pepper
 **And** JWT signing and verification helpers use `jose` so token utilities work in the Cloudflare Workers runtime
+**And** seed and auth configuration use documented environment variables: `SEED_SUPER_ADMIN_EMAIL`, `SEED_SUPER_ADMIN_PASSWORD`, `AUTH_PASSWORD_PEPPER`, and `JWT_SECRET`
 **And** Restaurant Admin, Platform Admin, and Super Admin sessions can be resolved server-side for protected requests
 **And** authentication failures and login events are audit-ready.
 

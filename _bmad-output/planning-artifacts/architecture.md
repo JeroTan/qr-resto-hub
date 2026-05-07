@@ -189,6 +189,8 @@ Dashboard users use custom email/password authentication with D1-backed sessions
 
 JWT signing and verification helpers must use `jose` rather than Node-only JWT libraries so auth-related token utilities continue to run inside Cloudflare Workers. These helpers belong under `src/lib/crypto/**` and must expose safe error results without leaking token internals to public responses.
 
+Authentication and seed configuration must be provided through environment variables. The Super Admin seed reads `SEED_SUPER_ADMIN_EMAIL` and `SEED_SUPER_ADMIN_PASSWORD`. Password hashing reads `AUTH_PASSWORD_PEPPER`, a deployment secret that is combined with each user's password in addition to the per-user stored salt. JWT helpers read `JWT_SECRET` when auth-related token signing or verification is needed. These values must be placeholders only in `.env.example` and real secrets in local or deployed environments.
+
 Super Admin is seeded and unique. Platform Admins manage Restaurant Admin accounts only. Restaurant Admins are scoped to exactly one restaurant tenant in MVP. Customer sessions remain anonymous and use QR tokens plus separate per-order anonymous order tokens.
 
 Authorization must be enforced server-side through role and tenant guards before service actions execute. Customer food-order PayMongo checkout is forbidden in MVP.
