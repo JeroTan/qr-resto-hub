@@ -1,6 +1,6 @@
 # Story 1.2: Establish DDD, API, Middleware, Lib, Utils, and Component Structure
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 
@@ -29,54 +29,54 @@ so that implementation remains consistent for future development work.
 
 ## Tasks / Subtasks
 
-- [ ] Add red tests that lock source boundaries before creating implementation files. (AC: 1-14)
-  - [ ] Verify required directories exist for domain, server layers, middleware, features, shared components, `src/lib`, `src/utils`, and `src/test/fixtures`.
-  - [ ] Verify API helper tests cover success envelopes, error envelopes, forbidden mapping, public-safe error messages, request ID behavior, and OpenAPI error metadata.
-  - [ ] Verify route composition tests prove categorized `src/server/routes/**` files document endpoint contracts, delegate to controllers, and do not inline service/domain logic.
-  - [ ] Verify middleware composition order and exports cover request ID, error boundary, auth session, tenant context, role guard, and ad entitlement.
-- [ ] Create the source tree skeleton without moving or deleting existing scaffold files. (AC: 1, 7, 8)
-  - [ ] Keep `src/pages/index.astro`, `src/styles/global.css`, `src/worker.ts`, and existing tests working.
-  - [ ] Create feature folders: `customer-ordering`, `restaurant-orders`, `menu-management`, `seating-qr`, `subscriptions-ads`, `platform-admin`, and `super-admin`, each with `api`, `components`, `hooks`, and `types`.
-  - [ ] Create domain folders: `auth`, `tenants`, `menu`, `seating`, `orders`, `subscriptions`, and `audit`.
-  - [ ] Create shared component folders: `ui`, `layouts`, `feedback`, `navigation`, and `data-display`.
-  - [ ] Create integration wrapper folders: `src/lib/ads`, `src/lib/cloudflare`, `src/lib/paymongo`, `src/lib/qr`, and `src/lib/r2`.
-  - [ ] Create `src/utils` for atomic helpers and `src/test/fixtures` for shared test fixtures.
-- [ ] Add Elysia API composition and route contract foundation. (AC: 2-8, 11-13)
-  - [ ] Refactor the user-added `src/pages/api/[...slug].ts` catch-all into a build-safe Astro API bridge for Elysia; the bridge must only mount/delegate to the composed Elysia app and must not trigger Astro static `getStaticPaths()` errors during `npm run build`.
-  - [ ] Add `src/server/app.ts` that composes Elysia, OpenAPI, and route modules, then have the Astro API bridge delegate to that app.
-  - [ ] Keep the Elysia app initialized at module scope where possible, and inject per-request Astro data through scoped `derive` decorations.
-  - [ ] Keep typed decoration helpers for `urlData` and `astroCookies` under `src/lib/elysia/**`.
-  - [ ] Add categorized route modules under `src/server/routes/**` for auth, platform-admin, restaurant-admin, menu, seating-qr, customer-ordering, orders, subscriptions-ads, assets, and audit.
-  - [ ] In each route module, define only the endpoints owned by that feature area, including OpenAPI `detail` metadata and request/response schemas per endpoint.
-  - [ ] Add matching controller modules under `src/server/controllers/**`; routes must call controllers instead of services/domain modules directly.
-  - [ ] Add service/repository folder conventions and placeholder examples only where they prove the boundary.
-  - [ ] Add TypeBox/Elysia `t` schemas for a foundation health/metadata route and shared error response schemas.
-  - [ ] Reuse `src/lib/typebox/wrapper.ts` for Elysia contract helpers where it fits, correcting encoding or typing issues before reuse.
-  - [ ] Use `src/lib/zod/**` only for non-Elysia concerns; remove or quarantine any Zod API response wrappers that would create a parallel route contract system.
-- [ ] Add standardized API envelope and error utilities. (AC: 11-13)
-  - [ ] Implement typed success helper returning `{ data, meta }`.
-  - [ ] Implement typed error helper returning `{ error: { code, message, details } }`.
-  - [ ] Implement forbidden and public-safe error mapping with no leaked internal diagnostic detail.
-  - [ ] Implement request ID utility/middleware integration so later routes can propagate one request ID.
-  - [ ] Implement OpenAPI error response metadata helpers for route response maps.
-- [ ] Add audit and operational logging foundations. (AC: 14)
-  - [ ] Define an audit event writer interface under `src/domain/audit`.
-  - [ ] Define operational logger types/helpers under `src/server/services` or `src/utils` only if atomic.
-  - [ ] Include event categories for permission denials, auth failures, account changes, invalid transitions, provider failures, QR failures, R2 failures, and live reconnect failures.
-  - [ ] Keep these interfaces dependency-free from HTTP, D1, R2, Durable Objects, PayMongo, AdSense, and React.
-- [ ] Add middleware structure and composition. (AC: 1, 10)
-  - [ ] Add `src/middleware/index.ts` as the composition point.
-  - [ ] Add focused middleware files: `auth-session.ts`, `tenant-context.ts`, `role-guard.ts`, `ad-entitlement.ts`, `request-id.ts`, and `error-boundary.ts`.
-  - [ ] Ensure middleware can be tested independently and does not own business rules.
-- [ ] Add Tailwind v4 token foundation and minimal shared primitives. (AC: 15, 16)
-  - [ ] Define CSS-first Tailwind v4 tokens in `src/styles/global.css` using the documented UI direction.
-  - [ ] Add minimal primitives only where useful to prove structure, such as Button, Badge, and StatusBadge under `src/components/ui`.
-  - [ ] Keep primitives local, accessible, and not tied to Apple-specific branding, SF Pro, negative tracking, or sparse product-page composition.
-- [ ] Run verification and update the story record. (AC: 1-16)
-  - [ ] `npm test`
-  - [ ] `npm run typecheck`
-  - [ ] `npm run build`
-  - [ ] Search implementation/config files for forbidden customer food-order PayMongo checkout wiring.
+- [x] Add red tests that lock source boundaries before creating implementation files. (AC: 1-14)
+  - [x] Verify required directories exist for domain, server layers, middleware, features, shared components, `src/lib`, `src/utils`, and `src/test/fixtures`.
+  - [x] Verify API helper tests cover success envelopes, error envelopes, forbidden mapping, public-safe error messages, request ID behavior, and OpenAPI error metadata.
+  - [x] Verify route composition tests prove categorized `src/server/routes/**` files document endpoint contracts, delegate to controllers, and do not inline service/domain logic.
+  - [x] Verify middleware composition order and exports cover request ID, error boundary, auth session, tenant context, role guard, and ad entitlement.
+- [x] Create the source tree skeleton without moving or deleting existing scaffold files. (AC: 1, 7, 8)
+  - [x] Keep `src/pages/index.astro`, `src/styles/global.css`, `src/worker.ts`, and existing tests working.
+  - [x] Create feature folders: `customer-ordering`, `restaurant-orders`, `menu-management`, `seating-qr`, `subscriptions-ads`, `platform-admin`, and `super-admin`, each with `api`, `components`, `hooks`, and `types`.
+  - [x] Create domain folders: `auth`, `tenants`, `menu`, `seating`, `orders`, `subscriptions`, and `audit`.
+  - [x] Create shared component folders: `ui`, `layouts`, `feedback`, `navigation`, and `data-display`.
+  - [x] Create integration wrapper folders: `src/lib/ads`, `src/lib/cloudflare`, `src/lib/paymongo`, `src/lib/qr`, and `src/lib/r2`.
+  - [x] Create `src/utils` for atomic helpers and `src/test/fixtures` for shared test fixtures.
+- [x] Add Elysia API composition and route contract foundation. (AC: 2-8, 11-13)
+  - [x] Refactor the user-added `src/pages/api/[...slug].ts` catch-all into a build-safe Astro API bridge for Elysia; the bridge must only mount/delegate to the composed Elysia app and must not trigger Astro static `getStaticPaths()` errors during `npm run build`.
+  - [x] Add `src/server/app.ts` that composes Elysia, OpenAPI, and route modules, then have the Astro API bridge delegate to that app.
+  - [x] Keep the Elysia app initialized at module scope where possible, and inject per-request Astro data through scoped `derive` decorations.
+  - [x] Keep typed decoration helpers for `urlData` and `astroCookies` under `src/lib/elysia/**`.
+  - [x] Add categorized route modules under `src/server/routes/**` for auth, platform-admin, restaurant-admin, menu, seating-qr, customer-ordering, orders, subscriptions-ads, assets, and audit.
+  - [x] In each route module, define only the endpoints owned by that feature area, including OpenAPI `detail` metadata and request/response schemas per endpoint.
+  - [x] Add matching controller modules under `src/server/controllers/**`; routes must call controllers instead of services/domain modules directly.
+  - [x] Add service/repository folder conventions and placeholder examples only where they prove the boundary.
+  - [x] Add TypeBox/Elysia `t` schemas for a foundation health/metadata route and shared error response schemas.
+  - [x] Reuse `src/lib/typebox/wrapper.ts` for Elysia contract helpers where it fits, correcting encoding or typing issues before reuse.
+  - [x] Use `src/lib/zod/**` only for non-Elysia concerns; remove or quarantine any Zod API response wrappers that would create a parallel route contract system.
+- [x] Add standardized API envelope and error utilities. (AC: 11-13)
+  - [x] Implement typed success helper returning `{ data, meta }`.
+  - [x] Implement typed error helper returning `{ error: { code, message, details } }`.
+  - [x] Implement forbidden and public-safe error mapping with no leaked internal diagnostic detail.
+  - [x] Implement request ID utility/middleware integration so later routes can propagate one request ID.
+  - [x] Implement OpenAPI error response metadata helpers for route response maps.
+- [x] Add audit and operational logging foundations. (AC: 14)
+  - [x] Define an audit event writer interface under `src/domain/audit`.
+  - [x] Define operational logger types/helpers under `src/server/services` or `src/utils` only if atomic.
+  - [x] Include event categories for permission denials, auth failures, account changes, invalid transitions, provider failures, QR failures, R2 failures, and live reconnect failures.
+  - [x] Keep these interfaces dependency-free from HTTP, D1, R2, Durable Objects, PayMongo, AdSense, and React.
+- [x] Add middleware structure and composition. (AC: 1, 10)
+  - [x] Add `src/middleware/index.ts` as the composition point.
+  - [x] Add focused middleware files: `auth-session.ts`, `tenant-context.ts`, `role-guard.ts`, `ad-entitlement.ts`, `request-id.ts`, and `error-boundary.ts`.
+  - [x] Ensure middleware can be tested independently and does not own business rules.
+- [x] Add Tailwind v4 token foundation and minimal shared primitives. (AC: 15, 16)
+  - [x] Define CSS-first Tailwind v4 tokens in `src/styles/global.css` using the documented UI direction.
+  - [x] Add minimal primitives only where useful to prove structure, such as Button, Badge, and StatusBadge under `src/components/ui`.
+  - [x] Keep primitives local, accessible, and not tied to Apple-specific branding, SF Pro, negative tracking, or sparse product-page composition.
+- [x] Run verification and update the story record. (AC: 1-16)
+  - [x] `npm test`
+  - [x] `npm run typecheck`
+  - [x] `npm run build`
+  - [x] Search implementation/config files for forbidden customer food-order PayMongo checkout wiring.
 
 ## Dev Notes
 
@@ -263,9 +263,123 @@ Codex (GPT-5)
 
 ### Debug Log References
 
+- 2026-05-07T15:51:54+08:00 - Started dev-story implementation for Story 1.2.
+- 2026-05-07T15:54:55+08:00 - Confirmed Story 1.2 red tests failed before implementation.
+- 2026-05-07T16:01:52+08:00 - Story 1.2 guardrail test file passed after implementation.
+- 2026-05-07T16:11:49+08:00 - Final validation passed: `npm test`, `npm run typecheck`, `npm run build`, touched-file Prettier check, and checkout scan.
+
+### Implementation Plan
+
+- Add Vitest architecture guardrails first for source layout, API envelopes, route/controller boundaries, middleware order, audit/logging primitives, and UI token/primitives.
+- Preserve user-added `src/lib/**` wrappers, adapting public HTTP responses through `src/lib/api/response.ts` and TypeBox route schemas through `src/lib/typebox/api.ts`.
+- Move Elysia composition out of the Astro catch-all bridge into `src/server/app.ts`, leaving `src/pages/api/[...slug].ts` as transport only.
+- Add dependency-free audit/logging interfaces and focused middleware placeholders so later stories extend consistent boundaries.
+- Validate with tests, Astro typecheck, Cloudflare build, scoped formatting, and checkout wiring search.
+
 ### Completion Notes List
 
 - Story context created by BMad create-story workflow.
 - Ultimate context engine analysis completed - comprehensive developer guide created.
+- Added red/green Story 1.2 architecture guardrail tests covering required folders, API helpers, route/controller delegation, middleware, audit/logging, Tailwind tokens, and shared primitives.
+- Created the DDD/source skeleton for domain modules, server layers, route modules, middleware, feature folders, shared components, provider wrapper folders, utilities, and test fixtures.
+- Refactored the Astro API catch-all into a build-safe transport bridge delegating to `src/server/app.ts`.
+- Added Elysia/OpenAPI route composition with foundation health and feature metadata route modules that delegate to controllers.
+- Added standardized public API error helpers, request ID propagation, TypeBox OpenAPI error response helpers, audit event interfaces, and operational logger primitives.
+- Added Tailwind CSS v4 Modern Epicurean theme tokens and minimal Button, Badge, and StatusBadge primitives.
+- Validation passed: `npm test`, `npm run typecheck`, `npm run build`, touched-file Prettier check, and scoped forbidden customer checkout scan.
+- Repo-wide `npm run format:check` remains red from pre-existing docs/config/source formatting outside the Story 1.2 scope; touched Story 1.2 files pass Prettier.
 
 ### File List
+
+- _bmad-output/implementation-artifacts/1-2-establish-ddd-api-middleware-lib-utils-and-component-structure.md
+- _bmad-output/implementation-artifacts/sprint-status.yaml
+- src/components/data-display/.gitkeep
+- src/components/feedback/.gitkeep
+- src/components/layouts/.gitkeep
+- src/components/navigation/.gitkeep
+- src/components/ui/Badge.tsx
+- src/components/ui/Button.tsx
+- src/components/ui/StatusBadge.tsx
+- src/components/ui/index.ts
+- src/domain/audit/index.ts
+- src/domain/auth/.gitkeep
+- src/domain/menu/.gitkeep
+- src/domain/orders/.gitkeep
+- src/domain/seating/.gitkeep
+- src/domain/subscriptions/.gitkeep
+- src/domain/tenants/.gitkeep
+- src/features/customer-ordering/api/.gitkeep
+- src/features/customer-ordering/components/.gitkeep
+- src/features/customer-ordering/hooks/.gitkeep
+- src/features/customer-ordering/types/.gitkeep
+- src/features/menu-management/api/.gitkeep
+- src/features/menu-management/components/.gitkeep
+- src/features/menu-management/hooks/.gitkeep
+- src/features/menu-management/types/.gitkeep
+- src/features/platform-admin/api/.gitkeep
+- src/features/platform-admin/components/.gitkeep
+- src/features/platform-admin/hooks/.gitkeep
+- src/features/platform-admin/types/.gitkeep
+- src/features/restaurant-orders/api/.gitkeep
+- src/features/restaurant-orders/components/.gitkeep
+- src/features/restaurant-orders/hooks/.gitkeep
+- src/features/restaurant-orders/types/.gitkeep
+- src/features/seating-qr/api/.gitkeep
+- src/features/seating-qr/components/.gitkeep
+- src/features/seating-qr/hooks/.gitkeep
+- src/features/seating-qr/types/.gitkeep
+- src/features/subscriptions-ads/api/.gitkeep
+- src/features/subscriptions-ads/components/.gitkeep
+- src/features/subscriptions-ads/hooks/.gitkeep
+- src/features/subscriptions-ads/types/.gitkeep
+- src/features/super-admin/api/.gitkeep
+- src/features/super-admin/components/.gitkeep
+- src/features/super-admin/hooks/.gitkeep
+- src/features/super-admin/types/.gitkeep
+- src/lib/ads/.gitkeep
+- src/lib/api/errors.ts
+- src/lib/api/response.ts
+- src/lib/cloudflare/.gitkeep
+- src/lib/elysia/decorationTypes.ts
+- src/lib/paymongo/.gitkeep
+- src/lib/qr/.gitkeep
+- src/lib/r2/.gitkeep
+- src/lib/typebox/api.ts
+- src/lib/typebox/wrapper.ts
+- src/lib/zod/wrappers.ts
+- src/middleware/ad-entitlement.ts
+- src/middleware/auth-session.ts
+- src/middleware/error-boundary.ts
+- src/middleware/index.ts
+- src/middleware/request-id.ts
+- src/middleware/role-guard.ts
+- src/middleware/tenant-context.ts
+- src/pages/api/[...slug].ts
+- src/server/app.ts
+- src/server/controllers/feature-metadata.controller.ts
+- src/server/controllers/foundation.controller.ts
+- src/server/durable-objects/.gitkeep
+- src/server/openapi/tags.ts
+- src/server/repositories/.gitkeep
+- src/server/routes/assets.routes.ts
+- src/server/routes/audit.routes.ts
+- src/server/routes/auth.routes.ts
+- src/server/routes/customer-ordering.routes.ts
+- src/server/routes/feature-metadata-route.ts
+- src/server/routes/foundation.routes.ts
+- src/server/routes/index.ts
+- src/server/routes/menu.routes.ts
+- src/server/routes/orders.routes.ts
+- src/server/routes/platform-admin.routes.ts
+- src/server/routes/restaurant-admin.routes.ts
+- src/server/routes/seating-qr.routes.ts
+- src/server/routes/subscriptions-ads.routes.ts
+- src/server/services/operational-logger.ts
+- src/styles/global.css
+- src/test/fixtures/.gitkeep
+- src/utils/request-id.ts
+- tests/story-1-2-architecture.test.ts
+
+### Change Log
+
+- 2026-05-07: Implemented Story 1.2 DDD/API/middleware/lib/utils/component foundation and moved story to review.

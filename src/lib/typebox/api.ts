@@ -1,10 +1,7 @@
 import { t } from "elysia";
 import type { TSchema } from "@sinclair/typebox";
-import { ERROR_CODE } from "@/utils/general/error";
-import { SUCCESS_CODE } from "@/utils/general/success";
-
-export const tboxErrorCode = t.Union(ERROR_CODE.map((code) => t.Literal(code)));
-export const tboxSuccessCode = t.Union(SUCCESS_CODE.map((code) => t.Literal(code)));
+export const tboxErrorCode = t.String();
+export const tboxSuccessCode = t.String();
 
 export const tboxApiMeta = t.Object(
   {
@@ -36,9 +33,15 @@ export function tboxApiError<TDetailsSchema extends TSchema = ReturnType<typeof 
 export function tboxApiResponse<
   TDataSchema extends TSchema,
   TDetailsSchema extends TSchema = ReturnType<typeof t.Unknown>,
->(
-  dataSchema: TDataSchema,
-  detailsSchema?: TDetailsSchema,
-) {
+>(dataSchema: TDataSchema, detailsSchema?: TDetailsSchema) {
   return t.Union([tboxApiSuccess(dataSchema), tboxApiError(detailsSchema)]);
+}
+
+export type OpenApiErrorStatus = 400 | 401 | 403 | 404 | 409 | 413 | 415 | 429 | 500;
+
+export function openApiErrorResponses(statuses: readonly OpenApiErrorStatus[]) {
+  return Object.fromEntries(statuses.map((status) => [status, tboxApiError()])) as Record<
+    OpenApiErrorStatus,
+    ReturnType<typeof tboxApiError>
+  >;
 }

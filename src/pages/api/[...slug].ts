@@ -1,37 +1,16 @@
-import { Elysia } from "elysia";
-import { CloudflareAdapter } from "elysia/adapter/cloudflare-worker";
-import { openapi } from "@elysiajs/openapi";
 import type { APIRoute } from "astro";
-// import { ApiContainer } from " __ApiThatContainsSeparationsOfManyApiEndpoints__ ";
+import { createApp } from "@/server/app";
 
 export const prerender = false;
 
-// Initialize the app at the global scope for performance
-const app = new Elysia({
-  prefix: "/api",
-  adapter: CloudflareAdapter,
-  aot: false,
-  normalize: true,
-}).use(
-  openapi({
-    documentation: {
-      info: {
-        title: "",
-        version: "1.0.0",
-        description: "",
-      },
-    },
-  }),
-);
+const app = createApp();
 
 const handle: APIRoute = async (ctx) => {
-  // Use scoped derive to inject real Astro data into the global app instance
   return await app
     .derive({ as: "scoped" }, () => ({
       urlData: ctx.url,
       astroCookies: ctx.cookies,
     }))
-    // .use(ApiContainer)
     .handle(ctx.request);
 };
 

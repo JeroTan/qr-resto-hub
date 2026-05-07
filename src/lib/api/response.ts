@@ -1,6 +1,7 @@
 import { GeneralError, type ErrorCodeType } from "@/utils/general/error";
 import type { AppResult } from "@/utils/general/result";
 import type { SuccessCodeType } from "@/utils/general/success";
+import { publicErrorMessage } from "./errors";
 
 export type ApiMeta = {
   code?: SuccessCodeType;
@@ -58,8 +59,8 @@ export function resultToApiResponse<T, D = unknown>(
   const error = result.error;
   if (error instanceof GeneralError) {
     return options.exposeErrorDetails
-      ? apiError(error.code, error.message, error.data)
-      : apiError(error.code, error.message);
+      ? apiError(error.code, publicErrorMessage(error.code, error.message), error.data)
+      : apiError(error.code, publicErrorMessage(error.code, error.message));
   }
 
   return apiError("UNKNOWN", "An unknown error occurred.");

@@ -25,7 +25,7 @@ export function tboxTextEssentials({
   return t.String({
     minLength,
     maxLength,
-    pattern: "^[\\p{L}\\p{M}'ñÑáéíóúÁÉÍÓÚ\\s\\.,0-9 !\"&'()+,\\-./:;=\\\\_]+$",
+    pattern: "^[\\p{L}\\p{M}\\s.,0-9 !\"&'()+,\\-./:;=\\\\_]+$",
     description: fieldName,
     error: `${fieldName} should only contain letters, numbers, spaces and some essential characters.`,
   });

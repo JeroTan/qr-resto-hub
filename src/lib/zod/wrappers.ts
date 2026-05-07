@@ -14,7 +14,7 @@ export function zodName({
     .max(maxLength, {
       message: `${fieldName} must be at most ${maxLength} characters long.`,
     })
-    .regex(/^[\p{L}\p{M}'ñÑáéíóúÁÉÍÓÚ\s\-\.,]+$/gu, {
+    .regex(/^[\p{L}\p{M}\s'".,-]+$/gu, {
       message: `${fieldName} should only contain letters, spaces, and the characters ., ' \"`,
     });
 }
@@ -31,7 +31,7 @@ export function zodNameWithNumbers({
     .max(maxLength, {
       message: `${fieldName} must be at most ${maxLength} characters long.`,
     })
-    .regex(/^[\p{L}\p{M}0-9'ñÑáéíóúÁÉÍÓÚ\s\-\.,]+$/gu, {
+    .regex(/^[\p{L}\p{M}0-9\s'".,-]+$/gu, {
       message: `${fieldName} should only contain letters, numbers, spaces, and the characters ., ' \"`,
     });
 }
@@ -49,7 +49,7 @@ export function zodTextEssentials({
     .max(maxLength, {
       message: `${fieldName} must be at most ${maxLength} characters long.`,
     })
-    .regex(/^[\p{L}\p{M}'ñÑáéíóúÁÉÍÓÚ\s\.,0-9 !"&'()+,\-./:;=\\_]+$/u, {
+    .regex(/^[\p{L}\p{M}\s.,0-9 !"&'()+,\-./:;=\\_]+$/u, {
       message: `${fieldName} should only contain letters, numbers, spaces and some essential characters.`,
     });
 }
@@ -189,4 +189,3 @@ export function zodArrayMinMax<T extends z.ZodTypeAny>({
     });
   return zodData;
 }
-

@@ -1,0 +1,11 @@
+export { foundationRoutes } from "./foundation.routes";
+export { authRoutes } from "./auth.routes";
+export { platformAdminRoutes } from "./platform-admin.routes";
+export { restaurantAdminRoutes } from "./restaurant-admin.routes";
+export { menuRoutes } from "./menu.routes";
+export { seatingQrRoutes } from "./seating-qr.routes";
+export { customerOrderingRoutes } from "./customer-ordering.routes";
+export { ordersRoutes } from "./orders.routes";
+export { subscriptionsAdsRoutes } from "./subscriptions-ads.routes";
+export { assetsRoutes } from "./assets.routes";
+export { auditRoutes } from "./audit.routes";
