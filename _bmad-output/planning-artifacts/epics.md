@@ -185,18 +185,18 @@ NFR59: Subscription state changes must be traceable from PayMongo event to tenan
 
 AR1: Initialize the project from the Cloudflare C3 Astro starter using `npm create cloudflare@latest -- qr-resto-hub --framework=astro`, preserving existing planning artifacts.
 AR2: Add Tailwind CSS v4 through Astro's current Tailwind integration flow after starter initialization.
-AR3: Add React, ElysiaJS, `@elysiajs/openapi`, TypeBox schemas, Drizzle, Drizzle Kit, Vitest, D1, R2, and Durable Object bindings during foundation setup.
+AR3: Add React, ElysiaJS, `@elysiajs/openapi`, TypeBox schemas, Drizzle, Drizzle Kit, Vitest, `jose`, D1, R2, and Durable Object bindings during foundation setup.
 AR4: Use D1 as the source of truth; Durable Objects coordinate live sessions and recover state from D1 after reconnects.
 AR5: Use Drizzle ORM and Drizzle Kit for schema, typed queries, and remote-first dev/prod D1 migrations.
 AR6: Use TypeBox/Elysia `t` as the HTTP contract source for request, params, query, headers, and response schemas.
 AR7: Use `@elysiajs/openapi` to generate OpenAPI/Swagger documentation from route contracts.
 AR8: Keep Elysia route handlers free of business logic; route handlers adapt requests, call controllers, and return controller results.
 AR9: Use Zod only outside Elysia route contracts, such as environment/config parsing or isolated internal helpers.
-AR10: Implement custom dashboard authentication with D1-backed sessions, HttpOnly secure cookies, Workers-compatible password hashing, per-user salts, and secret pepper configuration.
+AR10: Implement custom dashboard authentication with D1-backed sessions, HttpOnly secure cookies, Workers-compatible password hashing, per-user salts, secret pepper configuration, and `jose` for Workers-compatible JWT signing/verification helpers where token utilities are needed.
 AR11: Enforce role and tenant guards server-side before protected service actions execute.
 AR12: Use REST-style JSON APIs grouped by feature areas: auth, platform-admin, restaurant-admin, restaurant-settings, menu, seating-qr, customer-ordering, orders, subscriptions-ads, assets, and audit.
-AR13: Standardize API responses as `{ data, meta }` for success and `{ error: { code, message, details } }` for errors.
-AR14: Document all error envelopes in each Elysia route's OpenAPI response map.
+AR13: Standardize public API responses through `src/lib/api/response.ts` as `{ data, meta }` for success and `{ error: { code, message, details } }` for errors; internal `Result` objects must be adapted at controller/route boundaries.
+AR14: Document all success and error envelopes in each Elysia route's OpenAPI response map using `src/lib/typebox/api.ts`.
 AR15: Use feature-based React modules for customer-ordering, restaurant-orders, menu-management, seating-qr, platform-admin, super-admin, and subscriptions-ads.
 AR16: Use `src/components/**` for shared primitives/layouts/feedback/navigation/data-display and `src/features/**/components/**` for feature-owned components.
 AR17: Compose middleware through `src/middleware/index.ts` with focused middleware files for auth session, tenant context, role guard, ad entitlement, request ID, and error boundary.
@@ -450,13 +450,16 @@ So that implementation remains consistent for future development work.
 **When** the application structure is created
 **Then** source folders separate domain, services, repositories, controllers, routes, middleware, features, shared components, libraries, and utilities according to the architecture
 **And** API code follows Route -> Controller -> Service -> Domain/Repository boundaries
+**And** endpoint files are categorized by feature under `src/server/routes/**`, define the endpoints owned by that feature, and delegate to matching controllers
 **And** Elysia route handlers contain only request adaptation, route contract metadata, controller calls, and response return logic
+**And** Astro exposes the Elysia API through `src/pages/api/[...slug].ts` as a transport bridge only, using scoped Elysia `derive` decorations for Astro request data such as `urlData` and `astroCookies`
 **And** Elysia route contracts use TypeBox/Elysia `t` schemas for params, query, body, headers, and responses
 **And** OpenAPI/Swagger documentation is generated from route contracts with summary, description, tags, security metadata where applicable, and response schemas per status code
 **And** Zod is reserved for non-Elysia validation such as environment/config parsing or isolated internal helpers
-**And** shared UI primitives live under `src/components/**`, feature-owned components live under `src/features/**/components/**`, third-party wrappers live under `src/lib/**`, and atomic helpers live under `src/utils/**`
+**And** shared UI primitives live under `src/components/**`, feature-owned components live under `src/features/**/components/**`, Elysia/TypeBox/Zod/third-party wrappers live under `src/lib/**`, and atomic helpers live under `src/utils/**`
 **And** existing or future user-added files under `src/lib/**` and `src/utils/**` are treated as intentional project knowledge to inspect and reuse before duplication
-**And** standardized API success helpers produce `{ data, meta }` envelopes and standardized error helpers produce `{ error: { code, message, details } }` envelopes
+**And** standardized API success helpers under `src/lib/api/response.ts` produce `{ data, meta }` envelopes and standardized error helpers produce `{ error: { code, message, details } }` envelopes
+**And** TypeBox/OpenAPI response helpers under `src/lib/typebox/api.ts` are used for route response maps
 **And** forbidden response mapping, public-safe error message mapping, request ID propagation, and OpenAPI error response metadata helpers are available for all later route groups
 **And** an audit event writer interface and operational logging utility are available for later stories to record permission denials, auth failures, account changes, invalid transitions, provider failures, QR failures, R2 failures, and live reconnect failures without re-creating logging patterns
 **And** Tailwind CSS v4 tokens and shared primitives incorporate `docs/ui-design.md` plus the Modern Epicurean guidance from `docs/reference-inspiration-2-google-stitch.md` with cream/parchment surfaces, cocoa ink, orange action/focus states, olive markers, and restrained status colors
@@ -495,6 +498,7 @@ So that protected dashboards are accessible only to valid platform users.
 **And** dashboard users can log out and invalidate the active session
 **And** invalid credentials fail without exposing whether an email/account exists
 **And** password hashing is Workers-compatible and uses per-user salts plus configured secret pepper
+**And** JWT signing and verification helpers use `jose` so token utilities work in the Cloudflare Workers runtime
 **And** Restaurant Admin, Platform Admin, and Super Admin sessions can be resolved server-side for protected requests
 **And** authentication failures and login events are audit-ready.
 

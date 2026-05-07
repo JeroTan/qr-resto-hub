@@ -538,3 +538,13 @@ Most NFRs include clear criteria, metrics, or operational constraints. Minor spe
 **Severity:** Warning
 
 **Recommendation:** PRD has minor completeness gaps. Address minor gaps for complete documentation.
+
+## Post-Validation Addendum: Workers-Compatible JWT Library
+
+**Date:** 2026-05-07
+
+**Change Reviewed:** `jose 6.2.3` was added to the implementation because JWT signing and verification helpers must run in the Cloudflare Workers runtime.
+
+**PRD Impact:** No PRD change required. This is an implementation and architecture constraint, not a product capability. Keeping `jose` out of the PRD avoids additional implementation leakage in Functional Requirements.
+
+**Planning Artifact Alignment:** Architecture, epics, and project context now identify `jose` as the approved Workers-compatible JWT helper library for token utilities under `src/lib/crypto/**`.

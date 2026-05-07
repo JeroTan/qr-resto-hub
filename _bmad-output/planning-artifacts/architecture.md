@@ -17,6 +17,10 @@ status: 'complete'
 completedAt: '2026-05-06'
 lastEdited: '2026-05-06'
 editHistory:
+  - date: '2026-05-07'
+    changes: 'Aligned API composition guidance with the Astro catch-all Elysia route bridge, scoped Astro request decorations, and src/lib validation wrapper helpers added during Story 1.2 foundation work.'
+  - date: '2026-05-07'
+    changes: 'Recorded jose as the Workers-compatible JWT signing and verification library for auth token helpers while keeping PRD requirements implementation-agnostic.'
   - date: '2026-05-06'
     changes: 'Aligned architecture with brand-adapted visual guidance from docs/reference-inspiration.md while preserving operational dashboard density and Tailwind token governance.'
   - date: '2026-05-06'
@@ -149,6 +153,7 @@ Project initialization using this command should be the first implementation sto
 - Use `@elysiajs/openapi 1.4.15` for generated OpenAPI/Swagger documentation.
 - Use Zod `4.4.3` only for non-Elysia concerns where it is a better fit, such as environment/config validation, internal form helpers, or isolated domain value parsing that does not need to generate OpenAPI schemas.
 - Use custom dashboard session authentication with D1-backed sessions and HttpOnly secure cookies.
+- Use `jose 6.2.3` for JWT signing and verification helpers when tokenized auth/session support is required, because it is compatible with the Cloudflare Workers Web Crypto runtime.
 - Enforce RBAC and tenant scoping in services/domain guards, not only UI/routes.
 - Use REST-style JSON APIs through ElysiaJS `1.4.28`.
 - Use Durable Objects/WebSockets for live order coordination, with D1 as durable state.
@@ -182,6 +187,8 @@ Caching should be conservative:
 
 Dashboard users use custom email/password authentication with D1-backed sessions and HttpOnly secure cookies. Password hashing should use a Workers-compatible Web Crypto strategy with per-user salts and secret pepper configuration.
 
+JWT signing and verification helpers must use `jose` rather than Node-only JWT libraries so auth-related token utilities continue to run inside Cloudflare Workers. These helpers belong under `src/lib/crypto/**` and must expose safe error results without leaking token internals to public responses.
+
 Super Admin is seeded and unique. Platform Admins manage Restaurant Admin accounts only. Restaurant Admins are scoped to exactly one restaurant tenant in MVP. Customer sessions remain anonymous and use QR tokens plus separate per-order anonymous order tokens.
 
 Authorization must be enforced server-side through role and tenant guards before service actions execute. Customer food-order PayMongo checkout is forbidden in MVP.
@@ -190,7 +197,9 @@ Authorization must be enforced server-side through role and tenant guards before
 
 APIs use REST-style JSON endpoints implemented through Route -> Controller -> Service -> Domain/Repository.
 
-Elysia routes are contract and documentation declarations, not business-logic containers. Each endpoint must declare its TypeBox-backed `body`, `params`, `query`, `headers` when needed, `response` schemas per status code, `detail.summary`, `detail.description`, tags, and security metadata for OpenAPI/Swagger generation. Route handlers should only adapt the request, call the matching controller, and return the controller result.
+Elysia routes are contract and documentation declarations, not business-logic containers. Endpoint files must be categorized by feature under `src/server/routes/**`, such as `auth.routes.ts`, `menu.routes.ts`, `orders.routes.ts`, `platform-admin.routes.ts`, and `audit.routes.ts`. Each endpoint file must define what endpoints belong to that feature area and document those endpoints with TypeBox-backed `body`, `params`, `query`, `headers` when needed, `response` schemas per status code, `detail.summary`, `detail.description`, tags, and security metadata for OpenAPI/Swagger generation. Route handlers should only adapt the request, call the matching controller, and return the controller result.
+
+Astro exposes the Elysia API through the catch-all route `src/pages/api/[...slug].ts`. This catch-all file is only the Astro-to-Elysia transport bridge; it must not become the place where endpoints, OpenAPI metadata, controller decisions, or business logic accumulate. The Elysia app may be initialized at module scope for Worker performance, with per-request Astro data injected through scoped `derive` decorations such as `urlData` and `astroCookies`. Typed decoration helpers belong under `src/lib/elysia/**`; they are adapter helpers, not business logic.
 
 OpenAPI documentation is generated with `@elysiajs/openapi` and should expose a Swagger/OpenAPI documentation surface for development and authorized internal use. The OpenAPI JSON should be treated as the API contract for frontend clients, QA checks, and implementation review.
 
@@ -207,7 +216,7 @@ Elysia route groups should map to feature areas:
 - assets
 - audit
 
-Errors use a consistent response envelope with safe public messages and internal diagnostic codes, and those envelopes must be documented in each route's OpenAPI response map. Live updates use Durable Object WebSockets for restaurant boards and customer order status.
+Errors use a consistent response envelope with safe public messages and internal diagnostic codes, and those envelopes must be documented in each route's OpenAPI response map. Public HTTP responses use `src/lib/api/response.ts`: success responses are `{ data, meta }`, errors are `{ error: { code, message, details } }`, and internal service/domain `Result` objects are adapted at controller/route boundaries. TypeBox/OpenAPI response schemas use `src/lib/typebox/api.ts`. Error details are omitted by default and included only when a controller confirms they are public-safe. Live updates use Durable Object WebSockets for restaurant boards and customer order status.
 
 ### Frontend Architecture
 
@@ -359,6 +368,8 @@ Event payloads include:
 **Error Handling Patterns:**
 - Domain errors use stable error codes.
 - Controllers translate domain errors into API response envelopes.
+- Internal `Result` objects may carry workflow details, but public API adapters must use `apiSuccess`, `apiError`, or `resultToApiResponse` from `src/lib/api/response.ts`.
+- Route OpenAPI response maps must use `tboxApiSuccess`, `tboxApiError`, or `tboxApiResponse` from `src/lib/typebox/api.ts`.
 - Routes document error responses in OpenAPI.
 - Customer errors use plain language.
 - Internal logs include diagnostic context without leaking it to users.
@@ -540,7 +551,7 @@ qr-resto-hub/
 ### Architectural Boundaries
 
 **API Boundaries:**
-Elysia route files declare TypeBox schemas, OpenAPI metadata, route params/query/body/response contracts, and delegate to controllers. Routes contain no business logic.
+Elysia route files live under categorized `src/server/routes/**` modules, declare TypeBox schemas, OpenAPI metadata, route params/query/body/response contracts, and delegate to controllers. The Astro catch-all route only delegates requests into the composed Elysia app. Routes contain no business logic.
 
 **Component Boundaries:**
 Astro owns routing and page shells. React owns interactive islands inside feature folders. Shared reusable app primitives and layout pieces live under `src/components/**`. Feature-specific components live under `src/features/**/components/**`.
@@ -608,7 +619,7 @@ Static public assets live in `public/assets`. Uploaded dish images and persisted
 ### Development Workflow Integration
 
 **Development Server Structure:**
-Astro dev runs page and React development. Elysia API composition lives under `src/server/app.ts`.
+Astro dev runs page and React development. Elysia API composition is exposed through `src/pages/api/[...slug].ts`, with feature route modules composed into the app from server route/container modules as the API surface grows.
 
 **Build Process Structure:**
 Astro builds for Cloudflare Workers. Wrangler deploys with D1, R2, and Durable Object bindings.

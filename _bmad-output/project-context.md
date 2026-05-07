@@ -33,6 +33,7 @@ Verified npm latest versions on 2026-05-05:
 - `drizzle-orm`: `0.45.2`
 - `drizzle-kit`: `0.31.10`
 - `zod`: `4.4.3`
+- `jose`: `6.2.3` (added for Cloudflare Workers-compatible JWT signing and verification)
 - `lucide-react`: `1.14.0`
 
 Target platform:
@@ -67,6 +68,12 @@ These standards come from the original request and must be preserved across impl
 - Avoid TypeScript `any` as much as possible. Prefer explicit domain types, generated Cloudflare binding types, `unknown` with narrowing, generics, or validated schemas.
 - Atomic independent helpers must live in `src/utils/**`.
 - Third-party integrations and custom wrappers must live in `src/lib/**`.
+- Astro exposes Elysia APIs through `src/pages/api/[...slug].ts`; keep per-request Astro values injected with scoped Elysia `derive` decorations and place typed Elysia decoration helpers under `src/lib/elysia/**`.
+- `src/pages/api/[...slug].ts` is only the Astro-to-Elysia bridge. Categorized endpoint files belong under `src/server/routes/**`, OpenAPI metadata belongs with those route files, controllers belong under `src/server/controllers/**`, services under `src/server/services/**`, and business rules under `src/domain/**`.
+- Reusable TypeBox helpers belong under `src/lib/typebox/**`; reusable Zod wrappers/formatters belong under `src/lib/zod/**`, but Zod must not be used for Elysia route contracts.
+- General-purpose result/error/success primitives belong under `src/utils/general/**`. Treat them as internal workflow helpers; public HTTP responses must still be adapted to `{ data, meta }` or `{ error: { code, message, details } }`.
+- Use `src/lib/api/response.ts` as the public API response adapter standard and `src/lib/typebox/api.ts` as the Elysia/OpenAPI response schema standard.
+- JWT signing and verification helpers must use `jose`, not Node-only JWT libraries, because auth token utilities need to run in Cloudflare Workers.
 - Cloudflare Worker bindings/env can be imported in any supported file with `import { env } from "cloudflare:workers";` per the newer Cloudflare Workers module API. Prefer this over manually threading env through unrelated layers when it keeps code simpler, while still isolating platform access from domain logic.
 - D1 migrations are remote-first and must support only `dev` and `prod` D1 environments.
 - Customer-facing ordering is mobile-first.
