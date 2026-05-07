@@ -1,6 +1,6 @@
 # Story 1.1: Scaffold Cloudflare Astro Platform Foundation
 
-Status: review
+Status: done
 
 ## Story
 
@@ -214,3 +214,4 @@ Codex (GPT-5)
 ### Change Log
 
 - 2026-05-07: Implemented Story 1.1 scaffold foundation and moved story to review.
+- 2026-05-07: Code review completed with no actionable findings; story moved to done.
