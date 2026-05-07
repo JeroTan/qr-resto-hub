@@ -1,7 +1,7 @@
 import { openapi } from "@elysiajs/openapi";
 import { Elysia } from "elysia";
 import { CloudflareAdapter } from "elysia/adapter/cloudflare-worker";
-import { astroBridgeDecorations } from "@/lib/elysia/decorationTypes";
+import { astroBridgeDecorations } from "@/lib/elysia/astroBridgeContext";
 import {
   assetsRoutes,
   auditRoutes,

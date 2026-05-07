@@ -5,7 +5,7 @@ import {
   astroBridgeDecorations,
   bindAstroBridgeDecorations,
   clearAstroBridgeDecorations,
-} from "../src/lib/elysia/decorationTypes";
+} from "../src/lib/elysia/astroBridgeContext";
 
 function readText(path: string): string {
   return readFileSync(path, "utf8");

@@ -2,7 +2,7 @@ import type { APIRoute } from "astro";
 import {
   bindAstroBridgeDecorations,
   clearAstroBridgeDecorations,
-} from "@/lib/elysia/decorationTypes";
+} from "@/lib/elysia/astroBridgeContext";
 import { createApp } from "@/server/app";
 
 export const prerender = false;

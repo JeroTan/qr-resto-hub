@@ -344,6 +344,7 @@ Codex (GPT-5)
 - src/lib/api/errors.ts
 - src/lib/api/response.ts
 - src/lib/cloudflare/.gitkeep
+- src/lib/elysia/astroBridgeContext.ts
 - src/lib/elysia/decorationTypes.ts
 - src/lib/paymongo/.gitkeep
 - src/lib/qr/.gitkeep
