@@ -78,6 +78,10 @@ so that implementation remains consistent for future development work.
   - [x] `npm run build`
   - [x] Search implementation/config files for forbidden customer food-order PayMongo checkout wiring.
 
+### Review Findings
+
+- [x] [Review][Patch] Astro API bridge mutates the module-scoped Elysia app per request [src/pages/api/[...slug].ts:8] - fixed by binding Astro context to each `Request` and registering the scoped Elysia derive once in `src/server/app.ts`.
+
 ## Dev Notes
 
 ### Scope Boundary

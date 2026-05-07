@@ -1,4 +1,8 @@
 import type { APIRoute } from "astro";
+import {
+  bindAstroBridgeDecorations,
+  clearAstroBridgeDecorations,
+} from "@/lib/elysia/decorationTypes";
 import { createApp } from "@/server/app";
 
 export const prerender = false;
@@ -6,12 +10,16 @@ export const prerender = false;
 const app = createApp();
 
 const handle: APIRoute = async (ctx) => {
-  return await app
-    .derive({ as: "scoped" }, () => ({
-      urlData: ctx.url,
-      astroCookies: ctx.cookies,
-    }))
-    .handle(ctx.request);
+  bindAstroBridgeDecorations(ctx.request, {
+    urlData: ctx.url,
+    astroCookies: ctx.cookies,
+  });
+
+  try {
+    return await app.handle(ctx.request);
+  } finally {
+    clearAstroBridgeDecorations(ctx.request);
+  }
 };
 
 export const GET = handle;

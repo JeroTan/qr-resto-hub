@@ -1,6 +1,7 @@
 import { openapi } from "@elysiajs/openapi";
 import { Elysia } from "elysia";
 import { CloudflareAdapter } from "elysia/adapter/cloudflare-worker";
+import { astroBridgeDecorations } from "@/lib/elysia/decorationTypes";
 import {
   assetsRoutes,
   auditRoutes,
@@ -33,6 +34,7 @@ export function createApp() {
         },
       }),
     )
+    .use(astroBridgeDecorations)
     .use(foundationRoutes)
     .use(authRoutes)
     .use(platformAdminRoutes)

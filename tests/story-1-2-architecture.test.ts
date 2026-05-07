@@ -1,5 +1,11 @@
 import { existsSync, readFileSync } from "node:fs";
+import { Elysia } from "elysia";
 import { describe, expect, it } from "vitest";
+import {
+  astroBridgeDecorations,
+  bindAstroBridgeDecorations,
+  clearAstroBridgeDecorations,
+} from "../src/lib/elysia/decorationTypes";
 
 function readText(path: string): string {
   return readFileSync(path, "utf8");
@@ -82,7 +88,29 @@ describe("Story 1.2 source boundaries", () => {
     expect(bridge).toContain("export const prerender = false");
     expect(bridge).toContain("createApp");
     expect(bridge).not.toContain("new Elysia");
+    expect(bridge).not.toContain(".derive(");
     expect(bridge).not.toContain("openapi(");
+  });
+
+  it("binds Astro request data without mutating Elysia transforms per request", async () => {
+    const app = new Elysia()
+      .use(astroBridgeDecorations)
+      .get("/bridge", ({ urlData }) => urlData?.href ?? "missing");
+    const transformCount = app.event.transform?.length ?? 0;
+
+    for (const href of ["https://astro.test/one", "https://astro.test/two?x=1"]) {
+      const request = new Request("https://qr-resto-hub.test/bridge");
+      bindAstroBridgeDecorations(request, { urlData: new URL(href) });
+
+      try {
+        const response = await app.handle(request);
+
+        await expect(response.text()).resolves.toBe(href);
+        expect(app.event.transform?.length ?? 0).toBe(transformCount);
+      } finally {
+        clearAstroBridgeDecorations(request);
+      }
+    }
   });
 });
 
