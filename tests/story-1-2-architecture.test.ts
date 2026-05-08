@@ -175,6 +175,21 @@ describe("Story 1.2 API envelopes, route contracts, and OpenAPI metadata", () =>
     expect(zodWrappers).not.toContain("zodPaginatedResponse");
   });
 
+  it("keeps internal Zod array helper bounds enforced outside Elysia route contracts", async () => {
+    const { z } = await import("zod");
+    const { zodArrayMinMax } = await import("../src/lib/zod/wrappers");
+    const schema = zodArrayMinMax({
+      zodSchema: z.string(),
+      minLength: 2,
+      maxLength: 3,
+      fieldName: "Items",
+    });
+
+    expect(schema.safeParse(["one", "two"]).success).toBe(true);
+    expect(schema.safeParse(["one"]).success).toBe(false);
+    expect(schema.safeParse(["one", "two", "three", "four"]).success).toBe(false);
+  });
+
   it("composes Elysia route modules through controllers and exposes foundation metadata", async () => {
     const { createApp } = await import("../src/server/app");
     const app = createApp();

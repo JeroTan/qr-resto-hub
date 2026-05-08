@@ -177,14 +177,14 @@ export function zodArrayMinMax<T extends z.ZodTypeAny>({
   maxLength?: number;
   fieldName?: string;
 }) {
-  const zodData = z.array(zodSchema);
+  let zodData = z.array(zodSchema);
   if (minLength !== undefined)
-    zodData.min(minLength, {
+    zodData = zodData.min(minLength, {
       message: `${fieldName} must have at least ${minLength} items.`,
     });
 
   if (maxLength !== undefined)
-    zodData.max(maxLength, {
+    zodData = zodData.max(maxLength, {
       message: `${fieldName} must have at most ${maxLength} items.`,
     });
   return zodData;

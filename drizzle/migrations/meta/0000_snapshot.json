@@ -1,0 +1,769 @@
+{
+  "version": "6",
+  "dialect": "sqlite",
+  "id": "eb52f856-2784-4df4-8a5c-a2f42fa46aa0",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "tables": {
+    "admin_sessions": {
+      "name": "admin_sessions",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "admin_user_id": {
+          "name": "admin_user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "session_token_hash": {
+          "name": "session_token_hash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "expires_at": {
+          "name": "expires_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "revoked_at": {
+          "name": "revoked_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        "last_seen_at": {
+          "name": "last_seen_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "idx_admin_sessions_admin_user_id": {
+          "name": "idx_admin_sessions_admin_user_id",
+          "columns": [
+            "admin_user_id"
+          ],
+          "isUnique": false
+        },
+        "idx_admin_sessions_expires_at": {
+          "name": "idx_admin_sessions_expires_at",
+          "columns": [
+            "expires_at"
+          ],
+          "isUnique": false
+        },
+        "uq_admin_sessions_session_token_hash": {
+          "name": "uq_admin_sessions_session_token_hash",
+          "columns": [
+            "session_token_hash"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {
+        "admin_sessions_admin_user_id_admin_users_id_fk": {
+          "name": "admin_sessions_admin_user_id_admin_users_id_fk",
+          "tableFrom": "admin_sessions",
+          "tableTo": "admin_users",
+          "columnsFrom": [
+            "admin_user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "admin_users": {
+      "name": "admin_users",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "role_id": {
+          "name": "role_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'active'"
+        },
+        "password_hash": {
+          "name": "password_hash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "password_salt": {
+          "name": "password_salt",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "is_super_admin_owner": {
+          "name": "is_super_admin_owner",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        "suspended_at": {
+          "name": "suspended_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "last_login_at": {
+          "name": "last_login_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "idx_admin_users_role_id": {
+          "name": "idx_admin_users_role_id",
+          "columns": [
+            "role_id"
+          ],
+          "isUnique": false
+        },
+        "idx_admin_users_status": {
+          "name": "idx_admin_users_status",
+          "columns": [
+            "status"
+          ],
+          "isUnique": false
+        },
+        "uq_admin_users_email": {
+          "name": "uq_admin_users_email",
+          "columns": [
+            "email"
+          ],
+          "isUnique": true
+        },
+        "uq_admin_users_id_role_id": {
+          "name": "uq_admin_users_id_role_id",
+          "columns": [
+            "id",
+            "role_id"
+          ],
+          "isUnique": true
+        },
+        "uq_admin_users_super_admin_owner": {
+          "name": "uq_admin_users_super_admin_owner",
+          "columns": [
+            "is_super_admin_owner"
+          ],
+          "isUnique": true,
+          "where": "\"admin_users\".\"is_super_admin_owner\" = 1"
+        }
+      },
+      "foreignKeys": {
+        "admin_users_role_id_roles_id_fk": {
+          "name": "admin_users_role_id_roles_id_fk",
+          "tableFrom": "admin_users",
+          "tableTo": "roles",
+          "columnsFrom": [
+            "role_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "ck_admin_users_super_admin_owner_role": {
+          "name": "ck_admin_users_super_admin_owner_role",
+          "value": "\"admin_users\".\"is_super_admin_owner\" = 0 OR \"admin_users\".\"role_id\" = 'role_super_admin'"
+        }
+      }
+    },
+    "audit_events": {
+      "name": "audit_events",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "category": {
+          "name": "category",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "action": {
+          "name": "action",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "actor_admin_user_id": {
+          "name": "actor_admin_user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "restaurant_id": {
+          "name": "restaurant_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "target_type": {
+          "name": "target_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "target_id": {
+          "name": "target_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "request_id": {
+          "name": "request_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "metadata_json": {
+          "name": "metadata_json",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "occurred_at": {
+          "name": "occurred_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "CURRENT_TIMESTAMP"
+        }
+      },
+      "indexes": {
+        "idx_audit_events_category": {
+          "name": "idx_audit_events_category",
+          "columns": [
+            "category"
+          ],
+          "isUnique": false
+        },
+        "idx_audit_events_actor_admin_user_id": {
+          "name": "idx_audit_events_actor_admin_user_id",
+          "columns": [
+            "actor_admin_user_id"
+          ],
+          "isUnique": false
+        },
+        "idx_audit_events_restaurant_id": {
+          "name": "idx_audit_events_restaurant_id",
+          "columns": [
+            "restaurant_id"
+          ],
+          "isUnique": false
+        },
+        "idx_audit_events_occurred_at": {
+          "name": "idx_audit_events_occurred_at",
+          "columns": [
+            "occurred_at"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "audit_events_actor_admin_user_id_admin_users_id_fk": {
+          "name": "audit_events_actor_admin_user_id_admin_users_id_fk",
+          "tableFrom": "audit_events",
+          "tableTo": "admin_users",
+          "columnsFrom": [
+            "actor_admin_user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "cascade"
+        },
+        "audit_events_restaurant_id_restaurants_id_fk": {
+          "name": "audit_events_restaurant_id_restaurants_id_fk",
+          "tableFrom": "audit_events",
+          "tableTo": "restaurants",
+          "columnsFrom": [
+            "restaurant_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "restaurant_admin_assignments": {
+      "name": "restaurant_admin_assignments",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "admin_user_id": {
+          "name": "admin_user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "restaurant_id": {
+          "name": "restaurant_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "admin_user_role_id": {
+          "name": "admin_user_role_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'role_restaurant_admin'"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "CURRENT_TIMESTAMP"
+        }
+      },
+      "indexes": {
+        "idx_restaurant_admin_assignments_admin_user_id": {
+          "name": "idx_restaurant_admin_assignments_admin_user_id",
+          "columns": [
+            "admin_user_id"
+          ],
+          "isUnique": false
+        },
+        "idx_restaurant_admin_assignments_admin_user_role_id": {
+          "name": "idx_restaurant_admin_assignments_admin_user_role_id",
+          "columns": [
+            "admin_user_role_id"
+          ],
+          "isUnique": false
+        },
+        "idx_restaurant_admin_assignments_restaurant_id": {
+          "name": "idx_restaurant_admin_assignments_restaurant_id",
+          "columns": [
+            "restaurant_id"
+          ],
+          "isUnique": false
+        },
+        "uq_restaurant_admin_assignments_admin_user_id": {
+          "name": "uq_restaurant_admin_assignments_admin_user_id",
+          "columns": [
+            "admin_user_id"
+          ],
+          "isUnique": true
+        },
+        "uq_restaurant_admin_assignments_restaurant_id": {
+          "name": "uq_restaurant_admin_assignments_restaurant_id",
+          "columns": [
+            "restaurant_id"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {
+        "restaurant_admin_assignments_admin_user_id_admin_users_id_fk": {
+          "name": "restaurant_admin_assignments_admin_user_id_admin_users_id_fk",
+          "tableFrom": "restaurant_admin_assignments",
+          "tableTo": "admin_users",
+          "columnsFrom": [
+            "admin_user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        },
+        "restaurant_admin_assignments_restaurant_id_restaurants_id_fk": {
+          "name": "restaurant_admin_assignments_restaurant_id_restaurants_id_fk",
+          "tableFrom": "restaurant_admin_assignments",
+          "tableTo": "restaurants",
+          "columnsFrom": [
+            "restaurant_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        },
+        "fk_restaurant_admin_assignments_admin_user_role": {
+          "name": "fk_restaurant_admin_assignments_admin_user_role",
+          "tableFrom": "restaurant_admin_assignments",
+          "tableTo": "admin_users",
+          "columnsFrom": [
+            "admin_user_id",
+            "admin_user_role_id"
+          ],
+          "columnsTo": [
+            "id",
+            "role_id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "ck_restaurant_admin_assignments_role": {
+          "name": "ck_restaurant_admin_assignments_role",
+          "value": "\"restaurant_admin_assignments\".\"admin_user_role_id\" = 'role_restaurant_admin'"
+        }
+      }
+    },
+    "restaurants": {
+      "name": "restaurants",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "slug": {
+          "name": "slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'pending_setup'"
+        },
+        "payment_stage_enabled": {
+          "name": "payment_stage_enabled",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "CURRENT_TIMESTAMP"
+        }
+      },
+      "indexes": {
+        "idx_restaurants_status": {
+          "name": "idx_restaurants_status",
+          "columns": [
+            "status"
+          ],
+          "isUnique": false
+        },
+        "uq_restaurants_slug": {
+          "name": "uq_restaurants_slug",
+          "columns": [
+            "slug"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "roles": {
+      "name": "roles",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "key": {
+          "name": "key",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "label": {
+          "name": "label",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "CURRENT_TIMESTAMP"
+        }
+      },
+      "indexes": {
+        "uq_roles_key": {
+          "name": "uq_roles_key",
+          "columns": [
+            "key"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "tenant_entitlements": {
+      "name": "tenant_entitlements",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "restaurant_id": {
+          "name": "restaurant_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "plan_key": {
+          "name": "plan_key",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'free'"
+        },
+        "ad_policy": {
+          "name": "ad_policy",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'ads_required'"
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'active'"
+        },
+        "current_period_ends_at": {
+          "name": "current_period_ends_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "CURRENT_TIMESTAMP"
+        }
+      },
+      "indexes": {
+        "idx_tenant_entitlements_restaurant_id": {
+          "name": "idx_tenant_entitlements_restaurant_id",
+          "columns": [
+            "restaurant_id"
+          ],
+          "isUnique": false
+        },
+        "idx_tenant_entitlements_status": {
+          "name": "idx_tenant_entitlements_status",
+          "columns": [
+            "status"
+          ],
+          "isUnique": false
+        },
+        "uq_tenant_entitlements_restaurant_id": {
+          "name": "uq_tenant_entitlements_restaurant_id",
+          "columns": [
+            "restaurant_id"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {
+        "tenant_entitlements_restaurant_id_restaurants_id_fk": {
+          "name": "tenant_entitlements_restaurant_id_restaurants_id_fk",
+          "tableFrom": "tenant_entitlements",
+          "tableTo": "restaurants",
+          "columnsFrom": [
+            "restaurant_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    }
+  },
+  "views": {},
+  "enums": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "indexes": {}
+  }
+}

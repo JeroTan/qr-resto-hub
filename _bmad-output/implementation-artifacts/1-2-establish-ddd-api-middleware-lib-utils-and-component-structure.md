@@ -1,6 +1,6 @@
 # Story 1.2: Establish DDD, API, Middleware, Lib, Utils, and Component Structure
 
-Status: review
+Status: done
 
 ## Story
 
@@ -81,6 +81,7 @@ so that implementation remains consistent for future development work.
 ### Review Findings
 
 - [x] [Review][Patch] Astro API bridge mutates the module-scoped Elysia app per request [src/pages/api/[...slug].ts:8] - fixed by binding Astro context to each `Request` and registering the scoped Elysia derive once in `src/server/app.ts`.
+- [x] [Review][Patch] `zodArrayMinMax` drops `.min()` / `.max()` return values [src/lib/zod/wrappers.ts:181] - fixed by reassigning returned Zod array schemas and adding bounds coverage.
 
 ## Dev Notes
 
@@ -271,6 +272,8 @@ Codex (GPT-5)
 - 2026-05-07T15:54:55+08:00 - Confirmed Story 1.2 red tests failed before implementation.
 - 2026-05-07T16:01:52+08:00 - Story 1.2 guardrail test file passed after implementation.
 - 2026-05-07T16:11:49+08:00 - Final validation passed: `npm test`, `npm run typecheck`, `npm run build`, touched-file Prettier check, and checkout scan.
+- 2026-05-08T21:14:38+08:00 - Story 1.2 review re-run passed with no blocking patch findings; one pre-existing Zod helper bug deferred.
+- 2026-05-08T21:21:04+08:00 - Fixed deferred `zodArrayMinMax` bounds issue and added regression coverage.
 
 ### Implementation Plan
 
@@ -388,3 +391,5 @@ Codex (GPT-5)
 ### Change Log
 
 - 2026-05-07: Implemented Story 1.2 DDD/API/middleware/lib/utils/component foundation and moved story to review.
+- 2026-05-08: Re-ran Story 1.2 review, recorded deferred pre-existing Zod helper issue, and moved story to done.
+- 2026-05-08: Fixed deferred Zod array bounds issue while keeping Story 1.2 done.
