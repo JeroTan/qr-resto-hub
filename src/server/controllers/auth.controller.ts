@@ -97,8 +97,9 @@ export function createAuthController({
     async login(
       body: AuthLoginBody,
     ): Promise<ControllerResponse<ReturnType<typeof publicLoginResult>>> {
+      console.log("AuthController.login called with:", { body, requestId });
       const result = await service.login({ ...body, requestId });
-
+      console.log("AuthController.login result:", { result, requestId });
       if (result.error !== null) {
         return errorResponse(result.error.code, genericAuthError);
       }
@@ -108,6 +109,7 @@ export function createAuthController({
         result.content.sessionToken,
         sessionCookieOptions(result.content.session.expiresAt),
       );
+      console.log("AuthController.login set session cookie", { requestId });
 
       return {
         status: 200,
