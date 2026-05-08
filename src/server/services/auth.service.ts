@@ -153,13 +153,30 @@ export function createAuthService({
         });
         return authFailure();
       }
+      console.log("AuthService.login verifying password for adminUser:", {
+        adminUserId: adminUser.id,
+        requestId: input.requestId,
+      });
 
+      console.log("AuthService.login config for password verification:", {
+        hasPepper: !!config.passwordPepper,
+        requestId: input.requestId,
+      });
+      console.log("AuthService.login adminUser password hash and salt:", {
+        passwordHash: adminUser.passwordHash,
+        passwordSalt: adminUser.passwordSalt,
+        requestId: input.requestId,
+      });
       const passwordValid = await verifyPassword(
         input.password,
         config.passwordPepper,
         adminUser.passwordHash,
         adminUser.passwordSalt,
       );
+      console.log("AuthService.login password verification result:", {
+        passwordValid,
+        requestId: input.requestId,
+      });
 
       if (!passwordValid) {
         await safeAudit(repository, {
