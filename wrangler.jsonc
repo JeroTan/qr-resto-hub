@@ -2,6 +2,7 @@
   "compatibility_date": "2026-05-07",
   "compatibility_flags": ["global_fetch_strictly_public", "nodejs_compat"],
   "name": "qr-resto-hub",
+  "account_id": "8e6c0cd85435131ccf9936cc03cb62e5",
   "main": "./src/worker.ts",
   "assets": {
     "directory": "./dist/client",

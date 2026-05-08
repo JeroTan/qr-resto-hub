@@ -6,7 +6,7 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "dev": "astro dev",
+    "dev": "cross-env CLOUDFLARE_ENV=dev astro dev",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "typecheck": "astro check",
@@ -23,7 +23,9 @@
     "deploy:prod": "wrangler deploy dist/server/entry.mjs --config wrangler.jsonc --env prod",
     "deploy:prod:dry-run": "npm run build && wrangler deploy dist/server/entry.mjs --config wrangler.jsonc --env prod --dry-run",
     "db:migrate:dev": "wrangler d1 migrations apply qr-resto-hub-dev --env dev --remote",
-    "db:migrate:prod": "wrangler d1 migrations apply qr-resto-hub-prod --env prod --remote"
+    "db:migrate:prod": "wrangler d1 migrations apply qr-resto-hub-prod --env prod --remote",
+    "seed:super-admin:dev": "node scripts/seed-super-admin.mjs dev",
+    "seed:super-admin:prod": "node scripts/seed-super-admin.mjs prod"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^13.3.1",
@@ -50,6 +52,7 @@
     "@astrojs/check": "^0.9.9",
     "@cloudflare/workers-types": "^4.20260507.1",
     "@types/node": "^25.6.0",
+    "cross-env": "^10.1.0",
     "drizzle-kit": "^0.31.10",
     "prettier": "^3.8.3",
     "typescript": "^6.0.3",

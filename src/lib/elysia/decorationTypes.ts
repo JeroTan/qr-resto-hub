@@ -4,6 +4,7 @@ import Elysia from "elysia";
 export type AstroBridgeDecorations = {
   urlData?: URL;
   astroCookies?: AstroCookies;
+  runtimeEnv?: Partial<Env> & Record<string, unknown>;
 };
 
 export const typedUrlData = new Elysia({ name: "typed-url-data" }).decorate(

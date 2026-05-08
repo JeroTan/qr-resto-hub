@@ -1,4 +1,5 @@
 import type { APIRoute } from "astro";
+import { env } from "cloudflare:workers";
 import {
   bindAstroBridgeDecorations,
   clearAstroBridgeDecorations,
@@ -13,6 +14,7 @@ const handle: APIRoute = async (ctx) => {
   bindAstroBridgeDecorations(ctx.request, {
     urlData: ctx.url,
     astroCookies: ctx.cookies,
+    runtimeEnv: env as Partial<Env> & Record<string, unknown>,
   });
 
   try {
