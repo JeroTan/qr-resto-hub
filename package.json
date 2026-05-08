@@ -22,8 +22,12 @@
     "predeploy:prod": "npm run build",
     "deploy:prod": "wrangler deploy dist/server/entry.mjs --config wrangler.jsonc --env prod",
     "deploy:prod:dry-run": "npm run build && wrangler deploy dist/server/entry.mjs --config wrangler.jsonc --env prod --dry-run",
+    "db:generate": "drizzle-kit generate:sqlite --config drizzle.config.ts",
+    "db:push": "drizzle-kit push:sqlite --config drizzle.config.ts",
     "db:migrate:dev": "wrangler d1 migrations apply qr-resto-hub-dev --env dev --remote",
-    "db:migrate:prod": "wrangler d1 migrations apply qr-resto-hub-prod --env prod --remote"
+    "db:migrate:prod": "wrangler d1 migrations apply qr-resto-hub-prod --env prod --remote",
+    "db:seed:dev": "wrangler d1 execute qr-resto-hub-dev --env dev --remote --command=\"$(node -e \\\"const {generateSeedSQL} = require('./src/server/db/seed.ts'); console.log(generateSeedSQL(process.env.SEED_SUPER_ADMIN_EMAIL, 'REPLACE_WITH_HASH'))\\\")\"",
+    "db:seed:prod": "wrangler d1 execute qr-resto-hub-prod --env prod --remote --command=\"$(node -e \\\"const {generateSeedSQL} = require('./src/server/db/seed.ts'); console.log(generateSeedSQL(process.env.SEED_SUPER_ADMIN_EMAIL, 'REPLACE_WITH_HASH'))\\\")\""
   },
   "dependencies": {
     "@astrojs/cloudflare": "^13.3.1",

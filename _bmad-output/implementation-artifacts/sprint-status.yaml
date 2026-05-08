@@ -45,7 +45,7 @@ development_status:
   epic-1: in-progress
   1-1-scaffold-cloudflare-astro-platform-foundation: done
   1-2-establish-ddd-api-middleware-lib-utils-and-component-structure: review
-  1-3-configure-remote-first-d1-schema-and-migrations-for-platform-accounts: backlog
+  1-3-configure-remote-first-d1-schema-and-migrations-for-platform-accounts: review
   1-4-seed-unique-super-admin-and-implement-dashboard-authentication: backlog
   1-5-enforce-role-based-and-tenant-scoped-authorization: backlog
   1-6-manage-platform-admin-accounts-as-super-admin: backlog
