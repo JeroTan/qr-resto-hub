@@ -9,7 +9,7 @@ const databaseNames = {
   prod: "qr-resto-hub-prod",
 };
 const PASSWORD_ALGORITHM = "pbkdf2-sha256";
-const DEFAULT_ITERATIONS = 210_000;
+const DEFAULT_ITERATIONS = 99_999; // Cloudflare Worker maximum iterations is 100,000, but we leave some headroom for future increases without breaking existing hashes
 const DEFAULT_SALT_BYTES = 16;
 const HASH_BYTES = 32;
 
