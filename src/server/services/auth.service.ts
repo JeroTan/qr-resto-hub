@@ -142,6 +142,7 @@ export function createAuthService({
     async login(input: LoginInput): Promise<AppResult<LoginResult>> {
       const email = normalizeEmail(input.email);
       const adminUser = await repository.findAdminByEmail(email);
+      console.log("AuthService.login found adminUser:", { adminUser, requestId: input.requestId });
 
       if (!adminUser || adminUser.status !== "active") {
         await safeAudit(repository, {
