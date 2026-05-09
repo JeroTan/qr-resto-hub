@@ -246,6 +246,7 @@ GPT-5 Codex
 - Fixed the local OpenAPI dev-server issue by excluding Elysia packages from Vite dependency optimization and verifying `/api/openapi` returns `200`.
 - Added session middleware locals foundation for later protected-dashboard RBAC/tenant guards.
 - Added Story 1.4 red/green coverage for seed idempotency, duplicate owner prevention, secure cookie attributes, generic login failures, logout revocation, session resolution rejection, route metadata, and security guardrails.
+- Discovered and resolved an issue with Cloudflare Workers' Web Crypto API `deriveBits` enforcing a hard limit of 100,000 (or user preferred 99_999) PBKDF2 iterations. `DEFAULT_ITERATIONS` was lowered from 210,000 to 100,000 to fix `NotSupportedError` failures during password verification on the Cloudflare deployment.
 
 ### File List
 

@@ -1,197 +1,260 @@
-import { apiError, apiSuccess, type ApiResponse } from "@/lib/api/response";
-import { errorCodeToHttpStatus } from "@/lib/api/errors";
-import { parseAuthConfig } from "@/server/config/auth";
-import { createDatabase } from "@/server/db/client";
-import { D1AdminAuthRepository } from "@/server/repositories/admin-auth.repository";
-import {
-  createAuthService,
-  SESSION_COOKIE_NAME,
-  SESSION_DURATION_SECONDS,
-  type AuthService,
-  type LoginResult,
-  type SessionContext,
-} from "@/server/services/auth.service";
-import type { ErrorCodeType } from "@/utils/general/error";
+import { GeneralError } from "@/utils/general/error";
+import { Result, type AppResult } from "@/utils/general/result";
+import type { AdminRoleKey, AdminUserStatus } from "@/server/db/schema";
+import type { AuthConfig } from "@/server/config/auth";
+import { verifyPassword } from "@/lib/crypto/password";
+import { generateSessionToken, hashSessionToken } from "@/lib/crypto/session-token";
 
-export type AstroCookieAdapter = {
-  get?(name: string): { value: string } | undefined;
-  set?(name: string, value: string, options: CookieOptions): void;
-  delete?(name: string, options: CookieOptions): void;
+export const SESSION_COOKIE_NAME = "qr_resto_session";
+export const SESSION_DURATION_SECONDS = 60 * 60 * 8;
+
+export type AdminAuthRecord = {
+  id: string;
+  email: string;
+  roleId: string;
+  roleKey: AdminRoleKey;
+  status: AdminUserStatus;
+  passwordHash: string;
+  passwordSalt: string;
+  isSuperAdminOwner: boolean;
+  lastLoginAt?: string | null;
+  restaurantId?: string | null;
 };
 
-export type CookieOptions = {
-  httpOnly: true;
-  secure: true;
-  sameSite: "lax";
-  path: "/";
-  maxAge?: number;
-  expires?: Date;
+export type SessionRecord = {
+  id: string;
+  adminUserId: string;
+  sessionTokenHash: string;
+  expiresAt: string;
+  createdAt: string;
+  revokedAt: string | null;
+  lastSeenAt: string | null;
+  adminUser: AdminAuthRecord;
+  restaurantAssignment: { restaurantId: string } | null;
 };
 
-export type ControllerResponse<T> = {
-  status: number;
-  body: ApiResponse<T>;
+export type AuditReadyEvent = {
+  category: string;
+  action: string;
+  actorAdminUserId?: string;
+  requestId?: string;
+  metadata?: Record<string, unknown>;
 };
 
-export type AuthLoginBody = {
+export type AdminAuthRepository = {
+  ensureRoles(): Promise<void>;
+  countActiveSuperAdminOwners(): Promise<number>;
+  insertSuperAdminOwner(input: {
+    id: string;
+    email: string;
+    passwordHash: string;
+    passwordSalt: string;
+  }): Promise<void>;
+  findAdminByEmail(email: string): Promise<AdminAuthRecord | null>;
+  insertSession(input: {
+    id: string;
+    adminUserId: string;
+    sessionTokenHash: string;
+    expiresAt: string;
+    createdAt: string;
+  }): Promise<void>;
+  findSessionByTokenHash(sessionTokenHash: string): Promise<SessionRecord | null>;
+  revokeSessionByTokenHash(sessionTokenHash: string, revokedAt: string): Promise<void>;
+  updateAdminLastLogin(adminUserId: string, lastLoginAt: string): Promise<void>;
+  updateSessionLastSeen(sessionId: string, lastSeenAt: string): Promise<void>;
+  writeAuditEvent(input: AuditReadyEvent): Promise<void>;
+};
+
+export type LoginInput = {
   email: string;
   password: string;
+  requestId?: string;
 };
 
-const genericAuthError = apiError("AUTHENTICATION", "Authentication failed.");
-const genericSessionError = apiError("UNAUTHORIZED", "Authentication is required.");
+export type LoginResult = {
+  adminUser: {
+    id: string;
+    email: string;
+    roleKey: AdminRoleKey;
+    status: AdminUserStatus;
+  };
+  session: {
+    expiresAt: string;
+  };
+  sessionToken: string;
+};
 
-function sessionCookieOptions(expiresAt: string): CookieOptions {
+export type SessionContext = {
+  adminUser: {
+    id: string;
+    email: string;
+    roleKey: AdminRoleKey;
+    status: AdminUserStatus;
+  };
+  restaurantAssignment?: {
+    restaurantId: string;
+  };
+};
+
+export type AuthService = ReturnType<typeof createAuthService>;
+
+function normalizeEmail(email: string): string {
+  return email.trim().toLowerCase();
+}
+
+function authFailure(): AppResult<never> {
+  return Result.error(new GeneralError({}, "AUTHENTICATION", "Authentication failed."));
+}
+
+function unauthorized(): AppResult<never> {
+  return Result.error(new GeneralError({}, "UNAUTHORIZED", "Authentication is required."));
+}
+
+function toPublicAdminUser(adminUser: AdminAuthRecord) {
   return {
-    httpOnly: true,
-    secure: true,
-    sameSite: "lax",
-    path: "/",
-    maxAge: SESSION_DURATION_SECONDS,
-    expires: new Date(expiresAt),
+    id: adminUser.id,
+    email: adminUser.email,
+    roleKey: adminUser.roleKey,
+    status: adminUser.status,
   };
 }
 
-function clearSessionCookieOptions(): CookieOptions {
-  return {
-    httpOnly: true,
-    secure: true,
-    sameSite: "lax",
-    path: "/",
-    maxAge: 0,
-    expires: new Date(0),
-  };
+async function safeAudit(repository: AdminAuthRepository, input: AuditReadyEvent): Promise<void> {
+  try {
+    await repository.writeAuditEvent(input);
+  } catch {
+    // Audit write failure must not leak auth internals or block generic auth failures.
+  }
 }
 
-function errorResponse<T>(
-  code: ErrorCodeType,
-  fallback = genericSessionError,
-): ControllerResponse<T> {
-  return {
-    status: errorCodeToHttpStatus(code),
-    body: code === "AUTHENTICATION" ? genericAuthError : fallback,
-  };
-}
-
-function sessionTokenFromCookie(astroCookies?: AstroCookieAdapter): string | undefined {
-  return astroCookies?.get?.(SESSION_COOKIE_NAME)?.value;
-}
-
-function publicLoginResult(result: LoginResult) {
-  return {
-    adminUser: result.adminUser,
-    session: result.session,
-  };
-}
-
-export function createAuthController({
-  service,
-  astroCookies,
-  requestId,
+export function createAuthService({
+  repository,
+  config,
+  now = () => new Date(),
+  sessionDurationSeconds = SESSION_DURATION_SECONDS,
 }: {
-  service: AuthService;
-  astroCookies?: AstroCookieAdapter;
-  requestId?: string;
+  repository: AdminAuthRepository;
+  config: AuthConfig;
+  now?: () => Date;
+  sessionDurationSeconds?: number;
 }) {
   return {
-    async login(
-      body: AuthLoginBody,
-    ): Promise<ControllerResponse<ReturnType<typeof publicLoginResult>>> {
-      console.log("AuthController.login called with:", { body, requestId });
-      const result = await service.login({ ...body, requestId });
-      console.log("AuthController.login result:", { result, requestId });
-      if (result.error !== null) {
-        return errorResponse(result.error.code, genericAuthError);
+    async login(input: LoginInput): Promise<AppResult<LoginResult>> {
+      const email = normalizeEmail(input.email);
+      const adminUser = await repository.findAdminByEmail(email);
+
+      if (!adminUser || adminUser.status !== "active") {
+        await safeAudit(repository, {
+          category: "auth.failure",
+          action: "auth.login.failed",
+          requestId: input.requestId,
+          metadata: { reason: "invalid_credentials" },
+        });
+        return authFailure();
       }
 
-      astroCookies?.set?.(
-        SESSION_COOKIE_NAME,
-        result.content.sessionToken,
-        sessionCookieOptions(result.content.session.expiresAt),
+      const passwordValid = await verifyPassword(
+        input.password,
+        config.passwordPepper,
+        adminUser.passwordHash,
+        adminUser.passwordSalt,
       );
-      console.log("AuthController.login set session cookie", { requestId });
 
-      return {
-        status: 200,
-        body: apiSuccess(publicLoginResult(result.content), { code: "OK", requestId }),
-      };
-    },
-
-    async logout(): Promise<ControllerResponse<{ loggedOut: true }>> {
-      const result = await service.logout({
-        sessionToken: sessionTokenFromCookie(astroCookies),
-        requestId,
-      });
-      astroCookies?.delete?.(SESSION_COOKIE_NAME, clearSessionCookieOptions());
-
-      if (result.error !== null) {
-        return errorResponse(result.error.code);
+      if (!passwordValid) {
+        await safeAudit(repository, {
+          category: "auth.failure",
+          action: "auth.login.failed",
+          requestId: input.requestId,
+          metadata: { reason: "invalid_credentials" },
+        });
+        return authFailure();
       }
 
-      return {
-        status: 200,
-        body: apiSuccess(result.content, { code: "OK", requestId }),
-      };
-    },
+      const createdAt = now();
+      const expiresAt = new Date(createdAt.getTime() + sessionDurationSeconds * 1000);
+      const sessionToken = generateSessionToken();
+      const sessionTokenHash = await hashSessionToken(sessionToken);
 
-    async session(): Promise<ControllerResponse<{ authenticated: true } & SessionContext>> {
-      const result = await service.resolveSession({
-        sessionToken: sessionTokenFromCookie(astroCookies),
-        requestId,
+      await repository.insertSession({
+        id: crypto.randomUUID(),
+        adminUserId: adminUser.id,
+        sessionTokenHash,
+        createdAt: createdAt.toISOString(),
+        expiresAt: expiresAt.toISOString(),
+      });
+      await repository.updateAdminLastLogin(adminUser.id, createdAt.toISOString());
+      await safeAudit(repository, {
+        category: "account.changed",
+        action: "auth.login.succeeded",
+        actorAdminUserId: adminUser.id,
+        requestId: input.requestId,
       });
 
-      if (result.error !== null) {
-        return errorResponse(result.error.code);
+      return Result.okay({
+        adminUser: toPublicAdminUser(adminUser),
+        session: { expiresAt: expiresAt.toISOString() },
+        sessionToken,
+      });
+    },
+
+    async logout({
+      sessionToken,
+      requestId,
+    }: {
+      sessionToken?: string;
+      requestId?: string;
+    }): Promise<AppResult<{ loggedOut: true }>> {
+      if (sessionToken) {
+        const sessionTokenHash = await hashSessionToken(sessionToken);
+        const revokedAt = now().toISOString();
+        await repository.revokeSessionByTokenHash(sessionTokenHash, revokedAt);
+        await safeAudit(repository, {
+          category: "account.changed",
+          action: "auth.logout",
+          requestId,
+        });
       }
 
-      return {
-        status: 200,
-        body: apiSuccess(
-          {
-            authenticated: true,
-            ...result.content,
-          },
-          { code: "OK", requestId },
-        ),
-      };
+      return Result.okay({ loggedOut: true });
     },
-  };
-}
 
-export function createAuthControllerFromRuntime({
-  env,
-  astroCookies,
-  requestId,
-}: {
-  env?: Partial<Env> & Record<string, unknown>;
-  astroCookies?: AstroCookieAdapter;
-  requestId?: string;
-}) {
-  if (!env?.DB) {
-    return null;
-  }
+    async resolveSession({
+      sessionToken,
+      requestId,
+    }: {
+      sessionToken?: string;
+      requestId?: string;
+    }): Promise<AppResult<SessionContext>> {
+      if (!sessionToken) {
+        return unauthorized();
+      }
 
-  const config = parseAuthConfig(env);
-  if (config.error !== null) {
-    return null;
-  }
+      const sessionTokenHash = await hashSessionToken(sessionToken);
+      const session = await repository.findSessionByTokenHash(sessionTokenHash);
+      const expiresAtMs = session ? new Date(session.expiresAt).getTime() : Number.NaN;
+      const rejected =
+        !session ||
+        session.revokedAt !== null ||
+        !Number.isFinite(expiresAtMs) ||
+        expiresAtMs <= now().getTime() ||
+        session.adminUser.status !== "active";
 
-  const repository = new D1AdminAuthRepository(createDatabase(env.DB));
-  return createAuthController({
-    service: createAuthService({ repository, config: config.content }),
-    astroCookies,
-    requestId,
-  });
-}
+      if (rejected) {
+        await safeAudit(repository, {
+          category: "auth.failure",
+          action: "auth.session.rejected",
+          requestId,
+          metadata: { reason: "invalid_session" },
+        });
+        return unauthorized();
+      }
 
-export function authControllerUnavailable<T>(
-  kind: "login" | "session" = "session",
-): ControllerResponse<T> {
-  return {
-    status: kind === "login" ? 401 : 500,
-    body:
-      kind === "login"
-        ? genericAuthError
-        : apiError("INTERNAL_SERVER_ERROR", "An internal server error occurred."),
+      await repository.updateSessionLastSeen(session.id, now().toISOString());
+
+      return Result.okay({
+        adminUser: toPublicAdminUser(session.adminUser),
+        restaurantAssignment: session.restaurantAssignment ?? undefined,
+      });
+    },
   };
 }
